@@ -1,6 +1,8 @@
-# FE-Luncher2
+# FE-Luncher2 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6ff0dd25-254d-4119-bc30-d94163ffd380/deploy-status)](https://app.netlify.com/sites/luncher2/deploys)
 
-Front End to the Luncher 2 app
+https://luncher2.netlify.com/
+
 
 # Build Info
 

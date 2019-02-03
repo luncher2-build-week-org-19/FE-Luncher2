@@ -7,12 +7,12 @@ import { registerUser } from '../../actions/';
 import './register.css';
 
 class Register extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
 			firstName: '',
 			lastName: '',
-			account: '',
+			userRole: '',
 			username: '',
 			email: '',
 			password: ''
@@ -28,7 +28,10 @@ class Register extends React.Component {
 
 	handleRegister = e => {
 		e.preventDefault();
-		this.props.registerUser(this.state);
+		let user = this.state;
+		console.log('user', user);
+		this.props.registerUser(user);
+		this.props.history.push('/');
 	};
 
 	render() {
@@ -54,7 +57,7 @@ class Register extends React.Component {
 						<Input
 							type='radio'
 							id='User'
-							name='account'
+							name='userRole'
 							value='user'
 							onChange={e => this.handleChange(e)}
 						/>
@@ -64,7 +67,7 @@ class Register extends React.Component {
 						<Input
 							type='radio'
 							id='admin'
-							name='account'
+							name='userRole'
 							value='admin'
 							onChange={e => this.handleChange(e)}
 						/>
@@ -102,9 +105,11 @@ class Register extends React.Component {
 		);
 	}
 }
-// const mapStateToProps = state => {};
+const mapStateToProps = state => {
+	return { error: state.error };
+};
 
 export default connect(
-	'',
+	mapStateToProps,
 	{ registerUser }
 )(Register);

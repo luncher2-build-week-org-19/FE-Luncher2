@@ -25,6 +25,7 @@ const initialState = {
 // });
 
 const reducer = (state = initialState, action) => {
+	console.log('reducer', action.payload);
 	switch (action.type) {
 		case REGISTER_START:
 			return {

@@ -13,10 +13,17 @@ class Register extends React.Component {
 			firstName: '',
 			lastName: '',
 			userRole: '',
-			username: '',
+			userName: '',
 			email: '',
 			password: ''
 		};
+	}
+
+	componentDidUpdate() {
+		let redirect = this.props.registerRedirect;
+		if (redirect === true) {
+			this.history.push('/');
+		}
 	}
 
 	handleChange = e => {
@@ -28,10 +35,15 @@ class Register extends React.Component {
 
 	handleRegister = e => {
 		e.preventDefault();
-		let user = this.state;
-		console.log('user', user);
+		let user = {
+			firstName: this.state.firstName,
+			lastName: this.state.lastName,
+			userRole: this.state.userRole,
+			userName: this.state.userName,
+			email: this.state.email,
+			password: this.state.password
+		};
 		this.props.registerUser(user);
-		this.props.history.push('/');
 	};
 
 	render() {
@@ -75,7 +87,7 @@ class Register extends React.Component {
 					</div>
 					<Input
 						type='text'
-						name='username'
+						name='userName'
 						placeholder='Username'
 						value={this.state.username}
 						onChange={e => this.handleChange(e)}
@@ -106,7 +118,7 @@ class Register extends React.Component {
 	}
 }
 const mapStateToProps = state => {
-	return { error: state.error };
+	return { error: state.error, registerRedirect: state.registerRedirect };
 };
 
 export default connect(

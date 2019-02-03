@@ -15,7 +15,8 @@ const initialState = {
 	email: '',
 	password: '',
 	id: '',
-	token: ''
+	token: '',
+	registerRedirect: false
 };
 // import { combineReducers } from 'redux';
 // import login from './login';
@@ -34,12 +35,14 @@ const reducer = (state = initialState, action) => {
 		case REGISTER_SUCCESS:
 			return {
 				...state,
-				id: action.payload
+				id: action.payload.data[0],
+				registerRedirect: true
 			};
 		case REGISTER_FAILURE:
 			return {
 				...state,
-				error: action.payload
+				error: action.payload,
+				registerRedirect: false
 			};
 
 		case LOGIN_START:

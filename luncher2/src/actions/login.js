@@ -5,16 +5,30 @@
 
 import axios from 'axios';
 
-export const FETCH_REGISTER_START = 'FETCH_REGISTER_START ';
-export const FETCH_REGISTER_SUCCESS = 'FETCH_REGISTER_SUCCESS';
-export const FETCH_REGISTER_FAILURE = 'FETCH_REGISTER_FAILURE';
+export const REGISTER_START = 'REGISTER_START ';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
+
+export const LOGIN_START = 'LOGIN_START ';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const registerUser = user => dispatch => {
-	dispatch({ type: FETCH_REGISTER_START });
+	dispatch({ type: REGISTER_START });
 	axios
 		.get('https://luncher-2-bw-19-lambda.herokuapp.com/', user)
 		.then(res => {
-			dispatch({ type: FETCH_REGISTER_SUCCESS, payload: res });
+			dispatch({ type: REGISTER_SUCCESS, payload: res });
 		})
-		.catch(err => dispatch({ type: FETCH_REGISTER_FAILURE, payload: err }));
+		.catch(err => dispatch({ type: REGISTER_FAILURE, payload: err }));
+};
+
+export const loginUser = user => dispatch => {
+	dispatch({ type: LOGIN_START });
+	axios
+		.get('https://luncher-2-bw-19-lambda.herokuapp.com/', user)
+		.then(res => {
+			dispatch({ type: LOGIN_SUCCESS, payload: res });
+		})
+		.catch(err => dispatch({ type: LOGIN_FAILURE, payload: err }));
 };

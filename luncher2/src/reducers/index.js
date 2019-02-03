@@ -1,10 +1,10 @@
 import {
-	FETCH_REGISTER_START,
-	FETCH_REGISTER_SUCCESS,
-	FETCH_REGISTER_FAILURE
-	// FETCH_LOGIN_START,
-	// FETCH_LOGIN_SUCCESS,
-	// FETCH_LOGIN_FAILURE
+	REGISTER_START,
+	REGISTER_SUCCESS,
+	REGISTER_FAILURE,
+	LOGIN_START,
+	LOGIN_SUCCESS,
+	LOGIN_FAILURE
 } from '../actions/';
 
 const initialState = {
@@ -14,46 +14,41 @@ const initialState = {
 	userName: '',
 	email: '',
 	password: '',
-	id: ''
+	id: '',
+	token: ''
 };
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case FETCH_REGISTER_START:
+		case REGISTER_START:
 			return {
 				...state
 			};
-		case FETCH_REGISTER_SUCCESS:
+		case REGISTER_SUCCESS:
 			return {
 				...state,
 				id: action.payload
 			};
-		case FETCH_REGISTER_FAILURE:
+		case REGISTER_FAILURE:
 			return {
 				...state,
 				error: action.payload
 			};
-		// case FETCH_LOGIN_START:
-		// 	return {
-		// 		...state,
-		// 		smurfs: [...state.smurfs],
-		// 		fetchingSmurfs: true,
-		// 		error: ''
-		// 	};
-		// case FETCH_LOGIN_SUCCESS:
-		// 	return {
-		// 		...state,
-		// 		smurfs: action.payload.data,
-		// 		fetchingSmurfs: false,
-		// 		error: ''
-		// 	};
-		// case FETCH_LOGIN_FAILURE:
-		// 	return {
-		// 		...state,
-		// 		smurfs: [...state.smurfs],
-		// 		fetchingSmurfs: false,
-		// 		error: action.payload.data
-		// 	};
+
+		case LOGIN_START:
+			return {
+				...state
+			};
+		case LOGIN_SUCCESS:
+			return {
+				...state,
+				token: action.payload.data
+			};
+		case LOGIN_FAILURE:
+			return {
+				...state,
+				error: action.payload.data
+			};
 
 		default:
 			return state;

@@ -1,0 +1,10 @@
+.nav {
+	display: flex;
+	justify-content: space-between;
+	max-width: 1000px;
+	padding: 20px 20px;
+	border-bottom: 1px solid black;
+}
+.navItem {
+	margin-left: 10px;
+}

@@ -1,0 +1,8 @@
+.addSchool {
+	display: flex;
+	width: 300px;
+	margin: 0 auto;
+}
+.addSchool input {
+	margin-right: 10px;
+}

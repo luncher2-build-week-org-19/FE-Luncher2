@@ -1,21 +1,22 @@
 import React from 'react';
-import { Form, Input, Label } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Form, Input, Label, Button } from 'reactstrap';
 
-import './login.css';
+import './register.css';
 
-class Login extends React.Component {
+class Register extends React.Component {
 	render() {
 		return (
 			<>
-				<h1>login page</h1>
-				<Form>
+				<h1>Register</h1>
+				<Form className='registerForm'>
 					<Input name='firstName' autoComplete='on' placeholder='First Name' />
 					<Input name='lastName' autoComplete='on' placeholder='Last Name' />
-					<div>
-						<Input type='radio' id='User' name='accout' value='user' />
+					<div className='radio'>
+						<Input type='radio' id='User' name='account' value='user' />
 						<Label htmlFor='user'>User</Label>
 					</div>
-					<div>
+					<div className='radio'>
 						<Input type='radio' id='admin' name='account' value='admin' />
 						<Label htmlFor='admin'>Admin</Label>
 					</div>
@@ -32,10 +33,14 @@ class Login extends React.Component {
 						name='password'
 						placeholder='Password'
 					/>
+					<Button>Register</Button>
+					<p>
+						Already have an account? <Link to='/login'>Login</Link>
+					</p>
 				</Form>
 			</>
 		);
 	}
 }
 
-export default Login;
+export default Register;

@@ -17,6 +17,12 @@ const initialState = {
 	id: '',
 	token: ''
 };
+// import { combineReducers } from 'redux';
+// import login from './login';
+
+// export default combineReducers({
+// 	login
+// });
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {

@@ -13,5 +13,8 @@
 }
 .registerForm .radio {
 	display: flex;
-	margin-left: 25px;
+	/* margin-left: 25px; */
+}
+.registerForm .radio label {
+	margin-left: 20px;
 }

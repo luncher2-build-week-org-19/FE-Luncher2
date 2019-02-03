@@ -21,10 +21,10 @@ class Login extends React.Component {
 	};
 
 	handleSubmitLogin = () => {
-		let credentials = {
-			username: this.state.username,
-			password: this.state.password
-		};
+		// let credentials = {
+		// 	username: this.state.username,
+		// 	password: this.state.password
+		// };
 		//dispatch action creator
 		this.props.history.push('/');
 	};

@@ -15,6 +15,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const registerUser = user => dispatch => {
 	dispatch({ type: REGISTER_START });
+	console.log(user);
 	axios
 		.get('https://luncher-2-bw-19-lambda.herokuapp.com/', user)
 		.then(res => {

@@ -13,20 +13,18 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loginKey: ''
+			loginKey: '',
 		};
 	}
 
-	componentDidMount() {}
-
 	render() {
 		return (
-			<div className='App'>
-				<Route exact path='/' component={Home} />
-				<Route path='/login' component={Login} />
-				<Route path='/register' component={Register} />
+			<div className="App">
+				<Route exact path="/" component={Home} />
+				<Route path="/login" component={Login} />
+				<Route path="/register" component={Register} />
 				<Route path={`/profile/${this.props.id}`} />
-				<Route path='/school' />
+				<Route path="/school" />
 			</div>
 		);
 	}
@@ -34,7 +32,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
 	return {
-		id: state.id
+		id: state.id,
 	};
 };
 

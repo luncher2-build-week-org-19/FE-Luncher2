@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import { loginUser } from '../../actions/';
 
 import './login.css';
 
@@ -9,23 +11,23 @@ class Login extends React.Component {
 		super();
 		this.state = {
 			username: '',
-			password: ''
+			password: '',
 		};
 	}
 
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
 		});
 	};
 
 	handleSubmitLogin = () => {
-		// let credentials = {
-		// 	username: this.state.username,
-		// 	password: this.state.password
-		// };
-		//dispatch action creator
+		let credentials = {
+			username: this.state.username,
+			password: this.state.password,
+		};
+		this.props.loginUser(credentials);
 		this.props.history.push('/');
 	};
 
@@ -34,29 +36,30 @@ class Login extends React.Component {
 			<>
 				<h1>Login</h1>
 				<Form
-					className='loginForm'
+					className="loginForm"
 					onSubmit={() => {
 						this.handleSubmitLogin();
-					}}
-				>
+					}}>
 					<Input
-						type='text'
-						name='username'
+						type="text"
+						name="username"
 						value={this.state.username}
 						onChange={e => this.handleChange(e)}
-						placeholder='Username'
+						placeholder="Username"
 					/>
 					<Input
-						type='password'
-						autoComplete='on'
-						name='password'
+						type="password"
+						autoComplete="on"
+						name="password"
 						value={this.state.password}
 						onChange={e => this.handleChange(e)}
-						placeholder='Password'
+						placeholder="Password"
 					/>
-					<Button>Login</Button>
+					<Button onClick={() => this.handleSubmitLogin()}>
+						Login
+					</Button>
 					<p>
-						Need an account? <Link to='/register'>Register</Link>
+						Need an account? <Link to="/register">Register</Link>
 					</p>
 				</Form>
 			</>
@@ -64,4 +67,7 @@ class Login extends React.Component {
 	}
 }
 
-export default Login;
+export default connect(
+	'',
+	{ loginUser }
+)(Login);

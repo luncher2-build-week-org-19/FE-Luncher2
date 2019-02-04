@@ -6,11 +6,14 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducer from './reducers/';
+import axios from 'axios';
 //Styles
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //Components
 import App from './App';
+
+axios.defaults.withCredentials = true;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

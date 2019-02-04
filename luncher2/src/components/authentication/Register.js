@@ -15,7 +15,7 @@ class Register extends React.Component {
 			userRole: '',
 			userName: '',
 			email: '',
-			password: ''
+			password: '',
 		};
 	}
 
@@ -29,7 +29,7 @@ class Register extends React.Component {
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
 		});
 	};
 
@@ -41,7 +41,7 @@ class Register extends React.Component {
 			userRole: this.state.userRole,
 			userName: this.state.userName,
 			email: this.state.email,
-			password: this.state.password
+			password: this.state.password,
 		};
 		this.props.registerUser(user);
 		this.props.history.push('/');
@@ -56,69 +56,73 @@ class Register extends React.Component {
 		return (
 			<>
 				<h1>Register</h1>
-				<Form className='registerForm'>
+				<Form className="registerForm">
 					<Input
-						name='firstName'
-						autoComplete='on'
-						placeholder='First Name'
+						name="firstName"
+						autoComplete="on"
+						placeholder="First Name"
 						value={this.state.firstName}
 						onChange={e => this.handleChange(e)}
 					/>
 					<Input
-						name='lastName'
-						autoComplete='on'
-						placeholder='Last Name'
+						name="lastName"
+						autoComplete="on"
+						placeholder="Last Name"
 						value={this.state.lastName}
 						onChange={e => this.handleChange(e)}
 					/>
-					<div className='radio'>
+					<div className="radio">
 						<Input
-							type='radio'
-							id='User'
-							name='userRole'
-							value='user'
+							type="radio"
+							id="User"
+							name="userRole"
+							value="user"
 							onChange={e => this.handleChange(e)}
 						/>
-						<Label htmlFor='user'>User</Label>
+						<Label htmlFor="user">User</Label>
 					</div>
-					<div className='radio'>
+					<div className="radio">
 						<Input
-							type='radio'
-							id='admin'
-							name='userRole'
-							value='admin'
+							type="radio"
+							id="admin"
+							name="userRole"
+							value="admin"
 							onChange={e => this.handleChange(e)}
 						/>
-						<Label htmlFor='admin'>Admin</Label>
+						<Label htmlFor="admin">Admin</Label>
 					</div>
 					<Input
-						type='text'
-						name='userName'
-						placeholder='Username'
-						value={this.state.username}
+						type="text"
+						name="userName"
+						placeholder="Username"
+						value={this.state.userName}
 						onChange={e => this.handleChange(e)}
 					/>
 					<Input
-						type='email'
-						autoComplete='on'
-						name='email'
-						placeholder='Email'
+						type="email"
+						autoComplete="on"
+						name="email"
+						placeholder="Email"
 						value={this.state.email}
 						onChange={e => this.handleChange(e)}
 					/>
 					<Input
-						type='password'
-						autoComplete='on'
-						name='password'
-						placeholder='Password'
+						type="password"
+						autoComplete="on"
+						name="password"
+						placeholder="Password"
 						value={this.state.password}
 						onChange={e => this.handleChange(e)}
 					/>
-					<Button onClick={e => this.handleRegister(e)}>Register</Button>
-					{this.props.id ? <p>Success</p> : <p>Registration Failed</p>}
+					<Button onClick={this.handleRegister}>Register</Button>
+					{this.props.id ? (
+						<p>Success</p>
+					) : (
+						<p>Registration Failed</p>
+					)}
 
 					<p>
-						Already have an account? <Link to='/login'>Login</Link>
+						Already have an account? <Link to="/login">Login</Link>
 					</p>
 				</Form>
 			</>
@@ -129,7 +133,7 @@ const mapStateToProps = state => {
 	return {
 		error: state.error,
 		registerRedirect: state.registerRedirect,
-		id: state.id
+		id: state.id,
 	};
 };
 

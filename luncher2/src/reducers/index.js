@@ -4,7 +4,7 @@ import {
 	REGISTER_FAILURE,
 	LOGIN_START,
 	LOGIN_SUCCESS,
-	LOGIN_FAILURE
+	LOGIN_FAILURE,
 } from '../actions/';
 
 const initialState = {
@@ -16,7 +16,12 @@ const initialState = {
 	password: '',
 	id: '',
 	token: '',
-	registerRedirect: false
+	user: {
+		id: '',
+		username: '',
+		role: '',
+	},
+	registerRedirect: false,
 };
 // import { combineReducers } from 'redux';
 // import login from './login';
@@ -30,34 +35,39 @@ const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case REGISTER_START:
 			return {
-				...state
+				...state,
 			};
 		case REGISTER_SUCCESS:
 			return {
 				...state,
 				id: action.payload.data[0],
-				registerRedirect: true
+				registerRedirect: true,
 			};
 		case REGISTER_FAILURE:
 			return {
 				...state,
 				error: action.payload.response.data.error,
-				registerRedirect: false
+				registerRedirect: false,
 			};
 
 		case LOGIN_START:
 			return {
-				...state
+				...state,
 			};
 		case LOGIN_SUCCESS:
 			return {
 				...state,
-				token: action.payload.data
+				token: action.payload.data,
+				user: {
+					id: action.payload.data.user.id,
+					username: action.payload.data.user.username,
+					role: action.payload.data.user.role,
+				},
 			};
 		case LOGIN_FAILURE:
 			return {
 				...state,
-				error: action.payload.data
+				error: action.payload.data,
 			};
 
 		default:

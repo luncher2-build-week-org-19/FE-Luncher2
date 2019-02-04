@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Login from './components/authentication/Login';
 import Home from './components/home/Home';
 import Register from './components/authentication/Register';
+// import authenticateHOC from './components/authentication/Authenticate';
 //styles
 
 import './App.css';
@@ -14,16 +15,27 @@ class App extends Component {
 		super(props);
 		this.state = {
 			loginKey: '',
+			id: '',
+			userName: '',
 		};
 	}
+
+	componentDidMount = () => {
+		let id = localStorage.getItem('id');
+		let userName = localStorage.getItem('userName');
+		this.setState({
+			id: id,
+			userName: userName,
+		});
+	};
 
 	render() {
 		return (
 			<div className="App">
-				<Route exact path="/" component={Home} />
+				<Route path="/" component={Home} />
 				<Route path="/login" component={Login} />
 				<Route path="/register" component={Register} />
-				<Route path={`/profile/${this.props.id}`} />
+				<Route path="/profile/" />
 				<Route path="/school" />
 			</div>
 		);

@@ -5,6 +5,10 @@ export {
 	LOGIN_START,
 	LOGIN_SUCCESS,
 	LOGIN_FAILURE,
+	GET_USERINFO_START,
+	GET_USERINFO_SUCCESS,
+	GET_USERINFO_FAILURE,
 	registerUser,
 	loginUser,
+	getUserInfo,
 } from './login_action';

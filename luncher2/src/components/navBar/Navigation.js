@@ -2,20 +2,27 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Nav } from 'reactstrap';
 
-import './navigation.css';
+import '../../styles/navigation.css';
 
-const Navigation = () => {
+const Navigation = props => {
+	const logoutUser = () => {
+		localStorage.removeItem('userToken');
+		localStorage.removeItem('id');
+		window.location.reload();
+	};
 	return (
 		<Nav>
-			<Link to='/'>Luncher</Link>
-			<div className='rightMenu'>
-				<NavLink className='navItem' to='/'>
-					Home
+			<Link to="/">Luncher</Link>
+			<div className="rightMenu">
+				<NavLink className="navItem" to="/profile/">
+					{props.username}
 				</NavLink>
-				<NavLink className='navItem' to='/profile/:id'>
-					Profile
-				</NavLink>
-				<NavLink className='navItem' to='/'>
+				<NavLink
+					className="navItem"
+					to="/"
+					onClick={() => {
+						logoutUser();
+					}}>
 					Logout
 				</NavLink>
 			</div>

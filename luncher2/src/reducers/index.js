@@ -5,6 +5,9 @@ import {
 	LOGIN_START,
 	LOGIN_SUCCESS,
 	LOGIN_FAILURE,
+	GET_USERINFO_START,
+	GET_USERINFO_SUCCESS,
+	GET_USERINFO_FAILURE,
 } from '../actions/';
 
 const initialState = {
@@ -31,7 +34,6 @@ const initialState = {
 // });
 
 const reducer = (state = initialState, action) => {
-	console.log('reducer', action.payload);
 	switch (action.type) {
 		case REGISTER_START:
 			return {
@@ -46,7 +48,7 @@ const reducer = (state = initialState, action) => {
 		case REGISTER_FAILURE:
 			return {
 				...state,
-				error: action.payload.response.data.error,
+				error: action.payload.message,
 				registerRedirect: false,
 			};
 
@@ -68,6 +70,26 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				error: action.payload.data,
+			};
+
+		case GET_USERINFO_START:
+			return {
+				...state,
+			};
+		case GET_USERINFO_SUCCESS:
+			console.log('userninfo', action.payload);
+			return {
+				...state,
+				id: action.payload.id,
+				username: action.payload.username,
+				email: action.payload.email,
+				firstName: action.payload.firstName,
+				lastName: action.payload.lastName,
+				userRole: action.payload.useRole,
+			};
+		case GET_USERINFO_FAILURE:
+			return {
+				error: action.payload,
 			};
 
 		default:

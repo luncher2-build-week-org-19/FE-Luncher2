@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Form, Input, Label, Button } from 'reactstrap';
 import { registerUser } from '../../actions/';
 
-import './register.css';
+import '../../styles/register.css';
 
 class Register extends React.Component {
 	constructor(props) {
@@ -56,7 +56,7 @@ class Register extends React.Component {
 		return (
 			<>
 				<h1>Register</h1>
-				<Form className="registerForm">
+				<Form className="registerForm" onSubmit={this.handleRegister}>
 					<Input
 						name="firstName"
 						autoComplete="on"
@@ -77,6 +77,7 @@ class Register extends React.Component {
 							id="User"
 							name="userRole"
 							value="user"
+							required
 							onChange={e => this.handleChange(e)}
 						/>
 						<Label htmlFor="user">User</Label>
@@ -87,6 +88,7 @@ class Register extends React.Component {
 							id="admin"
 							name="userRole"
 							value="admin"
+							required
 							onChange={e => this.handleChange(e)}
 						/>
 						<Label htmlFor="admin">Admin</Label>
@@ -95,6 +97,7 @@ class Register extends React.Component {
 						type="text"
 						name="userName"
 						placeholder="Username"
+						required
 						value={this.state.userName}
 						onChange={e => this.handleChange(e)}
 					/>
@@ -103,7 +106,9 @@ class Register extends React.Component {
 						autoComplete="on"
 						name="email"
 						placeholder="Email"
+						required
 						value={this.state.email}
+					
 						onChange={e => this.handleChange(e)}
 					/>
 					<Input
@@ -111,10 +116,11 @@ class Register extends React.Component {
 						autoComplete="on"
 						name="password"
 						placeholder="Password"
+						required
 						value={this.state.password}
 						onChange={e => this.handleChange(e)}
 					/>
-					<Button onClick={this.handleRegister}>Register</Button>
+					<Button>Register</Button>
 					{this.props.id ? (
 						<p>Success</p>
 					) : (

@@ -1,16 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/';
 
-import './login.css';
+import '../../styles/login.css';
 
 class Login extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			username: '',
+			userName: '',
 			password: '',
 		};
 	}
@@ -24,11 +24,10 @@ class Login extends React.Component {
 
 	handleSubmitLogin = () => {
 		let credentials = {
-			username: this.state.username,
+			userName: this.state.userName,
 			password: this.state.password,
 		};
 		this.props.loginUser(credentials);
-		this.props.history.push('/');
 	};
 
 	render() {
@@ -42,8 +41,8 @@ class Login extends React.Component {
 					}}>
 					<Input
 						type="text"
-						name="username"
-						value={this.state.username}
+						name="userName"
+						value={this.state.userName}
 						onChange={e => this.handleChange(e)}
 						placeholder="Username"
 					/>
@@ -70,4 +69,4 @@ class Login extends React.Component {
 export default connect(
 	'',
 	{ loginUser }
-)(Login);
+)(withRouter(Login));

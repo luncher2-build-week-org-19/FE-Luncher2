@@ -13,9 +13,13 @@ export const LOGIN_START = 'LOGIN_START ';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+export const GET_USERINFO_START = 'GET_USERINFO_START';
+export const GET_USERINFO_SUCCESS = 'GET_USERINFO_SUCCESS';
+export const GET_USERINFO_FAILURE = 'GET_USERINFO_FAILURE';
+
 export const registerUser = user => dispatch => {
 	dispatch({ type: REGISTER_START });
-	console.log('registerUser', user.password);
+	console.log('registerUser', user);
 	axios({
 		method: 'post',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/register`,
@@ -40,6 +44,7 @@ export const registerUser = user => dispatch => {
 };
 
 export const loginUser = user => dispatch => {
+	console.log(user);
 	dispatch({ type: LOGIN_START });
 	axios({
 		method: 'post',
@@ -54,7 +59,22 @@ export const loginUser = user => dispatch => {
 	})
 		.then(res => {
 			dispatch({ type: LOGIN_SUCCESS, payload: res });
-			localStorage.setItem('token', res.token);
+			localStorage.setItem('userToken', res.data.token);
+			window.location.reload();
 		})
 		.catch(err => dispatch({ type: LOGIN_FAILURE, payload: err }));
+};
+
+export const getUserInfo = userToken => dispatch => {
+	console.log('getUser action', userToken);
+	dispatch({ type: GET_USERINFO_START });
+	axios({
+		method: 'get',
+		url: 'https://luncher-2-bw-19-lambda.herokuapp.com/users/info',
+		headers: {
+			Authorization: userToken,
+		},
+	})
+		.then(res => dispatch({ type: GET_USERINFO_SUCCESS, payload: res }))
+		.catch(err => dispatch({ type: GET_USERINFO_FAILURE, payload: err }));
 };

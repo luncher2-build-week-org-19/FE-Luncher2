@@ -20,10 +20,10 @@ class Register extends React.Component {
 	}
 
 	componentDidUpdate() {
-		let redirect = this.props.registerRedirect;
-		if (redirect === true) {
-			this.history.push('/');
-		}
+		// let redirect = this.props.registerRedirect;
+		// if (redirect === true) {
+		// 	this.props.history.push('/');
+		// }
 	}
 
 	handleChange = e => {
@@ -44,6 +44,12 @@ class Register extends React.Component {
 			password: this.state.password
 		};
 		this.props.registerUser(user);
+		this.props.history.push('/');
+
+		// let redirect = this.props.registerRedirect;
+		// if (redirect === true) {
+		// 	this.props.history.push('/');
+		// }
 	};
 
 	render() {
@@ -109,6 +115,8 @@ class Register extends React.Component {
 						onChange={e => this.handleChange(e)}
 					/>
 					<Button onClick={e => this.handleRegister(e)}>Register</Button>
+					{this.props.id ? <p>Success</p> : <p>Registration Failed</p>}
+
 					<p>
 						Already have an account? <Link to='/login'>Login</Link>
 					</p>
@@ -118,7 +126,11 @@ class Register extends React.Component {
 	}
 }
 const mapStateToProps = state => {
-	return { error: state.error, registerRedirect: state.registerRedirect };
+	return {
+		error: state.error,
+		registerRedirect: state.registerRedirect,
+		id: state.id
+	};
 };
 
 export default connect(

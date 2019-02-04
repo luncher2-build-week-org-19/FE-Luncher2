@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
 		case REGISTER_FAILURE:
 			return {
 				...state,
-				error: action.payload,
+				error: action.payload.response.data.error,
 				registerRedirect: false
 			};
 

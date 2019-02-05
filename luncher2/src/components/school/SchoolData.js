@@ -11,15 +11,20 @@ import {
 	addDonation,
 } from '../../actions';
 import { Button, Input, Form } from 'reactstrap';
-import AddDonation from './AddDonation';
+import DonationForm from './DonationForm';
+import '../../styles/schoolData.css';
 
 class SchoolData extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			isEditing: false,
+			isEditingDonation: false,
 			schoolName: '',
 			image: '',
+			title: '',
+			description: '',
+			amount: '',
 		};
 	}
 
@@ -63,6 +68,27 @@ class SchoolData extends React.Component {
 		});
 		window.location.reload();
 	};
+	editDonation = e => {
+		e.preventDefault();
+		this.setState({
+			isEditingDonation: true,
+			title: this.state.title,
+			description: this.state.description,
+			amount: this.state.amount,
+		});
+	};
+	submitDonation = e => {
+		e.preventdefault();
+		let userToken = localStorage.getItem('userToken');
+		let id = this.props.id;
+		let donation = {
+			title: this.state.title,
+			description: this.state.description,
+			amount: this.state.amount,
+		};
+
+		this.props.editDonation(userToken, donation, id);
+	};
 
 	render() {
 		return (
@@ -84,18 +110,18 @@ class SchoolData extends React.Component {
 					<Button onClick={e => this.submitEdit(e)}>Submit</Button>
 				</Form>
 
-				<div className="schoolRow">
-					<img
-						className="schoolImg"
-						src={
-							this.props.schoolData.image
-								? this.props.schoolData.image
-								: lambda
-						}
-						alt={this.props.schoolData.schoolname}
-					/>
+				<div className="schoolWrapper">
 					<div className="schoolInfo">
 						<div className="schoolTitle">
+							<img
+								className="schoolImg"
+								src={
+									this.props.schoolData.image
+										? this.props.schoolData.image
+										: lambda
+								}
+								alt={this.props.schoolData.schoolname}
+							/>
 							<h3>{this.props.schoolData.schoolname}</h3>
 							{this.props.userRole === 'admin' ? (
 								<div className="modify">
@@ -115,20 +141,48 @@ class SchoolData extends React.Component {
 								</div>
 							) : null}
 						</div>
-						<div>
+						<ul className="donationsList">
 							{this.props.schoolDonations.map(donation => {
 								return (
-									<div key={donation.id}>
-										<h4>{donation.title}</h4>
-										<p>{donation.description}</p>
-										<p>${donation.amount}</p>
-									</div>
+									<li
+										key={donation.id}
+										className="donationRow">
+										<div className="donationInfo">
+											<h4>{donation.title}</h4>
+											<p>{donation.description}</p>
+											<p>${donation.amount}</p>
+										</div>
+										{this.props.userRole === 'admin' ? (
+											<div className="modify">
+												<i
+													className="far fa-edit"
+													onClick={e =>
+														this.editDonation(e)
+													}
+												/>
+												<i
+													className="far fa-trash-alt"
+													onClick={e =>
+														this.handleDeleteSchool(
+															e,
+															this.props
+																.schoolData.id
+														)
+													}
+												/>
+											</div>
+										) : null}
+									</li>
 								);
 							})}
-						</div>
+						</ul>
 					</div>
 				</div>
-				<AddDonation id={this.props.schoolData.id} />
+				<DonationForm
+					isEditingDonation={this.props.isEditingDonation}
+					submitDonation={this.submitDonation}
+					id={this.props.schoolData.id}
+				/>
 			</div>
 		);
 	}

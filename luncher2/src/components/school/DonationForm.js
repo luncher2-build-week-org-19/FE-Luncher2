@@ -10,6 +10,7 @@ class AddDonation extends React.Component {
 			title: '',
 			description: '',
 			amount: '',
+			isEditingDonation: '',
 		};
 	}
 	handleChange = e => {
@@ -28,6 +29,18 @@ class AddDonation extends React.Component {
 			amount: this.state.amount,
 		};
 		this.props.addDonation(userToken, donation, id);
+	};
+	submitDonation = e => {
+		e.preventdefault();
+		let userToken = localStorage.getItem('userToken');
+		let id = this.props.id;
+		let donation = {
+			title: this.state.title,
+			description: this.state.description,
+			amount: this.state.amount,
+		};
+
+		this.props.editDonation(userToken, donation, id);
 	};
 
 	render() {
@@ -54,7 +67,15 @@ class AddDonation extends React.Component {
 					placeholder="Amount"
 					onChange={e => this.handleChange(e)}
 				/>
-				<Button onClick={e => this.addDonation(e)}>Submit</Button>
+				{this.state.isEditing ? (
+					<Button onClick={e => this.props.submitDonation(e)}>
+						Submit Edit
+					</Button>
+				) : (
+					<Button onClick={e => this.addDonation(e)}>
+						Add Donation
+					</Button>
+				)}
 			</Form>
 		);
 	}

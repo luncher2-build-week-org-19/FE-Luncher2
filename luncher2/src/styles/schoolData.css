@@ -1,0 +1,29 @@
+.schoolTitle{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    margin: 10px auto;
+    align-items:center;
+}
+.schoolImg{
+    width: 100px;
+    height:auto;
+    margin:0 atuo;
+}
+
+.schoolInfo{
+    display:flex;
+}
+ul{
+    max-width:800px;
+    width:100%;
+}
+.donationRow{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.donationRow:nth-child(odd){
+    background-color: lightgray;
+}

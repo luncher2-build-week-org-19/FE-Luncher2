@@ -128,7 +128,7 @@ class SchoolData extends React.Component {
 						</div>
 					</div>
 				</div>
-				<AddDonation />
+				<AddDonation id={this.props.schoolData.id} />
 			</div>
 		);
 	}

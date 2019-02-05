@@ -39,4 +39,16 @@ export {
 	schoolEdit,
 } from './school_action.js';
 
-export { addDonation } from './donation_actions';
+export {
+	DELETE_DONATION_START,
+	DELETE_DONATION_SUCCESS,
+	DELETE_DONATION_FAILURE,
+	EDIT_DONATION_START,
+	EDIT_DONATION_SUCCESS,
+	EDIT_DONATION_FAILURE,
+	ADD_DONATION_START,
+	ADD_DONATION_SUCCESS,
+	addDonation,
+	editDonation,
+	deleteDonation,
+} from './donation_actions';

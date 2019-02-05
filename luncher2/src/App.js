@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 //components
 import Login from './components/authentication/Login';
 import Home from './components/home/Home';
+import SchoolData from './components/school/SchoolData';
 import authenticateHOC from './components/authentication/Authenticate';
 //styles
 
@@ -36,6 +37,10 @@ class App extends Component {
 				<Route path="/login" component={Login} />
 				{/* <Route path="/register" component={Register} /> */}
 				<Route path="/profile/" component={Profile} />
+				<Route
+					path="/school/:id"
+					render={props => <SchoolData {...props} />}
+				/>
 			</div>
 		);
 	}

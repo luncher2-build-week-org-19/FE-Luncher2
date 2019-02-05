@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button } from 'reactstrap';
+import Loader from 'react-loader-spinner';
 import Navigation from '../navBar/Navigation';
 import School from '../school/School';
 import {
@@ -25,9 +26,8 @@ class Home extends React.Component {
 	}
 	componentDidMount() {
 		let userToken = localStorage.getItem('userToken');
-
-		this.props.getUserInfo(userToken);
 		this.props.getAllSchools(userToken);
+		this.props.getUserInfo(userToken);
 	}
 
 	handleChange = e => {
@@ -35,16 +35,6 @@ class Home extends React.Component {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
-	};
-
-	handleDeleteSchool = (e, schoolID) => {
-		console.log('school id', schoolID);
-		let userToken = localStorage.getItem('userToken');
-
-		e.preventDefault();
-		this.props.deleteSchool(userToken, schoolID);
-
-		this.props.getAllSchools(userToken);
 	};
 
 	handleAddSchool = e => {
@@ -58,16 +48,20 @@ class Home extends React.Component {
 		this.props.getAllSchools(userToken);
 	};
 
-	handleEditSchool = e => {
-		e.preventDefault();
-	};
-
 	render() {
 		return (
 			<>
-				<Navigation user={this.props.user} />
+				<Navigation user={this.props.username} />
 				<h1>Welcome {this.props.user.firstName}!</h1>
 
+				{this.props.isLoading && (
+					<Loader
+						type="ThreeDots"
+						color="#somecolor"
+						height={80}
+						width={80}
+					/>
+				)}
 				{this.props.user.userRole === 'admin' ? (
 					<Form className="addSchool">
 						<Input
@@ -87,16 +81,6 @@ class Home extends React.Component {
 							}}
 							placeholder="Image URL"
 						/>
-
-						<Input
-							name="donation"
-							value={this.state.donation}
-							onChange={e => {
-								this.handleChange(e);
-							}}
-							placeholder="Donations"
-						/>
-
 						<Button
 							onClick={e => {
 								this.handleAddSchool(e);
@@ -107,13 +91,7 @@ class Home extends React.Component {
 				) : null}
 
 				{this.props.schools.map(school => (
-					<School
-						key={school.id}
-						userRole={this.props.user.userRole}
-						school={school}
-						handleDeleteSchool={this.handleDeleteSchool}
-						handleEditSchool={this.handleEditSchool}
-					/>
+					<School key={school.id} school={school} />
 				))}
 			</>
 		);
@@ -122,6 +100,7 @@ class Home extends React.Component {
 
 const mapStateToProps = state => {
 	return {
+		isLoading: state.isLoading,
 		user: {
 			id: state.id,
 			firstName: state.firstName,
@@ -131,6 +110,7 @@ const mapStateToProps = state => {
 			email: state.email,
 		},
 		schools: state.schools,
+		username: state.username,
 	};
 };
 

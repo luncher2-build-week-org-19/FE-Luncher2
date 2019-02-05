@@ -23,7 +23,20 @@ export {
 	ADD_SCHOOL_START,
 	ADD_SCHOOL_SUCCESS,
 	ADD_SCHOOL_FAILURE,
+	GET_SCHOOLDATA_START,
+	GET_SCHOOLDATA_SUCCESS,
+	GET_SCHOOLDATA_FAILURE,
+	SCHOOL_DONATIONS_START,
+	SCHOOL_DONATIONS_SUCCESS,
+	SCHOOL_DONATIONS_FAILURE,
+	SCHOOL_EDIT_START,
+	SCHOOL_EDIT_SUCCESS,
+	SCHOOL_EDIT_FAILURE,
 	getAllSchools,
 	deleteSchool,
 	addSchool,
+	getSchoolData,
+	schoolEdit,
 } from './school_action.js';
+
+export { addDonation } from './donation_actions';

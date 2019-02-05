@@ -15,7 +15,7 @@ const Navigation = props => {
 			<Link to="/">Luncher</Link>
 			<div className="rightMenu">
 				<NavLink className="navItem" to="/profile/">
-					{props.user.username}
+					{props.user}
 				</NavLink>
 				<NavLink
 					className="navItem"

@@ -17,15 +17,26 @@ export const ADD_SCHOOL_START = 'ADD_SCHOOL_START';
 export const ADD_SCHOOL_SUCCESS = 'ADD_SCHOOL_SUCCESS';
 export const ADD_SCHOOL_FAILURE = 'ADD_SCHOOL_FAILURE';
 
-export const getAllSchools = userToken => dispatch => {
+export const GET_SCHOOLDATA_START = 'GET_SCHOOLDATA_START';
+export const GET_SCHOOLDATA_SUCCESS = 'GET_SCHOOLDATA_SUCCESS';
+export const GET_SCHOOLDATA_FAILURE = 'GET_SCHOOLDATA_FAILURE';
+
+export const SCHOOL_DONATIONS_START = 'SCHOOL_DONATIONS_START';
+export const SCHOOL_DONATIONS_SUCCESS = 'SCHOOL_DONATIONS_SUCCESS';
+export const SCHOOL_DONATIONS_FAILURE = 'SCHOOL_DONATIONS_FAILURE';
+
+export const SCHOOL_EDIT_START = 'SCHOOL_EDIT_START';
+export const SCHOOL_EDIT_SUCCESS = 'SCHOOL_EDIT_SUCCESS';
+export const SCHOOL_EDIT_FAILURE = 'SCHOOL_EDIT_FAILURE';
+
+export const getAllSchools = () => dispatch => {
 	dispatch({ type: GET_ALLSCHOOLS_START });
-	console.log('getAllSchools', userToken);
 	axios({
 		method: 'get',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools`,
-		headers: {
-			Authorization: userToken,
-		},
+		// headers: {
+		// 	Authorization: userToken,
+		// },
 	})
 		.then(res => {
 			console.log('response', res);
@@ -72,4 +83,48 @@ export const addSchool = (userToken, school) => dispatch => {
 			window.location.reload();
 		})
 		.catch(err => dispatch({ type: ADD_SCHOOL_FAILURE, payload: err }));
+};
+
+export const getSchoolData = id => dispatch => {
+	dispatch({ type: GET_SCHOOLDATA_START });
+	axios({
+		method: 'get',
+		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/${id}`,
+		// headers: {
+		// 	Authorization: userToken,
+		// },
+	})
+		.then(res => {
+			console.log('school data', res);
+			dispatch({ type: GET_SCHOOLDATA_SUCCESS, payload: res.data[0] });
+			dispatch({ type: SCHOOL_DONATIONS_START });
+			axios({
+				method: 'get',
+				url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/schools/${id}`,
+			})
+				.then(res =>
+					dispatch({
+						type: SCHOOL_DONATIONS_SUCCESS,
+						payload: res.data,
+					})
+				)
+				.catch(err =>
+					dispatch({ type: SCHOOL_DONATIONS_FAILURE, payload: err })
+				);
+		})
+		.catch(err => dispatch({ type: GET_SCHOOLDATA_FAILURE, payload: err }));
+};
+
+export const schoolEdit = (userToken, info, id) => dispatch => {
+	dispatch({ type: SCHOOL_EDIT_START });
+	axios({
+		method: 'put',
+		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/update/${id}`,
+		headers: {
+			Authorization: userToken,
+		},
+		data: { schoolname: info.schoolName, image: info.image },
+	})
+		.then(res => ({ type: SCHOOL_EDIT_SUCCESS, payload: res }))
+		.catch(err => ({ type: SCHOOL_EDIT_FAILURE, payload: err }));
 };

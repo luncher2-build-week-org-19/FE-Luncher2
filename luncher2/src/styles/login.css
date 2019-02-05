@@ -11,3 +11,30 @@
 .loginForm input {
 	margin: 5px 0;
 }
+.registerForm {
+	display: flex;
+	flex-direction: column;
+	max-width: 400px;
+	width: 100%;
+	margin: 10% auto;
+	border: 1px solid gray;
+	border-radius: 4px;
+	padding: 10px;
+}
+.registerForm input {
+	margin: 5px 0;
+}
+.registerForm .radio {
+	display: flex;
+	/* margin-left: 25px; */
+}
+.registerForm .radio label {
+	margin-left: 20px;
+}
+
+.hide {
+	display: none;
+}
+.show {
+	display: flex;
+}

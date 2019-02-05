@@ -45,11 +45,6 @@ class Register extends React.Component {
 		};
 		this.props.registerUser(user);
 		this.props.history.push('/');
-
-		// let redirect = this.props.registerRedirect;
-		// if (redirect === true) {
-		// 	this.props.history.push('/');
-		// }
 	};
 
 	render() {
@@ -108,7 +103,6 @@ class Register extends React.Component {
 						placeholder="Email"
 						required
 						value={this.state.email}
-					
 						onChange={e => this.handleChange(e)}
 					/>
 					<Input

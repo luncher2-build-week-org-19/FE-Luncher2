@@ -39,6 +39,7 @@ export const registerUser = user => dispatch => {
 			console.log('response', res);
 			dispatch({ type: REGISTER_SUCCESS, payload: res });
 			localStorage.setItem('id', res.data[0]);
+			window.location.reload();
 		})
 		.catch(err => dispatch({ type: REGISTER_FAILURE, payload: err }));
 };

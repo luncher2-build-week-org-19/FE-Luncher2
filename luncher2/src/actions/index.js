@@ -12,3 +12,10 @@ export {
 	loginUser,
 	getUserInfo,
 } from './login_action';
+
+export {
+	GET_ALLSCHOOLS_START,
+	GET_ALLSCHOOLS_SUCCESS,
+	GET_ALLSCHOOLS_FAILURE,
+	getAllSchools,
+} from './school_action.js';

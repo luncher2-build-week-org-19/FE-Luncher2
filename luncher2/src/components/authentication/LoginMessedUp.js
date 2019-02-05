@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loginUser, registerUser } from '../../actions/login_action';
-import { Form, Input, Button, Label } from 'reactstrap';
+import { Label, Form, Input, Button } from 'reactstrap';
+
 
 import '../../styles/login.css';
 
-class Login extends React.Component {
-	constructor(props) {
-		super(props);
+class Login extends React.component {
+	constructor() {
+		super();
 		this.state = {
 			firstName: '',
 			lastName: '',
@@ -45,7 +45,7 @@ class Login extends React.Component {
 			password: this.state.password,
 		};
 		this.props.registerUser(user);
-		// this.props.history.push('/');
+		this.props.history.push('/');
 	};
 
 	loginForm = () => {
@@ -59,11 +59,11 @@ class Login extends React.Component {
 		});
 	};
 
-	render() {
-		return (
-			<div className="wrapper">
-				<div className={this.state.loginForm ? '' : 'hide'}>
-					<Form className="loginForm">
+	render(){
+		return(
+			<div className='wrapper'>
+				<div className={this.state.loginForm ? 'show' : 'hide'	}>
+					<Form className="loginForm" >
 						<Input
 							type="text"
 							name="userName"
@@ -84,17 +84,13 @@ class Login extends React.Component {
 						</Button>
 						<p>
 							Need an account?{' '}
-							<span onClick={e => this.registerForm(e)}>
-								Register
-							</span>
+							<div onClick={e => this.registerForm(e)}>Register</div>
 						</p>
 					</Form>
 				</div>
-				<div
-					className={`registerForm ${
-						this.state.loginForm ? 'hide' : ''
-					}`}>
-					<Form>
+				
+				<div className={this.state.loginForm ? 'hide' : 'show'}>
+					<Form className="registerForm">
 						<Input
 							name="firstName"
 							autoComplete="on"
@@ -160,18 +156,23 @@ class Login extends React.Component {
 						<Button onClick={e => this.handleRegister(e)}>
 							Register
 						</Button>
+
+						
 					</Form>
 					<p>
 						Already have an account?{' '}
-						<span onClick={e => this.loginForm(e)}>Login</span>
+						<div onClick={e => this.loginForm(e)}>Login</div>
 					</p>
 				</div>
 			</div>
-		);
-	}
-}
+				
+		)
+	};
 
-export default connect(
-	'',
-	{ loginUser, registerUser }
-)(Login);
+	mapStateToProps
+
+	export default connect(
+		mapStateToProps,
+		{ loginUser, registerUser }
+	)(Login);
+	

@@ -8,6 +8,9 @@ import {
 	GET_USERINFO_START,
 	GET_USERINFO_SUCCESS,
 	GET_USERINFO_FAILURE,
+	GET_ALLSCHOOLS_START,
+	GET_ALLSCHOOLS_SUCCESS,
+	GET_ALLSCHOOLS_FAILURE,
 } from '../actions/';
 
 const initialState = {
@@ -25,6 +28,7 @@ const initialState = {
 		role: '',
 	},
 	registerRedirect: false,
+	schools: [],
 };
 // import { combineReducers } from 'redux';
 // import login from './login';
@@ -35,6 +39,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
+		// REGISTER
 		case REGISTER_START:
 			return {
 				...state,
@@ -43,7 +48,6 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				id: action.payload.data[0],
-				registerRedirect: true,
 			};
 		case REGISTER_FAILURE:
 			return {
@@ -51,7 +55,7 @@ const reducer = (state = initialState, action) => {
 				error: action.payload.message,
 				registerRedirect: false,
 			};
-
+		//LOGIN
 		case LOGIN_START:
 			return {
 				...state,
@@ -71,7 +75,7 @@ const reducer = (state = initialState, action) => {
 				...state,
 				error: action.payload.data,
 			};
-
+		//USERINFO
 		case GET_USERINFO_START:
 			return {
 				...state,
@@ -81,13 +85,28 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				id: action.payload.id,
-				username: action.payload.username,
-				email: action.payload.email,
-				firstName: action.payload.firstName,
-				lastName: action.payload.lastName,
-				userRole: action.payload.useRole,
+				username: action.payload.data[0].username,
+				email: action.payload.data[0].email,
+				firstName: action.payload.data[0].firstName,
+				lastName: action.payload.data[0].lastName,
+				userRole: action.payload.data[0].userRole,
 			};
 		case GET_USERINFO_FAILURE:
+			return {
+				error: action.payload,
+			};
+		//GET ALL SCHOOLS
+		case GET_ALLSCHOOLS_START:
+			return {
+				...state,
+			};
+		case GET_ALLSCHOOLS_SUCCESS:
+			console.log('allSchools', action.payload);
+			return {
+				...state,
+				schools: action.payload.data,
+			};
+		case GET_ALLSCHOOLS_FAILURE:
 			return {
 				error: action.payload,
 			};

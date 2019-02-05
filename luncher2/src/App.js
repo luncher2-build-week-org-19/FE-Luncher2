@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 //components
 import Login from './components/authentication/Login';
 import Home from './components/home/Home';
-import Register from './components/authentication/Register';
-// import authenticateHOC from './components/authentication/Authenticate';
+import SchoolInfo from './components/school/SchoolInfo';
+import authenticateHOC from './components/authentication/Authenticate';
 //styles
 
 import './App.css';
@@ -34,9 +34,9 @@ class App extends Component {
 			<div className="App">
 				<Route path="/" component={Home} />
 				<Route path="/login" component={Login} />
-				<Route path="/register" component={Register} />
+				{/* <Route path="/register" component={Register} /> */}
 				<Route path="/profile/" />
-				<Route path="/school" />
+				<Route path="/school/:id" component={SchoolInfo} />
 			</div>
 		);
 	}
@@ -51,4 +51,4 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{}
-)(App);
+)(authenticateHOC(App));

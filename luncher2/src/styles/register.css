@@ -1,4 +1,4 @@
-.registerForm {
+/* .registerForm {
 	display: flex;
 	flex-direction: column;
 	max-width: 400px;
@@ -13,8 +13,7 @@
 }
 .registerForm .radio {
 	display: flex;
-	/* margin-left: 25px; */
 }
 .registerForm .radio label {
 	margin-left: 20px;
-}
+} */

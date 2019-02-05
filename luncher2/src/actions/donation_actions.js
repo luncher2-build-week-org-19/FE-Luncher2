@@ -29,7 +29,10 @@ export const deleteDonation = (userToken, id) => dispatch => {
 	})
 		.then(res => {
 			console.log('delete success', res);
-			dispatch({ type: DELETE_DONATION_SUCCESS, payload: res });
+			dispatch(
+				{ type: DELETE_DONATION_SUCCESS, payload: res },
+				window.location.reload()
+			);
 		})
 		.catch(err =>
 			dispatch({ type: DELETE_DONATION_FAILURE, payload: err })
@@ -51,8 +54,10 @@ export const addDonation = (userToken, donation, id) => dispatch => {
 		},
 	})
 		.then(res => {
-			dispatch({ type: ADD_DONATION_SUCCESS, payload: res });
-			window.location.reload();
+			dispatch(
+				{ type: ADD_DONATION_SUCCESS, payload: res },
+				window.location.reload()
+			);
 		})
 		.catch(err => dispatch({ type: ADD_DONATION_FAILURE, payload: err }));
 };
@@ -71,6 +76,11 @@ export const editDonation = (userToken, donation, id) => dispatch => {
 			amount: donation.amount,
 		},
 	})
-		.then(res => ({ type: EDIT_DONATION_SUCCESS, payload: res }))
+		.then(
+			res => (
+				{ type: EDIT_DONATION_SUCCESS, payload: res },
+				window.location.reload()
+			)
+		)
 		.catch(err => ({ type: EDIT_DONATION_FAILURE, payload: err }));
 };

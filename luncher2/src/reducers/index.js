@@ -47,6 +47,7 @@ const initialState = {
 	schools: [],
 	schoolData: [],
 	schoolDonations: [],
+	isEditingDonation: false,
 };
 // import { combineReducers } from 'redux';
 // import login from './login';
@@ -191,12 +192,11 @@ const reducer = (state = initialState, action) => {
 			return { ...state };
 		//SCHOOL EDIT
 		case SCHOOL_EDIT_START:
-			console.log(action.payload);
-			return { ...state };
+			return { ...state, isEditingDonation: true };
 		case SCHOOL_EDIT_SUCCESS:
-			return { ...state };
+			return { ...state, isEditingDonation: false };
 		case SCHOOL_EDIT_FAILURE:
-			return { ...state };
+			return { ...state, isEditingDonation: false };
 
 		default:
 			return state;

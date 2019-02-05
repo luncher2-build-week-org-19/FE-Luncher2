@@ -10,20 +10,15 @@ class AddDonation extends React.Component {
 			title: '',
 			description: '',
 			amount: '',
-			isEditingDonation: '',
 		};
 	}
+
 	componentDidMount() {
 		this.setState({
-			isEditingDonation: this.props.schoolState.isEditingDonation,
+			title: this.props.donation.title,
+			description: this.props.donation.description,
+			amount: this.props.donation.amount,
 		});
-		if (this.state.isEditingDonation) {
-			this.setState({
-				title: this.props.schoolState.title,
-				description: this.props.schoolState.description,
-				amount: this.props.schoolState.amount,
-			});
-		}
 	}
 	handleChange = e => {
 		e.preventDefault();
@@ -31,21 +26,10 @@ class AddDonation extends React.Component {
 			[e.target.name]: e.target.value,
 		});
 	};
-	addDonation = e => {
+	submitDonation = e => {
 		e.preventDefault();
 		let userToken = localStorage.getItem('userToken');
-		let id = this.props.id;
-		let donation = {
-			title: this.state.title,
-			description: this.state.description,
-			amount: this.state.amount,
-		};
-		this.props.addDonation(userToken, donation, id);
-	};
-	submitDonation = e => {
-		e.preventdefault();
-		let userToken = localStorage.getItem('userToken');
-		let id = this.props.id;
+		let id = this.props.donation.id;
 		let donation = {
 			title: this.state.title,
 			description: this.state.description,
@@ -56,6 +40,9 @@ class AddDonation extends React.Component {
 	};
 
 	render() {
+		if (this.props.donation === undefined) {
+			return <p>...loading</p>;
+		}
 		return (
 			<Form>
 				<Input
@@ -79,15 +66,9 @@ class AddDonation extends React.Component {
 					placeholder="Amount"
 					onChange={e => this.handleChange(e)}
 				/>
-				{this.state.isEditing ? (
-					<Button onClick={e => this.props.submitDonation(e)}>
-						Submit Edit
-					</Button>
-				) : (
-					<Button onClick={e => this.addDonation(e)}>
-						Add Donation
-					</Button>
-				)}
+				<Button onClick={e => this.submitDonation(e)}>
+					Submit Edit
+				</Button>
 			</Form>
 		);
 	}

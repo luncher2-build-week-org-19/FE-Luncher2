@@ -9,10 +9,12 @@ import {
 	schoolEdit,
 	getUserInfo,
 	addDonation,
+	deleteDonation,
 } from '../../actions';
 import { Button, Input, Form } from 'reactstrap';
 import DonationForm from './DonationForm';
 import '../../styles/schoolData.css';
+import DonationEditForm from './DonationEditForm';
 
 class SchoolData extends React.Component {
 	constructor(props) {
@@ -68,29 +70,26 @@ class SchoolData extends React.Component {
 		});
 		window.location.reload();
 	};
-	editDonation = e => {
+	editDonation = (e, donation) => {
 		e.preventDefault();
 		this.setState({
 			isEditingDonation: true,
-			title: this.state.title,
-			description: this.state.description,
-			amount: this.state.amount,
+			title: donation.title,
+			description: donation.description,
+			amount: donation.amount,
 		});
 	};
-	submitDonation = e => {
-		e.preventdefault();
+	handleDeleteDonation = (e, id) => {
+		e.preventDefault();
 		let userToken = localStorage.getItem('userToken');
-		let id = this.props.id;
-		let donation = {
-			title: this.state.title,
-			description: this.state.description,
-			amount: this.state.amount,
-		};
 
-		this.props.editDonation(userToken, donation, id);
+		this.props.deleteDonation(userToken, id);
 	};
 
 	render() {
+		if (this.props.schoolDonations === undefined) {
+			return <p>...loading</p>;
+		}
 		return (
 			<div>
 				<Navigation user={this.props.username} />
@@ -157,21 +156,24 @@ class SchoolData extends React.Component {
 												<i
 													className="far fa-edit"
 													onClick={e =>
-														this.editDonation(e)
+														this.editDonation(
+															e,
+															donation
+														)
 													}
 												/>
 												<i
 													className="far fa-trash-alt"
 													onClick={e =>
-														this.handleDeleteSchool(
+														this.handleDeleteDonation(
 															e,
-															this.props
-																.schoolData.id
+															donation.id
 														)
 													}
 												/>
 											</div>
 										) : null}
+										<DonationEditForm donation={donation} />
 									</li>
 								);
 							})}
@@ -182,6 +184,7 @@ class SchoolData extends React.Component {
 					isEditingDonation={this.props.isEditingDonation}
 					submitDonation={this.submitDonation}
 					id={this.props.schoolData.id}
+					schoolState={this.state}
 				/>
 			</div>
 		);
@@ -207,5 +210,12 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getSchoolData, deleteSchool, schoolEdit, getUserInfo, addDonation }
+	{
+		getSchoolData,
+		deleteSchool,
+		schoolEdit,
+		getUserInfo,
+		addDonation,
+		deleteDonation,
+	}
 )(SchoolData);

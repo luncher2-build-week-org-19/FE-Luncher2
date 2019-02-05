@@ -11,6 +11,12 @@ import {
 	GET_ALLSCHOOLS_START,
 	GET_ALLSCHOOLS_SUCCESS,
 	GET_ALLSCHOOLS_FAILURE,
+	DELETE_SCHOOL_START,
+	DELETE_SCHOOL_SUCCESS,
+	DELETE_SCHOOL_FAILURE,
+	ADD_SCHOOL_START,
+	ADD_SCHOOL_SUCCESS,
+	ADD_SCHOOL_FAILURE,
 } from '../actions/';
 
 const initialState = {
@@ -107,6 +113,32 @@ const reducer = (state = initialState, action) => {
 				schools: action.payload.data,
 			};
 		case GET_ALLSCHOOLS_FAILURE:
+			return {
+				error: action.payload,
+			};
+		//DELETE SCHOOL
+		case DELETE_SCHOOL_START:
+			return {
+				...state,
+			};
+		case DELETE_SCHOOL_SUCCESS:
+			return {
+				...state,
+			};
+		case DELETE_SCHOOL_FAILURE:
+			return {
+				error: action.payload,
+			};
+		//ADD SCHOOL
+		case ADD_SCHOOL_START:
+			return {
+				...state,
+			};
+		case ADD_SCHOOL_SUCCESS:
+			return {
+				...state,
+			};
+		case ADD_SCHOOL_FAILURE:
 			return {
 				error: action.payload,
 			};

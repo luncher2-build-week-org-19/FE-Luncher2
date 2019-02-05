@@ -1,0 +1,28 @@
+.schoolRow {
+	display: flex;
+	align-items: center;
+	padding: 5px;
+}
+.schoolRow:nth-child(odd) {
+	background-color: rgb(240, 230, 217);
+}
+.schoolImg {
+	height: 100px;
+	width: auto;
+	margin-right: 15px;
+	border-radius: 50%;
+}
+.schoolInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+.modify {
+	display: flex;
+	font-size: 20px;
+}
+.far {
+	padding: 5px;
+	cursor: pointer;
+}

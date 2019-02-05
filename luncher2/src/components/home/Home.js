@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { Form, Input, Button } from 'reactstrap';
 import Navigation from '../navBar/Navigation';
 import School from '../school/School';
-import { getUserInfo, getAllSchools } from '../../actions';
+import {
+	getUserInfo,
+	getAllSchools,
+	deleteSchool,
+	addSchool,
+} from '../../actions';
 
 //style
 import '../../styles/home.css';
@@ -14,8 +19,17 @@ class Home extends React.Component {
 		this.state = {
 			schoolname: '',
 			image: '',
+			donation: '',
+			isEditing: false,
 		};
 	}
+	componentDidMount() {
+		let userToken = localStorage.getItem('userToken');
+
+		this.props.getUserInfo(userToken);
+		this.props.getAllSchools(userToken);
+	}
+
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
@@ -23,42 +37,83 @@ class Home extends React.Component {
 		});
 	};
 
-	componentDidMount() {
+	handleDeleteSchool = (e, schoolID) => {
+		console.log('school id', schoolID);
 		let userToken = localStorage.getItem('userToken');
 
-		this.props.getUserInfo(userToken);
+		e.preventDefault();
+		this.props.deleteSchool(userToken, schoolID);
+
 		this.props.getAllSchools(userToken);
-	}
+	};
+
+	handleAddSchool = e => {
+		e.preventDefault();
+		let userToken = localStorage.getItem('userToken');
+		let school = {
+			image: this.state.image,
+			schoolname: this.state.schoolname,
+		};
+		this.props.addSchool(userToken, school);
+		this.props.getAllSchools(userToken);
+	};
+
+	handleEditSchool = e => {
+		e.preventDefault();
+	};
+
 	render() {
 		return (
 			<>
-				<Navigation username={this.state.userName} />
+				<Navigation user={this.props.user} />
 				<h1>Welcome {this.props.user.firstName}!</h1>
 
-				{/* Form should only be available if user is admin */}
-				{/* https://github.com/luncher2-build-week-org-19/luncher2_backend_api#addSchool */}
 				{this.props.user.userRole === 'admin' ? (
 					<Form className="addSchool">
 						<Input
 							name="schoolname"
 							value={this.state.schoolname}
 							required
+							onChange={e => {
+								this.handleChange(e);
+							}}
 							placeholder="School Name"
 						/>
 						<Input
 							name="image"
 							value={this.state.image}
-							required
+							onChange={e => {
+								this.handleChange(e);
+							}}
 							placeholder="Image URL"
 						/>
-						<Button>Add</Button>
+
+						<Input
+							name="donation"
+							value={this.state.donation}
+							onChange={e => {
+								this.handleChange(e);
+							}}
+							placeholder="Donations"
+						/>
+
+						<Button
+							onClick={e => {
+								this.handleAddSchool(e);
+							}}>
+							Add
+						</Button>
 					</Form>
 				) : null}
 
-				{/* Display schools */}
-				{/* https://github.com/luncher2-build-week-org-19/luncher2_backend_api#allSchools */}
 				{this.props.schools.map(school => (
-					<School school={school} />
+					<School
+						key={school.id}
+						userRole={this.props.user.userRole}
+						school={school}
+						handleDeleteSchool={this.handleDeleteSchool}
+						handleEditSchool={this.handleEditSchool}
+					/>
 				))}
 			</>
 		);
@@ -81,5 +136,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ getUserInfo, getAllSchools }
+	{ getUserInfo, getAllSchools, deleteSchool, addSchool }
 )(Home);

@@ -6,3 +6,9 @@
 .addSchool input {
 	margin-right: 10px;
 }
+.hideInput {
+	display: none;
+}
+.show {
+	display: block;
+}

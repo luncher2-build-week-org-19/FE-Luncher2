@@ -141,6 +141,7 @@ class SchoolData extends React.Component {
 							) : null}
 						</div>
 						<ul className="donationsList">
+						{/* {if(this.prop.sschoolsDonations.length === 0){} */}
 							{this.props.schoolDonations.map(donation => {
 								return (
 									<li
@@ -173,19 +174,26 @@ class SchoolData extends React.Component {
 												/>
 											</div>
 										) : null}
-										<DonationEditForm donation={donation} />
+										{this.props.user.userRole ===
+										'admin' ? (
+											<DonationEditForm
+												donation={donation}
+											/>
+										) : null}
 									</li>
 								);
 							})}
 						</ul>
 					</div>
 				</div>
-				<DonationForm
-					isEditingDonation={this.props.isEditingDonation}
-					submitDonation={this.submitDonation}
-					id={this.props.schoolData.id}
-					schoolState={this.state}
-				/>
+				{this.props.user.userRole === 'admin' ? (
+					<DonationForm
+						isEditingDonation={this.props.isEditingDonation}
+						submitDonation={this.submitDonation}
+						id={this.props.schoolData.id}
+						schoolState={this.state}
+					/>
+				) : null}
 			</div>
 		);
 	}

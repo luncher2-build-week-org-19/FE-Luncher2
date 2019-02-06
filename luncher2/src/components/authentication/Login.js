@@ -32,6 +32,7 @@ class Login extends React.Component {
 			password: this.state.password,
 		};
 		this.props.loginUser(credentials);
+		localStorage.setItem('userName', this.state.userName);
 	};
 
 	handleRegister = e => {
@@ -45,7 +46,6 @@ class Login extends React.Component {
 			password: this.state.password,
 		};
 		this.props.registerUser(user);
-		// this.props.history.push('/');
 	};
 
 	loginForm = () => {
@@ -79,21 +79,14 @@ class Login extends React.Component {
 							onChange={e => this.handleChange(e)}
 							placeholder="Password"
 						/>
-						<Button onClick={() => this.handleSubmitLogin()}>
-							Login
-						</Button>
+						<Button onClick={() => this.handleSubmitLogin()}>Login</Button>
 						<p>
 							Need an account?{' '}
-							<span onClick={e => this.registerForm(e)}>
-								Register
-							</span>
+							<span onClick={e => this.registerForm(e)}>Register</span>
 						</p>
 					</Form>
 				</div>
-				<div
-					className={`registerForm ${
-						this.state.loginForm ? 'hide' : ''
-					}`}>
+				<div className={`registerForm ${this.state.loginForm ? 'hide' : ''}`}>
 					<Form>
 						<Input
 							name="firstName"
@@ -157,13 +150,10 @@ class Login extends React.Component {
 							value={this.state.password}
 							onChange={e => this.handleChange(e)}
 						/>
-						<Button onClick={e => this.handleRegister(e)}>
-							Register
-						</Button>
+						<Button onClick={e => this.handleRegister(e)}>Register</Button>
 					</Form>
 					<p>
-						Already have an account?{' '}
-						<span onClick={e => this.loginForm(e)}>Login</span>
+						Already have an account? <span onClick={e => this.loginForm(e)}>Login</span>
 					</p>
 				</div>
 			</div>

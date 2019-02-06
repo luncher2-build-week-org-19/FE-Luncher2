@@ -2,14 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button } from 'reactstrap';
 import Loader from 'react-loader-spinner';
-import Navigation from '../navBar/Navigation';
 import School from '../school/School';
-import {
-	getUserInfo,
-	getAllSchools,
-	deleteSchool,
-	addSchool,
-} from '../../actions';
+import { getUserInfo, getAllSchools, deleteSchool, addSchool } from '../../actions';
 
 //style
 import '../../styles/home.css';
@@ -29,6 +23,12 @@ class Home extends React.Component {
 		this.props.getAllSchools(userToken);
 		this.props.getUserInfo(userToken);
 	}
+	// componentDidUpdate(prevProps) {
+	// 	// Typical usage (don't forget to compare props):
+	// 	if (this.props.schools !== prevProps.schools) {
+	// 		this.fetchData(this.props.schools);
+	// 	}
+	// }
 
 	handleChange = e => {
 		e.preventDefault();
@@ -51,16 +51,10 @@ class Home extends React.Component {
 	render() {
 		return (
 			<>
-				<Navigation user={this.props.username} />
 				<h1>Welcome {this.props.user.firstName}!</h1>
 
 				{this.props.isLoading && (
-					<Loader
-						type="ThreeDots"
-						color="#somecolor"
-						height={80}
-						width={80}
-					/>
+					<Loader type="ThreeDots" color="#somecolor" height={80} width={80} />
 				)}
 				{this.props.user.userRole === 'admin' ? (
 					<Form className="addSchool">

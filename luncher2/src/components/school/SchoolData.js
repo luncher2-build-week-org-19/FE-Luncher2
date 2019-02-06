@@ -1,7 +1,6 @@
 import React from 'react';
 import '../../styles/school.css';
 import { connect } from 'react-redux';
-import Navigation from '../navBar/Navigation';
 import lambda from '../../images/lambda.jpg';
 import {
 	getSchoolData,
@@ -43,7 +42,6 @@ class SchoolData extends React.Component {
 			[e.target.name]: e.target.value,
 		});
 	};
-
 	handleDeleteSchool = (e, schoolID) => {
 		e.preventDefault();
 		let userToken = localStorage.getItem('userToken');
@@ -82,14 +80,22 @@ class SchoolData extends React.Component {
 
 		this.props.deleteDonation(userToken, id);
 	};
+	addDonation = e => {
+		e.preventDefault();
+		this.setState({
+			isAddingDonation: !this.state.isAddingDonation,
+		});
+	};
 
 	render() {
 		if (this.props.schoolDonations === undefined) {
 			return <p>...loading</p>;
 		}
+		if (this.props.schoolData === undefined) {
+			return <React.Fragment>School doesn't exist.</React.Fragment>;
+		}
 		return (
 			<div>
-				<Navigation user={this.props.username} />
 				<Form className={this.state.isEditing ? '' : 'hide'}>
 					<Input
 						onChange={e => this.handleChange(e)}
@@ -128,11 +134,25 @@ class SchoolData extends React.Component {
 									<i
 										className="far fa-trash-alt"
 										onClick={e =>
-											this.handleDeleteSchool(
-												e,
-												this.props.schoolData.id
-											)
+											this.handleDeleteSchool(e, this.props.schoolData.id)
 										}
+									/>
+								</div>
+							) : null}
+							{this.props.user.userRole === 'admin' ? (
+								<div className="addDonationWrapper">
+									<Button
+										onClick={e => {
+											this.addDonation(e);
+										}}>
+										{this.state.isAddingDonation ? 'Close' : 'Add Donation'}
+									</Button>
+
+									<DonationForm
+										isAddingDonation={this.state.isAddingDonation}
+										submitDonation={this.submitDonation}
+										id={this.props.schoolData.id}
+										schoolState={this.state}
 									/>
 								</div>
 							) : null}
@@ -141,56 +161,45 @@ class SchoolData extends React.Component {
 							{/* {if(this.prop.sschoolsDonations.length === 0){} */}
 							{this.props.schoolDonations.map(donation => {
 								return (
-									<li
-										key={donation.id}
-										className="donationRow">
-										<div className="donationInfo">
-											<h4>{donation.title}</h4>
-											<p>{donation.description}</p>
-											<p>${donation.amount}</p>
-										</div>
-										{this.props.userRole === 'admin' ? (
-											<div className="modify">
-												<i
-													className="far fa-edit"
-													onClick={e =>
-														this.editDonation(
-															e,
-															donation
-														)
-													}
-												/>
-												<i
-													className="far fa-trash-alt"
-													onClick={e =>
-														this.handleDeleteDonation(
-															e,
-															donation.id
-														)
-													}
-												/>
+									<div className="donationWrapper">
+										<li className="donationRow" key={donation.id}>
+											<div className="donationInfo">
+												<h4>{donation.title}</h4>
+												<p>{donation.description}</p>
+												<p>${donation.amount}</p>
 											</div>
-										) : null}
-										{this.props.isEditingDonation ===
-										true ? (
-											<DonationEditForm
-												donation={donation}
-											/>
-										) : null}
-									</li>
+											{this.props.userRole === 'admin' ? (
+												<div className="modify">
+													<i
+														className="far fa-edit"
+														onClick={e =>
+															this.editDonation(e, donation)
+														}
+													/>
+													<i
+														className="far fa-trash-alt"
+														onClick={e =>
+															this.handleDeleteDonation(
+																e,
+																donation.id
+															)
+														}
+													/>
+												</div>
+											) : null}
+										</li>
+										<div
+											className={`donationEditForm ${
+												this.state.isEditingDonation ? '' : 'hide'
+											}`}>
+											<DonationEditForm donation={donation} />
+										</div>
+									</div>
 								);
 							})}
 						</ul>
 					</div>
 				</div>
-				{this.props.user.userRole === 'admin' ? (
-					<DonationForm
-						isEditingDonation={this.props.isEditingDonation}
-						submitDonation={this.submitDonation}
-						id={this.props.schoolData.id}
-						schoolState={this.state}
-					/>
-				) : null}
 			</div>
 		);
 	}

@@ -1,29 +1,56 @@
-.schoolTitle{
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    margin: 10px auto;
-    align-items:center;
+.schoolTitle {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 10px auto;
+	align-items: center;
 }
-.schoolImg{
-    width: 100px;
-    height:auto;
-    margin:0 atuo;
+.schoolImg {
+	width: 100px;
+	height: 100px;
+	margin: 0 atuo;
 }
 
-.schoolInfo{
-    display:flex;
+.schoolInfo {
+	display: flex;
 }
-ul{
-    max-width:800px;
-    width:100%;
+ul {
+	max-width: 800px;
+	width: 100%;
 }
-.donationRow{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+.donationWrapper {
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	padding: 10px;
 }
-.donationRow:nth-child(odd){
-    background-color: lightgray;
+.donationRow {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+.donationWrapper:nth-child(odd) {
+	background-color: lightgray;
+}
+.donationInfo {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-items: flex-start;
+}
+.donationEditForm {
+	max-width: 75%;
+	width: 100%;
+	margin: 0 auto;
+}
+.addDonation {
+	max-width: 75%;
+	width: 100%;
+	margin: 10px auto;
+}
+
+.addDonationWrapper {
+	max-wdith: 75%;
+	width: 100%;
 }

@@ -15,7 +15,7 @@ const Navigation = props => {
 			<Link to="/">Luncher</Link>
 			<div className="rightMenu">
 				<NavLink className="navItem" to="/profile/">
-					{props.user}
+					{localStorage.getItem('userName')}
 				</NavLink>
 				<NavLink
 					className="navItem"

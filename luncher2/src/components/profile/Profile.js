@@ -37,7 +37,7 @@ class Profile extends React.Component {
 	render() {
 		return (
 			<div>
-				<Navigation user={this.props.username} />
+				{/* <Navigation user={this.props.username} /> */}
 
 				<h1>
 					{this.props.firstName} {this.props.lastName}

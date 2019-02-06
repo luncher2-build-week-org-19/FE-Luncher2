@@ -34,20 +34,15 @@ export const getAllSchools = () => dispatch => {
 	axios({
 		method: 'get',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools`,
-		// headers: {
-		// 	Authorization: userToken,
-		// },
 	})
 		.then(res => {
 			console.log('response', res);
 			dispatch({ type: GET_ALLSCHOOLS_SUCCESS, payload: res });
-			localStorage.setItem('id', res.data[0]);
 		})
 		.catch(err => dispatch({ type: GET_ALLSCHOOLS_FAILURE, payload: err }));
 };
 
 export const deleteSchool = (userToken, schoolID) => dispatch => {
-	console.log('delete action', schoolID);
 	dispatch({ type: DELETE_SCHOOL_START });
 	axios({
 		method: 'delete',
@@ -64,7 +59,7 @@ export const deleteSchool = (userToken, schoolID) => dispatch => {
 };
 
 export const addSchool = (userToken, school) => dispatch => {
-	console.log('delete action', school);
+	console.log('add action', school);
 	dispatch({ type: ADD_SCHOOL_START });
 	axios({
 		method: 'post',
@@ -73,14 +68,14 @@ export const addSchool = (userToken, school) => dispatch => {
 			Authorization: userToken,
 		},
 		data: {
-			image: school.schoolimage,
+			image: school.image,
 			schoolname: school.schoolname,
 		},
 	})
 		.then(res => {
 			console.log('add success', res);
 			dispatch({ type: ADD_SCHOOL_SUCCESS, payload: res });
-			window.location.reload();
+			// window.location.reload();
 		})
 		.catch(err => dispatch({ type: ADD_SCHOOL_FAILURE, payload: err }));
 };
@@ -105,9 +100,7 @@ export const getSchoolData = id => dispatch => {
 						payload: res.data,
 					})
 				)
-				.catch(err =>
-					dispatch({ type: SCHOOL_DONATIONS_FAILURE, payload: err })
-				);
+				.catch(err => dispatch({ type: SCHOOL_DONATIONS_FAILURE, payload: err }));
 		})
 		.catch(err => dispatch({ type: GET_SCHOOLDATA_FAILURE, payload: err }));
 };
@@ -122,11 +115,7 @@ export const schoolEdit = (userToken, info, id) => dispatch => {
 		},
 		data: { schoolname: info.schoolName, image: info.image },
 	})
-		.then(
-			res => (
-				{ type: SCHOOL_EDIT_SUCCESS, payload: res },
-				window.location.reload()
-			)
-		)
+		.then(res => ({ type: SCHOOL_EDIT_SUCCESS, payload: res }))
+		// window.location.reload()
 		.catch(err => ({ type: SCHOOL_EDIT_FAILURE, payload: err }));
 };

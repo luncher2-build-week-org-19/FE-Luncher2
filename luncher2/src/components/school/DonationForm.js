@@ -57,7 +57,7 @@ class AddDonation extends React.Component {
 
 	render() {
 		return (
-			<Form>
+			<Form className={`addDonation ${this.props.isAddingDonation ? '' : 'hide'}`}>
 				<Input
 					required
 					name="title"
@@ -79,15 +79,7 @@ class AddDonation extends React.Component {
 					placeholder="Amount"
 					onChange={e => this.handleChange(e)}
 				/>
-				{this.state.isEditing ? (
-					<Button onClick={e => this.props.submitDonation(e)}>
-						Submit Edit
-					</Button>
-				) : (
-					<Button onClick={e => this.addDonation(e)}>
-						Add Donation
-					</Button>
-				)}
+				<Button onClick={e => this.addDonation(e)}>Submit Donation</Button>
 			</Form>
 		);
 	}

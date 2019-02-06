@@ -52,6 +52,9 @@ const initialState = {
 	schoolDonations: [],
 	isEditingDonation: false,
 	donationsByUser: [],
+	errorCodes:{
+		13: 'Pick a new username'
+	}
 };
 // import { combineReducers } from 'redux';
 // import login from './login';

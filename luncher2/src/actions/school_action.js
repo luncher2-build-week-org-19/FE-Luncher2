@@ -90,9 +90,6 @@ export const getSchoolData = id => dispatch => {
 	axios({
 		method: 'get',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/${id}`,
-		// headers: {
-		// 	Authorization: userToken,
-		// },
 	})
 		.then(res => {
 			console.log('school data', res);
@@ -125,6 +122,11 @@ export const schoolEdit = (userToken, info, id) => dispatch => {
 		},
 		data: { schoolname: info.schoolName, image: info.image },
 	})
-		.then(res => ({ type: SCHOOL_EDIT_SUCCESS, payload: res }))
+		.then(
+			res => (
+				{ type: SCHOOL_EDIT_SUCCESS, payload: res },
+				window.location.reload()
+			)
+		)
 		.catch(err => ({ type: SCHOOL_EDIT_FAILURE, payload: err }));
 };

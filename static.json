@@ -1,6 +1,0 @@
-{
-	"root": "luncher2/",
-	"routes": {
-		"/**": "/public/index.html"
-	}
-}

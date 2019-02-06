@@ -22,6 +22,7 @@ class SchoolData extends React.Component {
 		this.state = {
 			isEditing: false,
 			isEditingDonation: false,
+			isAddingDonation: false,
 			schoolName: '',
 			image: '',
 			title: '',
@@ -65,15 +66,11 @@ class SchoolData extends React.Component {
 			schoolName: this.state.schoolName,
 		};
 		this.props.schoolEdit(userToken, info, this.props.match.params.id);
-		this.setState({
-			isEditing: false,
-		});
-		window.location.reload();
 	};
 	editDonation = (e, donation) => {
 		e.preventDefault();
 		this.setState({
-			isEditingDonation: true,
+			isEditingDonation: !this.state.isEditingDonation,
 			title: donation.title,
 			description: donation.description,
 			amount: donation.amount,
@@ -141,7 +138,7 @@ class SchoolData extends React.Component {
 							) : null}
 						</div>
 						<ul className="donationsList">
-						{/* {if(this.prop.sschoolsDonations.length === 0){} */}
+							{/* {if(this.prop.sschoolsDonations.length === 0){} */}
 							{this.props.schoolDonations.map(donation => {
 								return (
 									<li
@@ -174,8 +171,8 @@ class SchoolData extends React.Component {
 												/>
 											</div>
 										) : null}
-										{this.props.user.userRole ===
-										'admin' ? (
+										{this.props.isEditingDonation ===
+										true ? (
 											<DonationEditForm
 												donation={donation}
 											/>

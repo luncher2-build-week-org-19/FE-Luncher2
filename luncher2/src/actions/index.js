@@ -52,3 +52,14 @@ export {
 	editDonation,
 	deleteDonation,
 } from './donation_actions';
+
+export {
+	EDIT_USER_START,
+	EDIT_USER_SUCCESS,
+	EDIT_USER_FAILURE,
+	DELETE_USER_START,
+	DELETE_USER_SUCCESS,
+	DELETE_USER_FAILURE,
+	editUser,
+	deleteUser,
+} from './profile_action';

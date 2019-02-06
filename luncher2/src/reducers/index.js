@@ -38,11 +38,11 @@ const initialState = {
 	password: '',
 	id: '',
 	token: '',
-	user: {
-		id: '',
-		username: '',
-		role: '',
-	},
+	// user: {
+	// 	id: '',
+	// 	username: '',
+	// 	role: '',
+	// },
 	registerRedirect: false,
 	schools: [],
 	schoolData: [],
@@ -194,7 +194,13 @@ const reducer = (state = initialState, action) => {
 		case SCHOOL_EDIT_START:
 			return { ...state, isEditingDonation: true };
 		case SCHOOL_EDIT_SUCCESS:
-			return { ...state, isEditingDonation: false };
+			return {
+				...state,
+				isEditingDonation: false,
+				firstName: action.payload.firstName,
+				lastName: action.payload.lastName,
+				email: action.payload.email,
+			};
 		case SCHOOL_EDIT_FAILURE:
 			return { ...state, isEditingDonation: false };
 

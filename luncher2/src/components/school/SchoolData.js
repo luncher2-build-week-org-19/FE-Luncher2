@@ -27,6 +27,7 @@ class SchoolData extends React.Component {
 			title: '',
 			description: '',
 			amount: '',
+			donationID: '',
 		};
 	}
 
@@ -36,6 +37,20 @@ class SchoolData extends React.Component {
 		this.props.getSchoolData(this.props.match.params.id);
 		this.props.getUserInfo(userToken);
 	}
+	componentDidUpdate(prevProps) {
+		// Typical usage (don't forget to compare props):
+		if (this.props.schoolDonations !== prevProps.schoolDonations) {
+			if (this.props.schoolDonationsIsUpdating) {
+				this.props.getSchoolData(this.props.match.params.id);
+			}
+		}
+		if (this.props.schoolDonations !== prevProps.schoolDonations) {
+			if (this.props.schoolDonationsIsDeleting) {
+				this.props.getSchoolData(this.props.match.params.id);
+			}
+		}
+	}
+
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
@@ -65,13 +80,14 @@ class SchoolData extends React.Component {
 		};
 		this.props.schoolEdit(userToken, info, this.props.match.params.id);
 	};
-	editDonation = (e, donation) => {
+	editDonation = (e, donation, donationID) => {
 		e.preventDefault();
 		this.setState({
 			isEditingDonation: !this.state.isEditingDonation,
 			title: donation.title,
 			description: donation.description,
 			amount: donation.amount,
+			donationID: donationID,
 		});
 	};
 	handleDeleteDonation = (e, id) => {
@@ -161,8 +177,8 @@ class SchoolData extends React.Component {
 							{/* {if(this.prop.sschoolsDonations.length === 0){} */}
 							{this.props.schoolDonations.map(donation => {
 								return (
-									<div className="donationWrapper">
-										<li className="donationRow" key={donation.id}>
+									<div className="donationWrapper" key={donation.id}>
+										<li className="donationRow">
 											<div className="donationInfo">
 												<h4>{donation.title}</h4>
 												<p>{donation.description}</p>
@@ -173,7 +189,11 @@ class SchoolData extends React.Component {
 													<i
 														className="far fa-edit"
 														onClick={e =>
-															this.editDonation(e, donation)
+															this.editDonation(
+																e,
+																donation,
+																donation.id
+															)
 														}
 													/>
 													<i
@@ -190,7 +210,7 @@ class SchoolData extends React.Component {
 										</li>
 										<div
 											className={`donationEditForm ${
-												this.state.isEditingDonation ? '' : 'hide'
+												this.state.donationID === donation.id ? '' : 'hide'
 											}`}>
 											<DonationEditForm donation={donation} />
 										</div>
@@ -211,6 +231,8 @@ const mapStateToProps = state => {
 		userRole: state.userRole,
 		schoolData: state.schoolData,
 		schoolDonations: state.schoolDonations,
+		schoolDonationsIsUpdating: state.schoolDonationsIsUpdating,
+		schoolDonationsIsDeleting: state.schoolDonationsIsDeleting,
 		user: {
 			id: state.id,
 			firstName: state.firstName,
@@ -219,6 +241,8 @@ const mapStateToProps = state => {
 			userRole: state.userRole,
 			email: state.email,
 		},
+		deleteError: state.deleteError,
+		editError: state.editError,
 	};
 };
 

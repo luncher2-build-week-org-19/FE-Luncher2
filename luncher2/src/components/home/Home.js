@@ -16,6 +16,7 @@ class Home extends React.Component {
 			image: '',
 			donation: '',
 			isEditing: false,
+			isAdding: false,
 		};
 	}
 	componentDidMount() {
@@ -23,12 +24,16 @@ class Home extends React.Component {
 		this.props.getAllSchools(userToken);
 		this.props.getUserInfo(userToken);
 	}
-	// componentDidUpdate(prevProps) {
-	// 	// Typical usage (don't forget to compare props):
-	// 	if (this.props.schools !== prevProps.schools) {
-	// 		this.fetchData(this.props.schools);
-	// 	}
-	// }
+	componentDidUpdate(prevProps) {
+		// Typical usage (don't forget to compare props):
+		let userToken = localStorage.getItem('userToken');
+
+		if (this.props.schools !== prevProps.schools) {
+			if (this.props.getAllSchoolIsUpdating) {
+				this.props.getAllSchools(userToken);
+			}
+		}
+	}
 
 	handleChange = e => {
 		e.preventDefault();
@@ -57,7 +62,11 @@ class Home extends React.Component {
 					<Loader type="ThreeDots" color="#somecolor" height={80} width={80} />
 				)}
 				{this.props.user.userRole === 'admin' ? (
-					<Form className="addSchool">
+					<Form
+						className="addSchool"
+						onSubmit={e => {
+							this.handleAddSchool(e);
+						}}>
 						<Input
 							name="schoolname"
 							value={this.state.schoolname}
@@ -75,12 +84,7 @@ class Home extends React.Component {
 							}}
 							placeholder="Image URL"
 						/>
-						<Button
-							onClick={e => {
-								this.handleAddSchool(e);
-							}}>
-							Add
-						</Button>
+						<Button>Add</Button>
 					</Form>
 				) : null}
 
@@ -105,6 +109,7 @@ const mapStateToProps = state => {
 		},
 		schools: state.schools,
 		username: state.username,
+		getAllSchoolIsLoading: state.getAllSchoolIsLoading,
 	};
 };
 

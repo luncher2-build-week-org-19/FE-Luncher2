@@ -21,9 +21,9 @@ export const GET_SCHOOLDATA_START = 'GET_SCHOOLDATA_START';
 export const GET_SCHOOLDATA_SUCCESS = 'GET_SCHOOLDATA_SUCCESS';
 export const GET_SCHOOLDATA_FAILURE = 'GET_SCHOOLDATA_FAILURE';
 
-export const SCHOOL_DONATIONS_START = 'SCHOOL_DONATIONS_START';
-export const SCHOOL_DONATIONS_SUCCESS = 'SCHOOL_DONATIONS_SUCCESS';
-export const SCHOOL_DONATIONS_FAILURE = 'SCHOOL_DONATIONS_FAILURE';
+export const GET_SCHOOL_DONATIONS_START = 'GET_SCHOOL_DONATIONS_START';
+export const GET_SCHOOL_DONATIONS_SUCCESS = 'GET_SCHOOL_DONATIONS_SUCCESS';
+export const GET_SCHOOL_DONATIONS_FAILURE = 'GET_SCHOOL_DONATIONS_FAILURE';
 
 export const SCHOOL_EDIT_START = 'SCHOOL_EDIT_START';
 export const SCHOOL_EDIT_SUCCESS = 'SCHOOL_EDIT_SUCCESS';
@@ -73,9 +73,7 @@ export const addSchool = (userToken, school) => dispatch => {
 		},
 	})
 		.then(res => {
-			console.log('add success', res);
 			dispatch({ type: ADD_SCHOOL_SUCCESS, payload: res });
-			// window.location.reload();
 		})
 		.catch(err => dispatch({ type: ADD_SCHOOL_FAILURE, payload: err }));
 };
@@ -89,18 +87,18 @@ export const getSchoolData = id => dispatch => {
 		.then(res => {
 			console.log('school data', res);
 			dispatch({ type: GET_SCHOOLDATA_SUCCESS, payload: res.data[0] });
-			dispatch({ type: SCHOOL_DONATIONS_START });
+			dispatch({ type: GET_SCHOOL_DONATIONS_START });
 			axios({
 				method: 'get',
 				url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/schools/${id}`,
 			})
 				.then(res =>
 					dispatch({
-						type: SCHOOL_DONATIONS_SUCCESS,
+						type: GET_SCHOOL_DONATIONS_SUCCESS,
 						payload: res.data,
 					})
 				)
-				.catch(err => dispatch({ type: SCHOOL_DONATIONS_FAILURE, payload: err }));
+				.catch(err => dispatch({ type: GET_SCHOOL_DONATIONS_FAILURE, payload: err }));
 		})
 		.catch(err => dispatch({ type: GET_SCHOOLDATA_FAILURE, payload: err }));
 };

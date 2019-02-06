@@ -20,15 +20,24 @@ import {
 	GET_SCHOOLDATA_START,
 	GET_SCHOOLDATA_SUCCESS,
 	GET_SCHOOLDATA_FAILURE,
-	SCHOOL_DONATIONS_START,
-	SCHOOL_DONATIONS_SUCCESS,
-	SCHOOL_DONATIONS_FAILURE,
+	GET_SCHOOL_DONATIONS_START,
+	GET_SCHOOL_DONATIONS_SUCCESS,
+	GET_SCHOOL_DONATIONS_FAILURE,
 	SCHOOL_EDIT_START,
 	SCHOOL_EDIT_SUCCESS,
 	SCHOOL_EDIT_FAILURE,
 	USER_DONATIONS_START,
 	USER_DONATIONS_SUCCESS,
 	USER_DONATIONS_FAILURE,
+	ADD_DONATION_START,
+	ADD_DONATION_SUCCESS,
+	ADD_DONATION_FAILURE,
+	DELETE_DONATION_START,
+	DELETE_DONATION_SUCCESS,
+	DELETE_DONATION_FAILURE,
+	EDIT_DONATION_START,
+	EDIT_DONATION_SUCCESS,
+	EDIT_DONATION_FAILURE,
 } from '../actions/';
 
 const initialState = {
@@ -41,27 +50,21 @@ const initialState = {
 	password: '',
 	id: '',
 	token: '',
-	// user: {
-	// 	id: '',
-	// 	username: '',
-	// 	role: '',
-	// },
 	registerRedirect: false,
 	schools: [],
 	schoolData: [],
 	schoolDonations: [],
 	isEditingDonation: false,
+	getAllSchoolIsLoading: false,
 	donationsByUser: [],
-	errorCodes:{
-		13: 'Pick a new username'
-	}
+	//ERRORS
+	deleteError: '',
+	editError: '',
+	//componentDidUpdate booleans
+	getAllSchoolIsUpdating: false,
+	schoolDonationsIsUpdating: false,
+	schoolDonationsIsDeleting: false,
 };
-// import { combineReducers } from 'redux';
-// import login from './login';
-
-// export default combineReducers({
-// 	login
-// });
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -137,19 +140,21 @@ const reducer = (state = initialState, action) => {
 		case GET_ALLSCHOOLS_START:
 			return {
 				...state,
-				isLoading: true,
+				getAllSchoolIsLoading: true,
 			};
 		case GET_ALLSCHOOLS_SUCCESS:
 			console.log('allSchools', action.payload);
 			return {
 				...state,
 				schools: action.payload.data,
-				isLoading: false,
+				getAllSchoolIsLoading: false,
+				getAllSchoolIsUpdating: false,
 			};
 		case GET_ALLSCHOOLS_FAILURE:
 			return {
 				error: action.payload,
-				isLoading: false,
+				getAllSchoolIsLoading: false,
+				getAllSchoolIsUpdating: false,
 			};
 		//DELETE SCHOOL
 		case DELETE_SCHOOL_START:
@@ -177,6 +182,7 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
+				getAllSchoolIsUpdating: true,
 			};
 		case ADD_SCHOOL_FAILURE:
 			return {
@@ -187,16 +193,25 @@ const reducer = (state = initialState, action) => {
 		case GET_SCHOOLDATA_START:
 			return { ...state };
 		case GET_SCHOOLDATA_SUCCESS:
-			return { ...state, schoolData: action.payload };
+			return {
+				...state,
+				schoolData: action.payload,
+				schoolDonationsIsUpdating: false,
+				schoolDonationsIsDeleting: false,
+			};
 		case GET_SCHOOLDATA_FAILURE:
-			return { ...state };
+			return { ...state, schoolDonationsIsUpdating: false, schoolDonationsIsDeleting: false };
 		//DONATIONS
-		case SCHOOL_DONATIONS_START:
+		case GET_SCHOOL_DONATIONS_START:
 			return { ...state };
-		case SCHOOL_DONATIONS_SUCCESS:
-			return { ...state, schoolDonations: action.payload };
-		case SCHOOL_DONATIONS_FAILURE:
-			return { ...state };
+		case GET_SCHOOL_DONATIONS_SUCCESS:
+			return {
+				...state,
+				schoolDonations: action.payload,
+				schoolDonationsIsUpdating: false,
+			};
+		case GET_SCHOOL_DONATIONS_FAILURE:
+			return { ...state, schoolDonationsIsUpdating: false };
 		//SCHOOL EDIT
 		case SCHOOL_EDIT_START:
 			return { ...state, isEditingDonation: true };
@@ -217,6 +232,47 @@ const reducer = (state = initialState, action) => {
 			return { ...state, donationsByUser: action.payload.data };
 		case USER_DONATIONS_FAILURE:
 			return { ...state };
+		//Add Donation
+		case ADD_DONATION_START:
+			return { ...state };
+		case ADD_DONATION_SUCCESS:
+			return {
+				...state,
+				schoolDonationsIsUpdating: true,
+				schoolDonations: [...state.schoolDonations, action.payload],
+			};
+		case ADD_DONATION_FAILURE:
+			return { ...state, schoolDonationsIsUpdating: false };
+		//Delete Donation
+		case DELETE_DONATION_START:
+			return { ...state, deleteError: '' };
+		case DELETE_DONATION_SUCCESS:
+			return {
+				...state,
+				schoolDonationsIsDeleting: true,
+				deleteError: '',
+				schoolDonations: [...state.schoolDonations, action.payload],
+			};
+		case DELETE_DONATION_FAILURE:
+			return {
+				...state,
+				schoolDonationsIsDeleting: false,
+				deleteError: action.payload.message,
+			};
+		//Delete Donation
+		case EDIT_DONATION_START:
+			console.log(action.payload);
+			return { ...state, deleteError: '', editError: '' };
+		case EDIT_DONATION_SUCCESS:
+			return {
+				...state,
+				editError: '',
+			};
+		case EDIT_DONATION_FAILURE:
+			return {
+				...state,
+				editError: action.payload.message,
+			};
 
 		default:
 			return state;

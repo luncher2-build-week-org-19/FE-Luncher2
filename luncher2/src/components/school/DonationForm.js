@@ -25,6 +25,9 @@ class AddDonation extends React.Component {
 			});
 		}
 	}
+	reset = () => {
+		this.setState({ title: '', description: '', amount: '' });
+	};
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
@@ -41,6 +44,7 @@ class AddDonation extends React.Component {
 			amount: this.state.amount,
 		};
 		this.props.addDonation(userToken, donation, id);
+		this.reset();
 	};
 	submitDonation = e => {
 		e.preventdefault();
@@ -51,8 +55,8 @@ class AddDonation extends React.Component {
 			description: this.state.description,
 			amount: this.state.amount,
 		};
-
 		this.props.editDonation(userToken, donation, id);
+		this.reset();
 	};
 
 	render() {

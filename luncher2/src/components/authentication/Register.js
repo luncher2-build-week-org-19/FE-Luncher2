@@ -115,11 +115,7 @@ class Register extends React.Component {
 						onChange={e => this.handleChange(e)}
 					/>
 					<Button>Register</Button>
-					{this.props.id ? (
-						<p>Success</p>
-					) : (
-						<p>Registration Failed</p>
-					)}
+					{this.props.id ? <p>Success</p> : <p>Registration Failed</p>}
 
 					<p>
 						Already have an account? <Link to="/login">Login</Link>

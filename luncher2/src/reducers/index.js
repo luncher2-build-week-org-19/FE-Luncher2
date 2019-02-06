@@ -57,6 +57,7 @@ const initialState = {
 	isEditingDonation: false,
 	getAllSchoolIsLoading: false,
 	donationsByUser: [],
+	schoolEdit: '',
 	//ERRORS
 	deleteError: '',
 	editError: '',
@@ -214,17 +215,21 @@ const reducer = (state = initialState, action) => {
 			return { ...state, schoolDonationsIsUpdating: false };
 		//SCHOOL EDIT
 		case SCHOOL_EDIT_START:
-			return { ...state, isEditingDonation: true };
+			return {
+				...state,
+				//  isEditingDonation: true
+			};
 		case SCHOOL_EDIT_SUCCESS:
 			return {
 				...state,
 				isEditingDonation: false,
-				firstName: action.payload.firstName,
-				lastName: action.payload.lastName,
-				email: action.payload.email,
+				// firstName: action.payload.firstName,
+				// lastName: action.payload.lastName,
+				// email: action.payload.email,
+				schoolEdit: action.payload,
 			};
 		case SCHOOL_EDIT_FAILURE:
-			return { ...state, isEditingDonation: false };
+			return { ...state, schoolEdit: '' };
 		//donationByUser
 		case USER_DONATIONS_START:
 			return { ...state };

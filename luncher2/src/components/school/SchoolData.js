@@ -49,6 +49,11 @@ class SchoolData extends React.Component {
 				this.props.getSchoolData(this.props.match.params.id);
 			}
 		}
+		if (this.props.schoolEdit !== prevProps.schoolEdit) {
+			if (this.props.schoolEdit) {
+				this.props.getSchoolData(this.props.match.params.id);
+			}
+		}
 	}
 
 	handleChange = e => {
@@ -174,7 +179,6 @@ class SchoolData extends React.Component {
 							) : null}
 						</div>
 						<ul className="donationsList">
-							{/* {if(this.prop.sschoolsDonations.length === 0){} */}
 							{this.props.schoolDonations.map(donation => {
 								return (
 									<div className="donationWrapper" key={donation.id}>
@@ -233,6 +237,7 @@ const mapStateToProps = state => {
 		schoolDonations: state.schoolDonations,
 		schoolDonationsIsUpdating: state.schoolDonationsIsUpdating,
 		schoolDonationsIsDeleting: state.schoolDonationsIsDeleting,
+		schoolEdit: state.schoolEdit,
 		user: {
 			id: state.id,
 			firstName: state.firstName,

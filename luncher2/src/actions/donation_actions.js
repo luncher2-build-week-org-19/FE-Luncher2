@@ -68,6 +68,6 @@ export const editDonation = (userToken, donation, id) => dispatch => {
 			amount: donation.amount,
 		},
 	})
-		.then(res => ({ type: EDIT_DONATION_SUCCESS, payload: res }))
+		.then(res => ({ type: EDIT_DONATION_SUCCESS, payload: res.result }))
 		.catch(err => ({ type: EDIT_DONATION_FAILURE, payload: err }));
 };

@@ -114,6 +114,5 @@ export const schoolEdit = (userToken, info, id) => dispatch => {
 		data: { schoolname: info.schoolName, image: info.image },
 	})
 		.then(res => ({ type: SCHOOL_EDIT_SUCCESS, payload: res }))
-		// window.location.reload()
 		.catch(err => ({ type: SCHOOL_EDIT_FAILURE, payload: err }));
 };

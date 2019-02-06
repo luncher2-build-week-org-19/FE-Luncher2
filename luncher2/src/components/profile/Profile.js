@@ -58,7 +58,7 @@ class Profile extends React.Component {
 				) : null}
 				<div className="userDonations">
 					{this.props.donationsByUser.map(donation => (
-						<UserDonations donation={donation} />
+						<UserDonations key={donation.id} donation={donation} />
 					))}
 				</div>
 			</div>

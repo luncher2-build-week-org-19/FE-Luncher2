@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Navigation from '../navBar/Navigation';
-import { getUserInfo } from '../../actions';
+import { getUserInfo, donationByUser } from '../../actions';
 import ProfileForm from './ProfileForm';
 import { Button } from 'reactstrap';
+import UserDonations from './UserDonations';
 
 class Profile extends React.Component {
 	constructor(props) {
@@ -17,8 +18,10 @@ class Profile extends React.Component {
 	}
 	componentDidMount() {
 		let userToken = localStorage.getItem('userToken');
+		let userID = localStorage.getItem('userID');
 
 		this.props.getUserInfo(userToken);
+		this.props.donationByUser(userID);
 		this.setState({
 			firstName: this.props.firstName,
 			lastName: this.props.lastName,
@@ -32,9 +35,6 @@ class Profile extends React.Component {
 		});
 	};
 	render() {
-		// if (this.props.userRole === undefined) {
-		// 	return <p>...loading</p>;
-		// }
 		return (
 			<div>
 				<Navigation user={this.props.username} />
@@ -56,6 +56,11 @@ class Profile extends React.Component {
 						// profileState={this.state}
 					/>
 				) : null}
+				<div className="userDonations">
+					{this.props.donationsByUser.map(donation => (
+						<UserDonations donation={donation} />
+					))}
+				</div>
 			</div>
 		);
 	}
@@ -68,10 +73,11 @@ const mapStateToProps = state => {
 		username: state.username,
 		userRole: state.userRole,
 		email: state.email,
+		donationsByUser: state.donationsByUser,
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ getUserInfo }
+	{ getUserInfo, donationByUser }
 )(Profile);

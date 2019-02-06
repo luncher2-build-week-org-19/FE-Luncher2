@@ -61,6 +61,7 @@ export const loginUser = user => dispatch => {
 		.then(res => {
 			dispatch({ type: LOGIN_SUCCESS, payload: res });
 			localStorage.setItem('userToken', res.data.token);
+			localStorage.setItem('userID', res.data.user.id);
 			window.location.reload();
 		})
 		.catch(err => dispatch({ type: LOGIN_FAILURE, payload: err }));

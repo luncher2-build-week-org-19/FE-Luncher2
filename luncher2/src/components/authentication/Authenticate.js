@@ -33,7 +33,7 @@ const authenticateHOC = App =>
 			this.setState({
 				loggedIn: false,
 			});
-			localStorage.removeItem('username');
+			localStorage.removeItem('userID');
 			localStorage.removeItem('userToken');
 		};
 

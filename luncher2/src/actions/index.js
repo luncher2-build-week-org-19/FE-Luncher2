@@ -60,6 +60,10 @@ export {
 	DELETE_USER_START,
 	DELETE_USER_SUCCESS,
 	DELETE_USER_FAILURE,
+	USER_DONATIONS_START,
+	USER_DONATIONS_SUCCESS,
+	USER_DONATIONS_FAILURE,
 	editUser,
 	deleteUser,
+	donationByUser,
 } from './profile_action';

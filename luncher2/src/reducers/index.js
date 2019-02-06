@@ -26,6 +26,9 @@ import {
 	SCHOOL_EDIT_START,
 	SCHOOL_EDIT_SUCCESS,
 	SCHOOL_EDIT_FAILURE,
+	USER_DONATIONS_START,
+	USER_DONATIONS_SUCCESS,
+	USER_DONATIONS_FAILURE,
 } from '../actions/';
 
 const initialState = {
@@ -48,6 +51,7 @@ const initialState = {
 	schoolData: [],
 	schoolDonations: [],
 	isEditingDonation: false,
+	donationsByUser: [],
 };
 // import { combineReducers } from 'redux';
 // import login from './login';
@@ -203,6 +207,13 @@ const reducer = (state = initialState, action) => {
 			};
 		case SCHOOL_EDIT_FAILURE:
 			return { ...state, isEditingDonation: false };
+		//donationByUser
+		case USER_DONATIONS_START:
+			return { ...state };
+		case USER_DONATIONS_SUCCESS:
+			return { ...state, donationsByUser: action.payload.data };
+		case USER_DONATIONS_FAILURE:
+			return { ...state };
 
 		default:
 			return state;

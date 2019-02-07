@@ -1,9 +1,19 @@
+/* 
+blue - #180aaf
+gray - #4c4c4c
+orange - #f9a03f
+white - #fefff2
+pink - #c2095a
+*/
 .schoolTitle {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 10px auto;
+	margin: 10px auto 30px;
 	align-items: center;
+}
+.schoolTitle button {
+	margin-top: 10px;
 }
 .schoolImg {
 	width: 100px;
@@ -14,15 +24,20 @@
 .schoolInfo {
 	display: flex;
 }
-ul {
+.schoolInfo ul {
 	max-width: 800px;
 	width: 100%;
+	margin: 0 auto;
+	border: 1px solid #4c4c4c;
+	padding-left: 0;
 }
+
 .donationWrapper {
 	display: flex;
 	flex-direction: column;
 	list-style: none;
 	padding: 10px;
+	margin: 0 auto;
 }
 .donationRow {
 	display: flex;
@@ -31,7 +46,8 @@ ul {
 	width: 100%;
 }
 .donationWrapper:nth-child(odd) {
-	background-color: lightgray;
+	background-color: #4c4c4c;
+	color: white;
 }
 .donationInfo {
 	display: flex;
@@ -45,12 +61,16 @@ ul {
 	margin: 0 auto;
 }
 .addDonation {
-	max-width: 75%;
+	max-width: 500px;
 	width: 100%;
-	margin: 10px auto;
+	margin: 40px auto;
+}
+.addDonation input {
+	margin: 5px 0;
+	width: 100%;
 }
 
 .addDonationWrapper {
-	max-wdith: 75%;
+	max-width: 1000px;
 	width: 100%;
 }

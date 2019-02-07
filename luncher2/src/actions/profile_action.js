@@ -23,19 +23,18 @@ export const editUser = (userToken, user) => dispatch => {
 		method: 'put',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/update`,
 		headers: {
-			Authorization: userToken,
+			Authorization: userToken
 		},
 		data: {
 			firstName: user.firstName,
 			lastName: user.lastName,
 			email: user.email,
-			password: user.password,
-		},
+			password: user.password
+		}
 	})
 		.then(
 			res => (
-				{ type: EDIT_USER_SUCCESS, payload: res },
-				window.location.reload()
+				{ type: EDIT_USER_SUCCESS, payload: res }, window.location.reload()
 			)
 		)
 		.catch(err => ({ type: EDIT_USER_FAILURE, payload: err }));
@@ -47,11 +46,10 @@ export const deleteUser = userToken => dispatch => {
 		method: 'delete',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/delete/`,
 		headers: {
-			Authorization: userToken,
-		},
+			Authorization: userToken
+		}
 	})
 		.then(res => {
-			console.log('delete success', res);
 			dispatch(
 				{ type: DELETE_USER_SUCCESS, payload: res },
 				localStorage.removeItem('userToken'),
@@ -65,10 +63,9 @@ export const donationByUser = id => dispatch => {
 	dispatch({ type: USER_DONATIONS_START });
 	axios({
 		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/users/${id}`,
+		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/users/${id}`
 	})
 		.then(res => {
-			console.log('donationsbyuser', res);
 			dispatch({ type: USER_DONATIONS_SUCCESS, payload: res });
 		})
 		.catch(err => dispatch({ type: USER_DONATIONS_FAILURE, payload: err }));

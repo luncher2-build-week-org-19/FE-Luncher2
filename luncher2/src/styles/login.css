@@ -1,6 +1,29 @@
+/* 
+blue - #180aaf
+gray - #4c4c4c
+orange - #f9a03f
+white - #fefff2
+pink - #c2095a
+*/
+
+.formWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 75px auto;
+	width: 500px;
+}
+.logo {
+	width: 200px;
+	height: 200px;
+}
+
 .loginForm {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	max-width: 200px;
 	width: 100%;
 	margin: 10% auto;
@@ -10,6 +33,9 @@
 }
 .loginForm input {
 	margin: 5px 0;
+}
+.loginForm p {
+	text-align: center;
 }
 .registerForm {
 	display: flex;
@@ -37,4 +63,13 @@
 }
 .show {
 	display: flex;
+}
+.link {
+	color: #180aaf;
+	cursor: pointer;
+}
+.loginLoader {
+	position: absolute;
+	left: 45%;
+	top: 45%;
 }

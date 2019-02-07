@@ -38,10 +38,14 @@ import {
 	EDIT_DONATION_START,
 	EDIT_DONATION_SUCCESS,
 	EDIT_DONATION_FAILURE,
+	GET_ALL_DONATIONS_SCHOOL_START,
+	GET_ALL_DONATIONS_SCHOOL_SUCCESS,
+	GET_ALL_DONATIONS_SCHOOL_FAILURE,
 } from '../actions/';
 
 const initialState = {
 	isLoading: false,
+	//user data
 	firstName: '',
 	lastName: '',
 	userRole: '',
@@ -50,22 +54,28 @@ const initialState = {
 	password: '',
 	id: '',
 	token: '',
-	registerRedirect: false,
+	// registerRedirect: false,
+	//school data
 	schools: [],
 	schoolData: [],
+	schoolEdit: '',
+
+	//donation data
 	schoolDonations: [],
 	isEditingDonation: false,
 	getAllSchoolIsLoading: false,
 	donationsByUser: [],
-	schoolEdit: '',
 	//ERRORS
 	deleteError: '',
 	editError: '',
+	loginError: '',
+	registerError: '',
 	//componentDidUpdate booleans
 	getAllSchoolIsUpdating: false,
 	schoolDonationsIsUpdating: false,
 	schoolDonationsIsDeleting: false,
-	schoolInfoIsUpdating: false,
+	//Donations
+	totalDonationsBySchool: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -85,20 +95,19 @@ const reducer = (state = initialState, action) => {
 		case REGISTER_FAILURE:
 			return {
 				...state,
-				error: action.payload.message,
-				registerRedirect: false,
+				registerError: action.payload.message,
 				isLoading: false,
 			};
 		//LOGIN
 		case LOGIN_START:
 			return {
 				...state,
-				isLoading: true,
+				loginIsLoading: true,
 			};
 		case LOGIN_SUCCESS:
 			return {
 				...state,
-				isLoading: false,
+				loginIsLoading: false,
 
 				token: action.payload.data,
 				user: {
@@ -110,9 +119,9 @@ const reducer = (state = initialState, action) => {
 		case LOGIN_FAILURE:
 			return {
 				...state,
-				isLoading: false,
+				loginIsLoading: false,
 
-				error: action.payload.data,
+				loginError: action.payload.message,
 			};
 		//USERINFO
 		case GET_USERINFO_START:
@@ -200,10 +209,13 @@ const reducer = (state = initialState, action) => {
 				schoolData: action.payload,
 				schoolDonationsIsUpdating: false,
 				schoolDonationsIsDeleting: false,
-				schoolInfoIsUpdating: false,
 			};
 		case GET_SCHOOLDATA_FAILURE:
-			return { ...state, schoolDonationsIsUpdating: false, schoolDonationsIsDeleting: false, schoolInfoIsUpdating: false, };
+			return {
+				...state,
+				schoolDonationsIsUpdating: false,
+				schoolDonationsIsDeleting: false,
+			};
 		//DONATIONS
 		case GET_SCHOOL_DONATIONS_START:
 			return { ...state };
@@ -212,28 +224,26 @@ const reducer = (state = initialState, action) => {
 				...state,
 				schoolDonations: action.payload,
 				schoolDonationsIsUpdating: false,
-				schoolInfoIsUpdating: false
 			};
 		case GET_SCHOOL_DONATIONS_FAILURE:
-			return { ...state, schoolDonationsIsUpdating: false,
-			schoolInfoIsUpdating:false };
+			return { ...state, schoolDonationsIsUpdating: false, schoolInfoIsUpdating: false };
 		//SCHOOL EDIT
 		case SCHOOL_EDIT_START:
 			return {
 				...state,
-				schoolEdit:''
 				//  isEditingDonation: true
 			};
 		case SCHOOL_EDIT_SUCCESS:
 			return {
 				...state,
-				schoolInfoIsUpdating: true,
-				schoolEdit: action.payload.data
-				
+				isEditingDonation: false,
+				// firstName: action.payload.firstName,
+				// lastName: action.payload.lastName,
+				// email: action.payload.email,
+				schoolEdit: action.payload,
 			};
 		case SCHOOL_EDIT_FAILURE:
-			return { ...state, schoolEdit: '',
-			schoolInfoIsUpdating: false, };
+			return { ...state, schoolEdit: '', schoolInfoIsUpdating: false };
 		//donationByUser
 		case USER_DONATIONS_START:
 			return { ...state };
@@ -281,6 +291,21 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				editError: action.payload.message,
+			};
+		//get all donations by school id
+		case GET_ALL_DONATIONS_SCHOOL_START:
+			return {
+				...state,
+			};
+		case GET_ALL_DONATIONS_SCHOOL_SUCCESS:
+			console.group(action.payload);
+			return {
+				...state,
+				totalDonationsBySchool: action.payload.data.totalReceived,
+			};
+		case GET_ALL_DONATIONS_SCHOOL_FAILURE:
+			return {
+				...state,
 			};
 
 		default:

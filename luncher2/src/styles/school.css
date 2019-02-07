@@ -1,11 +1,33 @@
-.schoolRow {
+/* 
+blue - #180aaf
+gray - #4c4c4c
+orange - #f9a03f
+white - #fefff2
+pink - #c2095a
+*/
+.schoolItem {
 	display: flex;
+	width: 100%;
+	/* flex-direction: column; */
+	justify-content: space-between;
 	align-items: center;
 	padding: 5px;
+	/* width: 240px;
+	height: 240px; */
+	border: 1px solid black;
+	border-radius: 4px;
+	padding: 5px;
+	margin: 5px;
+	font-weight: 500;
 }
-.schoolRow:nth-child(odd) {
+.schoolItem:hover {
+	background-color: #f9a03f;
+	color: white;
+	text-decoration: none;
+}
+/* .schoolItem:nth-child(odd) {
 	background-color: rgb(240, 230, 217);
-}
+} */
 .schoolImg {
 	height: 100px;
 	width: auto;
@@ -25,4 +47,13 @@
 .far {
 	padding: 5px;
 	cursor: pointer;
+}
+.schoolItem_left {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.schoolItem_right {
+	display: flex;
+	flex-direction: column;
 }

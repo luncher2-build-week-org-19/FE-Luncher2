@@ -19,20 +19,20 @@ class App extends Component {
 		this.state = {
 			loginKey: '',
 			id: '',
-			userName: '',
+			userName: ''
 		};
 	}
 
 	render() {
 		return (
-			<div className="App">
+			<div className='App'>
 				<Navigation user={this.props.username} />
 
-				<Route exact path="/" component={Home} />
-				<Route path="/login" component={Login} />
+				<Route exact path='/' component={Home} />
+				<Route path='/login' component={Login} />
 				{/* <Route path="/register" component={Register} /> */}
-				<Route path="/profile/" component={Profile} />
-				<Route path="/school/:id" render={props => <SchoolData {...props} />} />
+				<Route path='/profile/' component={Profile} />
+				<Route path='/school/:id' render={props => <SchoolData {...props} />} />
 			</div>
 		);
 	}
@@ -47,8 +47,8 @@ const mapStateToProps = state => {
 			lastName: state.lastName,
 			username: state.username,
 			userRole: state.userRole,
-			email: state.email,
-		},
+			email: state.email
+		}
 	};
 };
 

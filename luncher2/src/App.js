@@ -48,7 +48,7 @@ class App extends Component {
 const mapStateToProps = state => {
 	return {
 		id: state.id,
-		userInfoError: stable.userInfoError,
+		userInfoError: state.userInfoError,
 		user: {
 			id: state.id,
 			firstName: state.firstName,

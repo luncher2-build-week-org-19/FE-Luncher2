@@ -10,7 +10,7 @@ export {
 	GET_USERINFO_FAILURE,
 	registerUser,
 	loginUser,
-	getUserInfo
+	getUserInfo,
 } from './login_action';
 
 export {
@@ -26,9 +26,9 @@ export {
 	GET_SCHOOLDATA_START,
 	GET_SCHOOLDATA_SUCCESS,
 	GET_SCHOOLDATA_FAILURE,
-	GET_SCHOOL_DONATIONS_START,
-	GET_SCHOOL_DONATIONS_SUCCESS,
-	GET_SCHOOL_DONATIONS_FAILURE,
+	// GET_SCHOOL_DONATIONS_START,
+	// GET_SCHOOL_DONATIONS_SUCCESS,
+	// GET_SCHOOL_DONATIONS_FAILURE,
 	SCHOOL_EDIT_START,
 	SCHOOL_EDIT_SUCCESS,
 	SCHOOL_EDIT_FAILURE,
@@ -36,7 +36,7 @@ export {
 	deleteSchool,
 	addSchool,
 	getSchoolData,
-	schoolEdit
+	schoolEdit,
 } from './school_action.js';
 
 export {
@@ -55,10 +55,14 @@ export {
 	GET_SCHOOL_DONATIONS_START_2,
 	GET_SCHOOL_DONATIONS_SUCCESS_2,
 	GET_SCHOOL_DONATIONS_FAILURE_2,
+	GET_SCHOOL_DONATIONS_START,
+	GET_SCHOOL_DONATIONS_SUCCESS,
+	GET_SCHOOL_DONATIONS_FAILURE,
 	addDonation,
 	editDonation,
 	deleteDonation,
-	getAllDondationsBySchool
+	getAllDondationsBySchool,
+	getSchoolDonations,
 } from './donation_actions';
 
 export {
@@ -73,5 +77,5 @@ export {
 	USER_DONATIONS_FAILURE,
 	editUser,
 	deleteUser,
-	donationByUser
+	donationByUser,
 } from './profile_action';

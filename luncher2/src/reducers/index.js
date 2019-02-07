@@ -211,7 +211,7 @@ const reducer = (state = initialState, action) => {
 			};
 		//GET SCHOOL DATA
 		case GET_SCHOOLDATA_START:
-			return { ...state, schoolDonations: [] };
+			return { ...state, };
 		case GET_SCHOOLDATA_SUCCESS:
 			return {
 				...state,
@@ -263,10 +263,10 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				isSchoolEditing: false,
-				schoolEdit: action.payload,
+				schoolData: action.payload,
 			};
 		case SCHOOL_EDIT_FAILURE:
-			return { ...state, schoolEdit: '', schoolInfoIsUpdating: false };
+			return { ...state, schoolData: '', schoolInfoIsUpdating: false };
 		//donationByUser
 		case USER_DONATIONS_START:
 			return { ...state };
@@ -276,7 +276,8 @@ const reducer = (state = initialState, action) => {
 			return { ...state };
 		//Add Donation
 		case ADD_DONATION_START:
-			return { ...state };
+			return { ...state,
+			schoolDonationsIsUpdating: false };
 		case ADD_DONATION_SUCCESS:
 			return {
 				...state,

@@ -101,19 +101,20 @@ export const getSchoolData = id => dispatch => {
 	})
 		.then(res => {
 			dispatch({ type: GET_SCHOOLDATA_SUCCESS, payload: res.data[0] });
-			dispatch({ type: GET_SCHOOL_DONATIONS_START });
-			axios({
-				method: 'get',
-				url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/schools/${id}`,
-			})
-				.then(res =>
-					dispatch({
-						type: GET_SCHOOL_DONATIONS_SUCCESS,
-						payload: res.data,
-					})
-				)
-				.catch(err => dispatch({ type: GET_SCHOOL_DONATIONS_FAILURE, payload: err }));
 		})
+		// 	dispatch({ type: GET_SCHOOL_DONATIONS_START });
+		// 	axios({
+		// 		method: 'get',
+		// 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/schools/${id}`,
+		// 	})
+		// 		.then(res =>
+		// 			dispatch({
+		// 				type: GET_SCHOOL_DONATIONS_SUCCESS,
+		// 				payload: res.data,
+		// 			})
+		// 		)
+		// 		.catch(err => dispatch({ type: GET_SCHOOL_DONATIONS_FAILURE, payload: err }));
+		// })
 		.catch(err => dispatch({ type: GET_SCHOOLDATA_FAILURE, payload: err }));
 };
 

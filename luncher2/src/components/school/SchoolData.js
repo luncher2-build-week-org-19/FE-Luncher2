@@ -10,6 +10,7 @@ import {
 	addDonation,
 	deleteDonation,
 	editDonation,
+	getSchoolDonations,
 } from '../../actions';
 import { Button, Input, Form } from 'reactstrap';
 import DonationForm from './DonationForm';
@@ -36,30 +37,43 @@ class SchoolData extends React.Component {
 		let userToken = localStorage.getItem('userToken');
 
 		this.props.getSchoolData(this.props.match.params.id);
+		this.props.getSchoolDonations(this.props.match.params.id);
 		this.props.getUserInfo(userToken);
 	}
 	componentDidUpdate(prevProps) {
 		// Typical usage (don't forget to compare props):
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
-			if (this.props.schoolDonationsIsUpdating) {
+			if (this.props.schoolDonationsIsUpdating=== !prevProps.schoolDonationsIsUpdating) {
+				console.log('MDU');
 				this.props.getSchoolData(this.props.match.params.id);
-			}
-		}
-		if (this.props.schoolDonations !== prevProps.schoolDonations) {
-			if (this.props.schoolDonationsIsDeleting) {
-				this.props.getSchoolData(this.props.match.params.id);
-			}
-		}
-		if (this.props.schoolEdit !== prevProps.schoolEdit) {
-			if (this.props.schoolInfoIsUpdating) {
-				this.props.getSchoolData(this.props.match.params.id);
+				// this.props.getSchoolDonations(this.props.match.params.id);
 			}
 		}
 		if (this.props.schoolData !== prevProps.schoolData) {
-			if (this.props.isSchoolEditing) {
-				this.props.getSchoolData(this.props.match.params.id);
+			if (!this.props.isSchoolEditing) {
+				this.props.getSchoolDonations(this.props.match.params.id);
 			}
 		}
+
+		if (this.props.schoolDonations !== prevProps.schoolDonations) {
+			if (this.props.schoolDonationsIsDeleting === !prevProps.schoolDonationsIsDeleting) {
+				this.props.getSchoolData(this.props.match.params.id);
+				this.props.getSchoolDonations(this.props.match.params.id);
+			}
+		}
+		// if (this.props.schoolEdit !== prevProps.schoolEdit) {
+		// 	if (this.props.schoolInfoIsUpdating) {
+		// 		this.props.getSchoolData(this.props.match.params.id);
+		// 		this.props.getSchoolDonations(this.props.match.params.id);
+		// 	}
+		// }
+		// if (this.props.schoolData !== prevProps.schoolData) {
+		// 	if (this.props.isSchoolEditing) {
+		// 		this.props.getSchoolData(this.props.match.params.id);
+		// 		this.props.getSchoolDonations(this.props.match.params.id);
+
+		// 	}
+		// }
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
 			if (this.props.isEditingDonation) {
 				this.props.getSchoolData(this.props.match.params.id);
@@ -181,20 +195,28 @@ class SchoolData extends React.Component {
 								className={`editSchoolInfo ${
 									this.state.isEditingSchool ? '' : 'hide'
 								}`}>
-								<Input className='editSchoolInput'
+								<Input
+									className="editSchoolInput"
 									onChange={e => this.handleChange(e)}
 									name="schoolName"
 									value={this.state.schoolName}
 									placeholder="School Name"
 								/>
-								<Input className='editSchoolInput'
+								<Input
+									className="editSchoolInput"
 									onChange={e => this.handleChange(e)}
 									name="image"
 									value={this.state.image}
 									placeholder="School Image"
 								/>
-								<Button className='editSchoolBtn' onClick={e => this.submitEdit(e)}>Submit</Button>
-								<Button className='editSchoolBtn' onClick={e => this.closeEditSchool(e)}>Close </Button>
+								<Button className="editSchoolBtn" onClick={e => this.submitEdit(e)}>
+									Submit
+								</Button>
+								<Button
+									className="editSchoolBtn"
+									onClick={e => this.closeEditSchool(e)}>
+									Close{' '}
+								</Button>
 							</Form>
 
 							{this.props.user.userRole === 'admin' ? (
@@ -308,5 +330,6 @@ export default connect(
 		addDonation,
 		deleteDonation,
 		editDonation,
+		getSchoolDonations,
 	}
 )(SchoolData);

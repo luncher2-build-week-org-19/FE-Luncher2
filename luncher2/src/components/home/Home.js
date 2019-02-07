@@ -67,7 +67,7 @@ class Home extends React.Component {
 				<h1>Welcome {this.props.user.firstName}!</h1>
 
 				{this.props.isLoading && (
-					<Loader type='ThreeDots' color='#somecolor' height={80} width={80} />
+					<Loader type='ThreeDots' color='#f9a03f' height={80} width={80} />
 				)}
 				{this.props.user.userRole === 'admin' ? (
 					<Form

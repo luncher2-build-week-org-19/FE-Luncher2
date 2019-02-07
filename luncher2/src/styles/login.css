@@ -69,5 +69,7 @@ pink - #c2095a
 	cursor: pointer;
 }
 .loginLoader {
-	margin: 45% auto;
+	position: absolute;
+	left: 45%;
+	top: 45%;
 }

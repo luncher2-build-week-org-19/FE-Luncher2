@@ -64,13 +64,9 @@ class Login extends React.Component {
 		return (
 			<div className='wrapper'>
 				{this.props.loginIsLoading && (
-					<Loader
-						className='loginLoader'
-						type='ThreeDots'
-						color='orange'
-						height={80}
-						width={80}
-					/>
+					<div className='loginLoader'>
+						<Loader type='ThreeDots' color='#f9a03f' height={80} width={80} />
+					</div>
 				)}
 				<div
 					className={`formWrapper ${this.props.loginIsLoading ? 'hide' : ''}`}
@@ -82,6 +78,10 @@ class Login extends React.Component {
 					/>
 
 					<Form className={`loginForm ${this.state.loginForm ? '' : 'hide'}`}>
+						<p className={this.props.loginError ? 'error' : 'hide'}>
+							{this.props.loginError ? 'Incorrect login' : null}
+						</p>
+
 						<Input
 							type='text'
 							name='userName'
@@ -99,7 +99,7 @@ class Login extends React.Component {
 						/>
 						<Button onClick={() => this.handleSubmitLogin()}>Login</Button>
 						<p>
-							Need an account?{' '}
+							Need an account?
 							<span className='link' onClick={e => this.registerForm(e)}>
 								Register
 							</span>
@@ -108,6 +108,12 @@ class Login extends React.Component {
 					<Form
 						className={`registerForm ${this.state.loginForm ? 'hide' : ''}`}
 					>
+						<p className={this.props.registerError ? 'error' : 'hide'}>
+							{this.props.registerError
+								? 'Username and/or email already in use'
+								: null}
+						</p>
+
 						<Input
 							name='firstName'
 							autoComplete='on'
@@ -186,7 +192,9 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		loginIsLoading: state.loginIsLoading
+		loginIsLoading: state.loginIsLoading,
+		loginError: state.loginError,
+		registerError: state.registerError
 	};
 };
 

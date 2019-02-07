@@ -19,24 +19,19 @@ export const GET_USERINFO_FAILURE = 'GET_USERINFO_FAILURE';
 
 export const registerUser = user => dispatch => {
 	dispatch({ type: REGISTER_START });
-	console.log('registerUser', user);
 	axios({
 		method: 'post',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/register`,
-		// headers: {
-		// 	Authorization: token,
-		// },
 		data: {
 			email: user.email,
 			firstName: user.firstName,
 			lastName: user.lastName,
 			password: user.password,
 			userRole: user.userRole,
-			userName: user.userName,
-		},
+			userName: user.userName
+		}
 	})
 		.then(res => {
-			console.log('response', res);
 			dispatch({ type: REGISTER_SUCCESS, payload: res });
 			localStorage.setItem('id', res.data[0]);
 			window.location.reload();
@@ -45,18 +40,14 @@ export const registerUser = user => dispatch => {
 };
 
 export const loginUser = user => dispatch => {
-	console.log(user);
 	dispatch({ type: LOGIN_START });
 	axios({
 		method: 'post',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/login`,
-		// headers: {
-		// 	Authorization: token,
-		// },
 		data: {
 			password: user.password,
-			userName: user.userName,
-		},
+			userName: user.userName
+		}
 	})
 		.then(res => {
 			dispatch({ type: LOGIN_SUCCESS, payload: res });
@@ -68,14 +59,13 @@ export const loginUser = user => dispatch => {
 };
 
 export const getUserInfo = userToken => dispatch => {
-	console.log('getUser action', userToken);
 	dispatch({ type: GET_USERINFO_START });
 	axios({
 		method: 'get',
 		url: 'https://luncher-2-bw-19-lambda.herokuapp.com/users/info',
 		headers: {
-			Authorization: userToken,
-		},
+			Authorization: userToken
+		}
 	})
 		.then(res => dispatch({ type: GET_USERINFO_SUCCESS, payload: res }))
 		.catch(err => dispatch({ type: GET_USERINFO_FAILURE, payload: err }));

@@ -45,6 +45,7 @@ import {
 
 const initialState = {
 	isLoading: false,
+	//user data
 	firstName: '',
 	lastName: '',
 	userRole: '',
@@ -53,17 +54,22 @@ const initialState = {
 	password: '',
 	id: '',
 	token: '',
-	registerRedirect: false,
+	// registerRedirect: false,
+	//school data
 	schools: [],
 	schoolData: [],
+	schoolEdit: '',
+
+	//donation data
 	schoolDonations: [],
 	isEditingDonation: false,
 	getAllSchoolIsLoading: false,
 	donationsByUser: [],
-	schoolEdit: '',
 	//ERRORS
 	deleteError: '',
 	editError: '',
+	loginError: '',
+	registerError: '',
 	//componentDidUpdate booleans
 	getAllSchoolIsUpdating: false,
 	schoolDonationsIsUpdating: false,
@@ -89,8 +95,7 @@ const reducer = (state = initialState, action) => {
 		case REGISTER_FAILURE:
 			return {
 				...state,
-				error: action.payload.message,
-				registerRedirect: false,
+				registerError: action.payload.message,
 				isLoading: false
 			};
 		//LOGIN
@@ -116,7 +121,7 @@ const reducer = (state = initialState, action) => {
 				...state,
 				loginIsLoading: false,
 
-				error: action.payload.data
+				loginError: action.payload.message
 			};
 		//USERINFO
 		case GET_USERINFO_START:

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Navigation from '../navBar/Navigation';
 import { getUserInfo, donationByUser } from '../../actions';
 import ProfileForm from './ProfileForm';
 import { Button } from 'reactstrap';
@@ -13,7 +12,7 @@ class Profile extends React.Component {
 			firstName: '',
 			lastName: '',
 			email: '',
-			isEditingUser: false,
+			isEditingUser: false
 		};
 	}
 	componentDidMount() {
@@ -25,13 +24,13 @@ class Profile extends React.Component {
 		this.setState({
 			firstName: this.props.firstName,
 			lastName: this.props.lastName,
-			email: this.props.email,
+			email: this.props.email
 		});
 	}
 	toggleEdit = e => {
 		e.preventDefault();
 		this.setState({
-			isEditingUser: !this.state.isEditingUser,
+			isEditingUser: !this.state.isEditingUser
 		});
 	};
 	render() {
@@ -47,7 +46,8 @@ class Profile extends React.Component {
 				<Button
 					onClick={e => {
 						this.toggleEdit(e);
-					}}>
+					}}
+				>
 					{this.state.isEditingUser ? 'Close' : 'Edit'}
 				</Button>
 				{this.state.isEditingUser ? (
@@ -56,7 +56,7 @@ class Profile extends React.Component {
 						// profileState={this.state}
 					/>
 				) : null}
-				<div className="userDonations">
+				<div className='userDonations'>
 					{this.props.donationsByUser.map(donation => (
 						<UserDonations key={donation.id} donation={donation} />
 					))}
@@ -73,7 +73,7 @@ const mapStateToProps = state => {
 		username: state.username,
 		userRole: state.userRole,
 		email: state.email,
-		donationsByUser: state.donationsByUser,
+		donationsByUser: state.donationsByUser
 	};
 };
 

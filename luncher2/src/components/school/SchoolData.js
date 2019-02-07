@@ -212,55 +212,57 @@ class SchoolData extends React.Component {
 							</Button>
 						</div>
 						<ul className="donationsList">
-							{this.props.schoolDonations.map(donation => {
-								if (this.props.schoolDonations.length === 0) {
-									return <p>'No donation requests'</p>;
-								}
-
-								return (
-									<div className="donationWrapper" key={donation.id}>
-										<li className="donationRow">
-											<div className="donationInfo">
-												<h4>{donation.title}</h4>
-												<p>{donation.description}</p>
-												<p>${donation.amount}</p>
-											</div>
-											{this.props.userRole === 'admin' ? (
-												<div className="modify">
-													<i
-														className="far fa-edit"
-														onClick={e =>
-															this.editDonation(
-																e,
-																donation,
-																donation.id
-															)
-														}
-													/>
-													<i
-														className="far fa-trash-alt"
-														onClick={e =>
-															this.handleDeleteDonation(
-																e,
-																donation.id
-															)
-														}
-													/>
+							{this.props.schoolDonations.length === 0 ? (
+								<h2>No available donation requests</h2>
+							) : (
+								this.props.schoolDonations.map(donation => {
+									return (
+										<div className="donationWrapper" key={donation.id}>
+											<li className="donationRow">
+												<div className="donationInfo">
+													<h4>{donation.title}</h4>
+													<p>{donation.description}</p>
+													<p>${donation.amount}</p>
 												</div>
-											) : null}
-										</li>
-										<div
-											className={`donationEditForm ${
-												this.state.donationID === donation.id ? '' : 'hide'
-											}`}>
-											<DonationEditForm
-												submitDonation={this.submitDonation}
-												donation={donation}
-											/>
+												{this.props.userRole === 'admin' ? (
+													<div className="modify">
+														<i
+															className="far fa-edit"
+															onClick={e =>
+																this.editDonation(
+																	e,
+																	donation,
+																	donation.id
+																)
+															}
+														/>
+														<i
+															className="far fa-trash-alt"
+															onClick={e =>
+																this.handleDeleteDonation(
+																	e,
+																	donation.id
+																)
+															}
+														/>
+													</div>
+												) : null}
+											</li>
+											<div
+												className={`donationEditForm ${
+													this.state.donationID === donation.id
+														? ''
+														: 'hide'
+												}`}>
+												<DonationEditForm
+													submitDonation={this.submitDonation}
+													donation={donation}
+												/>
+											</div>
 										</div>
-									</div>
-								);
-							})}
+									);
+								})
+							)}
 						</ul>
 					</div>
 				</div>

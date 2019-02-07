@@ -69,7 +69,6 @@ const initialState = {
 	isEditingDonation: false,
 	getAllSchoolIsLoading: false,
 	donationsByUser: [],
-	isEditingDonation: false,
 	//ERRORS
 	deleteError: '',
 	editError: '',

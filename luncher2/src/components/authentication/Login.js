@@ -64,7 +64,13 @@ class Login extends React.Component {
 		return (
 			<div className='wrapper'>
 				{this.props.loginIsLoading && (
-					<Loader type='ThreeDots' color='orange' height={80} width={80} />
+					<Loader
+						className='loginLoader'
+						type='ThreeDots'
+						color='orange'
+						height={80}
+						width={80}
+					/>
 				)}
 				<div
 					className={`formWrapper ${this.props.loginIsLoading ? 'hide' : ''}`}

@@ -5,7 +5,7 @@
 
 import axios from 'axios';
 
-export const EDIT_USER_START = 'EDIT_USER_FAILURE ';
+export const EDIT_USER_START = 'EDIT_USER_START ';
 export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
 export const EDIT_USER_FAILURE = 'EDIT_USER_FAILURE';
 
@@ -23,21 +23,17 @@ export const editUser = (userToken, user) => dispatch => {
 		method: 'put',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/update`,
 		headers: {
-			Authorization: userToken
+			Authorization: userToken,
 		},
 		data: {
 			firstName: user.firstName,
 			lastName: user.lastName,
 			email: user.email,
-			password: user.password
-		}
+			password: user.password,
+		},
 	})
-		.then(
-			res => (
-				{ type: EDIT_USER_SUCCESS, payload: res }, window.location.reload()
-			)
-		)
-		.catch(err => ({ type: EDIT_USER_FAILURE, payload: err }));
+		.then(res => dispatch({ type: EDIT_USER_SUCCESS, payload: res }))
+		.catch(err => dispatch({ type: EDIT_USER_FAILURE, payload: err }));
 };
 
 export const deleteUser = userToken => dispatch => {
@@ -46,14 +42,14 @@ export const deleteUser = userToken => dispatch => {
 		method: 'delete',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/delete/`,
 		headers: {
-			Authorization: userToken
-		}
+			Authorization: userToken,
+		},
 	})
 		.then(res => {
 			dispatch(
 				{ type: DELETE_USER_SUCCESS, payload: res },
-				localStorage.removeItem('userToken'),
-				window.location.reload()
+				localStorage.removeItem('userToken')
+				// window.location.reload()
 			);
 		})
 		.catch(err => dispatch({ type: DELETE_USER_FAILURE, payload: err }));
@@ -63,7 +59,7 @@ export const donationByUser = id => dispatch => {
 	dispatch({ type: USER_DONATIONS_START });
 	axios({
 		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/users/${id}`
+		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/users/${id}`,
 	})
 		.then(res => {
 			dispatch({ type: USER_DONATIONS_SUCCESS, payload: res });

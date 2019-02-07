@@ -12,7 +12,6 @@ class ProfileForm extends React.Component {
 			lastName: '',
 			email: '',
 			password: '',
-			isEditingUser: '',
 		};
 	}
 
@@ -51,7 +50,11 @@ class ProfileForm extends React.Component {
 
 	render() {
 		return (
-			<Form>
+			<Form
+				className="editProfileForm"
+				onSubmit={e => {
+					this.editUser(e);
+				}}>
 				<Input
 					name="firstName"
 					value={this.state.firstName}
@@ -79,12 +82,7 @@ class ProfileForm extends React.Component {
 					placeholder="Please re-enter password"
 					onChange={e => this.handleChange(e)}
 				/>
-				<Button
-					onClick={e => {
-						this.editUser(e);
-					}}>
-					Submit Changes
-				</Button>
+				<Button>Submit Changes</Button>
 			</Form>
 		);
 	}

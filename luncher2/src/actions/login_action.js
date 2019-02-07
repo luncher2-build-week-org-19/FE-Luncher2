@@ -67,7 +67,9 @@ export const getUserInfo = userToken => dispatch => {
 			Authorization: userToken,
 		},
 	})
-		.then(res => dispatch({ type: GET_USERINFO_SUCCESS, payload: res }))
+		.then(res => {
+			dispatch({ type: GET_USERINFO_SUCCESS, payload: res });
+		})
 		.catch(err => {
 			localStorage.clear();
 			window.location.reload('/');

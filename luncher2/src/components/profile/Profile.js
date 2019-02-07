@@ -12,7 +12,7 @@ class Profile extends React.Component {
 			firstName: '',
 			lastName: '',
 			email: '',
-			isEditingUser: false
+			isEditingUser: false,
 		};
 	}
 	componentDidMount() {
@@ -24,20 +24,28 @@ class Profile extends React.Component {
 		this.setState({
 			firstName: this.props.firstName,
 			lastName: this.props.lastName,
-			email: this.props.email
+			email: this.props.email,
+			isEditingUser: false,
 		});
 	}
+	componentDidUpdate = prevProps => {
+		let userToken = localStorage.getItem('userToken');
+
+		if (this.props.user !== prevProps.user) {
+			if (this.props.isEditingUser) {
+				this.props.getUserInfo(userToken);
+			}
+		}
+	};
 	toggleEdit = e => {
 		e.preventDefault();
 		this.setState({
-			isEditingUser: !this.state.isEditingUser
+			isEditingUser: !this.state.isEditingUser,
 		});
 	};
 	render() {
 		return (
 			<div>
-				{/* <Navigation user={this.props.username} /> */}
-
 				<h1>
 					{this.props.firstName} {this.props.lastName}
 				</h1>
@@ -46,17 +54,13 @@ class Profile extends React.Component {
 				<Button
 					onClick={e => {
 						this.toggleEdit(e);
-					}}
-				>
+					}}>
 					{this.state.isEditingUser ? 'Close' : 'Edit'}
 				</Button>
 				{this.state.isEditingUser ? (
-					<ProfileForm
-						isEditingUser={this.state.isEditingUser}
-						// profileState={this.state}
-					/>
+					<ProfileForm isEditingUser={this.state.isEditingUser} />
 				) : null}
-				<div className='userDonations'>
+				<div className="userDonations">
 					{this.props.donationsByUser.map(donation => (
 						<UserDonations key={donation.id} donation={donation} />
 					))}
@@ -67,13 +71,15 @@ class Profile extends React.Component {
 }
 const mapStateToProps = state => {
 	return {
+		user: state.user,
 		id: state.id,
 		firstName: state.firstName,
 		lastName: state.lastName,
 		username: state.username,
 		userRole: state.userRole,
 		email: state.email,
-		donationsByUser: state.donationsByUser
+		donationsByUser: state.donationsByUser,
+		isEditingUser: state.isEditingUser,
 	};
 };
 

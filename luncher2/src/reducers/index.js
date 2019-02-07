@@ -44,11 +44,16 @@ import {
 	GET_ALL_DONATIONS_SCHOOL_START,
 	GET_ALL_DONATIONS_SCHOOL_SUCCESS,
 	GET_ALL_DONATIONS_SCHOOL_FAILURE,
+	EDIT_USER_START,
+	EDIT_USER_SUCCESS,
+	EDIT_USER_FAILURE,
 } from '../actions/';
 
 const initialState = {
 	isLoading: false,
 	//user data
+	user: [],
+	isEditingUser: false,
 	firstName: '',
 	lastName: '',
 	userRole: '',
@@ -63,7 +68,7 @@ const initialState = {
 	schoolData: [],
 	schoolEdit: '',
 	isSchoolEditing: false,
-	schoolAdded:[],
+	schoolAdded: [],
 
 	//donation data
 	schoolDonations: [],
@@ -114,7 +119,6 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				loginIsLoading: false,
-
 				token: action.payload.data,
 				user: {
 					id: action.payload.data.user.id,
@@ -126,7 +130,6 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				loginIsLoading: false,
-
 				loginError: action.payload.message,
 			};
 		//USERINFO
@@ -136,11 +139,10 @@ const reducer = (state = initialState, action) => {
 				isLoading: true,
 			};
 		case GET_USERINFO_SUCCESS:
-			console.log('userninfo', action.payload);
 			return {
 				...state,
+				user: action.payload.data[0],
 				isLoading: false,
-
 				id: action.payload.id,
 				username: action.payload.data[0].username,
 				email: action.payload.data[0].email,
@@ -192,7 +194,7 @@ const reducer = (state = initialState, action) => {
 		case ADD_SCHOOL_START:
 			return {
 				...state,
-				schoolAdded:[]
+				schoolAdded: [],
 				// isLoading: true,
 			};
 		case ADD_SCHOOL_SUCCESS:
@@ -205,7 +207,7 @@ const reducer = (state = initialState, action) => {
 			return {
 				error: action.payload,
 				isLoading: false,
-				schoolAdded:[]
+				schoolAdded: [],
 			};
 		//GET SCHOOL DATA
 		case GET_SCHOOLDATA_START:
@@ -328,6 +330,24 @@ const reducer = (state = initialState, action) => {
 		case GET_ALL_DONATIONS_SCHOOL_FAILURE:
 			return {
 				...state,
+			};
+		//EDIT USER
+		case EDIT_USER_START:
+			return {
+				...state,
+				user: [action.payload],
+
+				isEditingUser: true,
+			};
+		case EDIT_USER_SUCCESS:
+			return {
+				...state,
+				isEditingUser: false,
+			};
+		case EDIT_USER_FAILURE:
+			return {
+				...state,
+				isEditingUser: false,
 			};
 
 		default:

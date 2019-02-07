@@ -19,20 +19,27 @@ class App extends Component {
 		this.state = {
 			loginKey: '',
 			id: '',
-			userName: ''
+			userName: '',
 		};
 	}
-
+	componentDidMount() {
+		if (this.props.userInfoError) {
+			localStorage.removeItem('userToken');
+			localStorage.removeItem('userName');
+			localStorage.removeItem('userID');
+			window.location.reload();
+		}
+	}
 	render() {
 		return (
-			<div className='App'>
+			<div className="App">
 				<Navigation user={this.props.username} />
 
-				<Route exact path='/' component={Home} />
-				<Route path='/login' component={Login} />
+				<Route exact path="/" component={Home} />
+				<Route path="/login" component={Login} />
 				{/* <Route path="/register" component={Register} /> */}
-				<Route path='/profile/' component={Profile} />
-				<Route path='/school/:id' render={props => <SchoolData {...props} />} />
+				<Route path="/profile/" component={Profile} />
+				<Route path="/school/:id" render={props => <SchoolData {...props} />} />
 			</div>
 		);
 	}
@@ -41,14 +48,15 @@ class App extends Component {
 const mapStateToProps = state => {
 	return {
 		id: state.id,
+		userInfoError: stable.userInfoError,
 		user: {
 			id: state.id,
 			firstName: state.firstName,
 			lastName: state.lastName,
 			username: state.username,
 			userRole: state.userRole,
-			email: state.email
-		}
+			email: state.email,
+		},
 	};
 };
 

@@ -70,6 +70,7 @@ const initialState = {
 	editError: '',
 	loginError: '',
 	registerError: '',
+	userInfoError:'',
 	//componentDidUpdate booleans
 	getAllSchoolIsUpdating: false,
 	schoolDonationsIsUpdating: false,
@@ -144,7 +145,7 @@ const reducer = (state = initialState, action) => {
 			};
 		case GET_USERINFO_FAILURE:
 			return {
-				error: action.payload,
+				userInfoError: action.payload.response.data.message,
 				isLoading: false,
 			};
 		//GET ALL SCHOOLS

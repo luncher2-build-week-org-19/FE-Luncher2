@@ -63,6 +63,7 @@ const initialState = {
 	schoolData: [],
 	schoolEdit: '',
 	isSchoolEditing: false,
+	schoolAdded:[],
 
 	//donation data
 	schoolDonations: [],
@@ -191,18 +192,20 @@ const reducer = (state = initialState, action) => {
 		case ADD_SCHOOL_START:
 			return {
 				...state,
-				isLoading: true,
+				schoolAdded:[]
+				// isLoading: true,
 			};
 		case ADD_SCHOOL_SUCCESS:
 			return {
 				...state,
-				isLoading: false,
+				schoolAdded: [...state.schoolAdded, action.payload],
 				getAllSchoolIsUpdating: true,
 			};
 		case ADD_SCHOOL_FAILURE:
 			return {
 				error: action.payload,
 				isLoading: false,
+				schoolAdded:[]
 			};
 		//GET SCHOOL DATA
 		case GET_SCHOOLDATA_START:

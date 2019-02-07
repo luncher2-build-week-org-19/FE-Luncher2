@@ -8,7 +8,7 @@ import {
 	getAllSchools,
 	deleteSchool,
 	addSchool,
-	getAllDondationsBySchool
+	getAllDondationsBySchool,
 } from '../../actions';
 
 //style
@@ -22,21 +22,21 @@ class Home extends React.Component {
 			image: '',
 			donation: '',
 			isEditing: false,
-			isAdding: false
+			isAdding: false,
 		};
 	}
 	componentDidMount() {
 		let userToken = localStorage.getItem('userToken');
 		this.props.getAllSchools(userToken);
 		this.props.getUserInfo(userToken);
-		this.props.getAllDondationsBySchool(1);
+		// this.props.getAllDondationsBySchool(1);
 	}
 	componentDidUpdate(prevProps) {
-		// Typical usage (don't forget to compare props):
 		let userToken = localStorage.getItem('userToken');
 
-		if (this.props.schools !== prevProps.schools) {
-			if (this.props.getAllSchoolIsUpdating) {
+		if (this.props.getAllSchoolIsUpdating) {
+			if (this.props.schoolAdded !== prevProps.schoolAdded) {
+				console.log('firing');
 				this.props.getAllSchools(userToken);
 			}
 		}
@@ -44,7 +44,7 @@ class Home extends React.Component {
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
 		});
 	};
 	handleAddSchool = e => {
@@ -52,7 +52,7 @@ class Home extends React.Component {
 		let userToken = localStorage.getItem('userToken');
 		let school = {
 			image: this.state.image,
-			schoolname: this.state.schoolname
+			schoolname: this.state.schoolname,
 		};
 		this.props.addSchool(userToken, school);
 		this.props.getAllSchools(userToken);
@@ -67,38 +67,37 @@ class Home extends React.Component {
 				<h1>Welcome {this.props.user.firstName}!</h1>
 
 				{this.props.isLoading && (
-					<Loader type='ThreeDots' color='#f9a03f' height={80} width={80} />
+					<Loader type="ThreeDots" color="#f9a03f" height={80} width={80} />
 				)}
 				{this.props.user.userRole === 'admin' ? (
 					<Form
-						className='addSchool'
+						className="addSchool"
 						onSubmit={e => {
 							this.handleAddSchool(e);
-						}}
-					>
-						<div className='addSchoolInputs'>
+						}}>
+						<div className="addSchoolInputs">
 							<Input
-								name='schoolname'
+								name="schoolname"
 								value={this.state.schoolname}
 								required
 								onChange={e => {
 									this.handleChange(e);
 								}}
-								placeholder='School Name'
+								placeholder="School Name"
 							/>
 							<Input
-								name='image'
+								name="image"
 								value={this.state.image}
 								onChange={e => {
 									this.handleChange(e);
 								}}
-								placeholder='Image URL'
+								placeholder="Image URL"
 							/>
 						</div>
 						<Button>Add</Button>
 					</Form>
 				) : null}
-				<div className='schoolList'>
+				<div className="schoolList">
 					{this.props.schools.map(school => (
 						<School
 							key={school.id}
@@ -122,12 +121,13 @@ const mapStateToProps = state => {
 			lastName: state.lastName,
 			username: state.username,
 			userRole: state.userRole,
-			email: state.email
+			email: state.email,
 		},
 		schools: state.schools,
 		username: state.username,
 		getAllSchoolIsLoading: state.getAllSchoolIsLoading,
-		totalDonationsBySchool: state.totalDonationsBySchool
+		totalDonationsBySchool: state.totalDonationsBySchool,
+		schoolAdded: state.schoolAdded,
 	};
 };
 
@@ -138,6 +138,6 @@ export default connect(
 		getAllSchools,
 		deleteSchool,
 		addSchool,
-		getAllDondationsBySchool
+		getAllDondationsBySchool,
 	}
 )(Home);

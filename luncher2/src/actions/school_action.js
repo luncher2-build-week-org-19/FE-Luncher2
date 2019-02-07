@@ -52,13 +52,20 @@ export const deleteSchool = (userToken, schoolID) => dispatch => {
 	})
 		.then(res => {
 			dispatch({ type: DELETE_SCHOOL_SUCCESS, payload: res });
-			window.location.reload('/');
+			dispatch({ type: GET_ALLSCHOOLS_START });
+			axios({
+				method: 'get',
+				url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools`,
+			})
+				.then(res => {
+					dispatch({ type: GET_ALLSCHOOLS_SUCCESS, payload: res });
+				})
+				.catch(err => dispatch({ type: GET_ALLSCHOOLS_FAILURE, payload: err }));
 		})
 		.catch(err => dispatch({ type: DELETE_SCHOOL_FAILURE, payload: err }));
 };
 
 export const addSchool = (userToken, school) => dispatch => {
-	console.log('add action', school);
 	dispatch({ type: ADD_SCHOOL_START });
 	axios({
 		method: 'post',
@@ -72,7 +79,16 @@ export const addSchool = (userToken, school) => dispatch => {
 		},
 	})
 		.then(res => {
-			dispatch({ type: ADD_SCHOOL_SUCCESS, payload: res });
+			dispatch({ type: ADD_SCHOOL_SUCCESS, payload: res.data });
+			dispatch({ type: GET_ALLSCHOOLS_START });
+			axios({
+				method: 'get',
+				url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools`,
+			})
+				.then(res => {
+					dispatch({ type: GET_ALLSCHOOLS_SUCCESS, payload: res });
+				})
+				.catch(err => dispatch({ type: GET_ALLSCHOOLS_FAILURE, payload: err }));
 		})
 		.catch(err => dispatch({ type: ADD_SCHOOL_FAILURE, payload: err }));
 };

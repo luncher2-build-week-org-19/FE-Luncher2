@@ -4,6 +4,7 @@ import { getUserInfo, donationByUser } from '../../actions';
 import ProfileForm from './ProfileForm';
 import { Button } from 'reactstrap';
 import UserDonations from './UserDonations';
+import '../../styles/profile.css';
 
 class Profile extends React.Component {
 	constructor(props) {
@@ -45,25 +46,29 @@ class Profile extends React.Component {
 	};
 	render() {
 		return (
-			<div>
+			<div className="profileWrapper">
 				<h1>
 					{this.props.firstName} {this.props.lastName}
 				</h1>
 				<p>Role: {this.props.userRole}</p>
 				<p>Email: {this.props.email}</p>
+
 				<Button
 					onClick={e => {
 						this.toggleEdit(e);
 					}}>
-					{this.state.isEditingUser ? 'Close' : 'Edit'}
+					{this.state.isEditingUser ? 'Close' : 'Edit Profile'}
 				</Button>
 				{this.state.isEditingUser ? (
 					<ProfileForm isEditingUser={this.state.isEditingUser} />
 				) : null}
-				<div className="userDonations">
-					{this.props.donationsByUser.map(donation => (
-						<UserDonations key={donation.id} donation={donation} />
-					))}
+				<div className="userDonationsWrapper">
+					<h1>My Donation Requests</h1>
+					<div className="userDonationsList">
+						{this.props.donationsByUser.map(donation => (
+							<UserDonations key={donation.id} donation={donation} />
+						))}
+					</div>
 				</div>
 			</div>
 		);

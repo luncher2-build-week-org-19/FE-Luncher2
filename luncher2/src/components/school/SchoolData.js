@@ -43,7 +43,7 @@ class SchoolData extends React.Component {
 	componentDidUpdate(prevProps) {
 		// Typical usage (don't forget to compare props):
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
-			if (this.props.schoolDonationsIsUpdating=== !prevProps.schoolDonationsIsUpdating) {
+			if (this.props.schoolDonationsIsUpdating === !prevProps.schoolDonationsIsUpdating) {
 				console.log('MDU');
 				this.props.getSchoolData(this.props.match.params.id);
 				// this.props.getSchoolDonations(this.props.match.params.id);
@@ -207,7 +207,7 @@ class SchoolData extends React.Component {
 									onChange={e => this.handleChange(e)}
 									name="image"
 									value={this.state.image}
-									placeholder="School Image"
+									placeholder="School Image Url"
 								/>
 								<Button className="editSchoolBtn" onClick={e => this.submitEdit(e)}>
 									Submit

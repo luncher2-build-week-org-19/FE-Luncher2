@@ -19,7 +19,7 @@ class SchoolData extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isEditing: false,
+			isEditingSchool: false,
 			isEditingDonation: false,
 			isAddingDonation: false,
 			schoolName: '',
@@ -50,7 +50,7 @@ class SchoolData extends React.Component {
 			}
 		}
 		if (this.props.schoolEdit !== prevProps.schoolEdit) {
-			if (this.props.schoolEdit) {
+			if (this.props.schoolInfoIsUpdating) {
 				this.props.getSchoolData(this.props.match.params.id);
 			}
 		}
@@ -71,10 +71,14 @@ class SchoolData extends React.Component {
 	handleEditSchool = e => {
 		e.preventDefault();
 		this.setState({
-			isEditing: true,
+			isEditingSchool: true,
 			schoolName: this.props.schoolData.schoolname,
 			image: this.props.schoolData.image,
 		});
+	};
+	closeEditSchool = e => {
+		e.preventDefault();
+		this.setState({ isEditingSchool: false });
 	};
 	submitEdit = e => {
 		e.preventDefault();
@@ -117,7 +121,7 @@ class SchoolData extends React.Component {
 		}
 		return (
 			<div>
-				<Form className={this.state.isEditing ? '' : 'hide'}>
+				<Form className={this.state.isEditingSchool ? '' : 'hide'}>
 					<Input
 						onChange={e => this.handleChange(e)}
 						name="schoolName"
@@ -131,6 +135,7 @@ class SchoolData extends React.Component {
 						placeholder="School Image"
 					/>
 					<Button onClick={e => this.submitEdit(e)}>Submit</Button>
+					<Button onClick={e => this.closeEditSchool(e)}>Close </Button>
 				</Form>
 
 				<div className="schoolWrapper">
@@ -181,7 +186,7 @@ class SchoolData extends React.Component {
 						<ul className="donationsList">
 							{this.props.schoolDonations.map(donation => {
 								return (
-									<div className="donationWrapper" key={donation.id}>
+									<div key={donation.id} className="donationWrapper">
 										<li className="donationRow">
 											<div className="donationInfo">
 												<h4>{donation.title}</h4>
@@ -237,6 +242,7 @@ const mapStateToProps = state => {
 		schoolDonations: state.schoolDonations,
 		schoolDonationsIsUpdating: state.schoolDonationsIsUpdating,
 		schoolDonationsIsDeleting: state.schoolDonationsIsDeleting,
+		schoolInfoIsUpdating: state.schoolInfoIsUpdating,
 		schoolEdit: state.schoolEdit,
 		user: {
 			id: state.id,

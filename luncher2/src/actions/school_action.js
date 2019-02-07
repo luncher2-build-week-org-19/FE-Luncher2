@@ -52,7 +52,6 @@ export const deleteSchool = (userToken, schoolID) => dispatch => {
 		},
 	})
 		.then(res => {
-			console.log('delete success', res);
 			dispatch({ type: DELETE_SCHOOL_SUCCESS, payload: res });
 		})
 		.catch(err => dispatch({ type: DELETE_SCHOOL_FAILURE, payload: err }));
@@ -113,6 +112,6 @@ export const schoolEdit = (userToken, info, id) => dispatch => {
 		},
 		data: { schoolname: info.schoolName, image: info.image },
 	})
-		.then(res => ({ type: SCHOOL_EDIT_SUCCESS, payload: res }))
-		.catch(err => ({ type: SCHOOL_EDIT_FAILURE, payload: err }));
+		.then(res => dispatch({ type: SCHOOL_EDIT_SUCCESS, payload: res }))
+		.catch(err => dispatch({ type: SCHOOL_EDIT_FAILURE, payload: err }));
 };

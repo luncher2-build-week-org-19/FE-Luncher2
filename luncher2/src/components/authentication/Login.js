@@ -64,106 +64,114 @@ class Login extends React.Component {
 		return (
 			<div className='wrapper'>
 				{this.props.loginIsLoading && (
-					<Loader type='ThreeDots' color='#somecolor' height={80} width={80} />
+					<Loader type='ThreeDots' color='orange' height={80} width={80} />
 				)}
 				<div
 					className={`formWrapper ${this.props.loginIsLoading ? 'hide' : ''}`}
 				>
-					<div className={`loginForm ${this.state.loginForm ? '' : 'hide'}`}>
-						<Form>
+					<img
+						className='logo'
+						src='https://raw.githubusercontent.com/luncher2-build-week-org-19/UI-tabita-filimon/tabita-filimon/IMG/OrangeSlice%20(1).png'
+						alt='luncher'
+					/>
+
+					<Form className={`loginForm ${this.state.loginForm ? '' : 'hide'}`}>
+						<Input
+							type='text'
+							name='userName'
+							value={this.state.userName}
+							onChange={e => this.handleChange(e)}
+							placeholder='Username'
+						/>
+						<Input
+							type='password'
+							autoComplete='on'
+							name='password'
+							value={this.state.password}
+							onChange={e => this.handleChange(e)}
+							placeholder='Password'
+						/>
+						<Button onClick={() => this.handleSubmitLogin()}>Login</Button>
+						<p>
+							Need an account?{' '}
+							<span className='link' onClick={e => this.registerForm(e)}>
+								Register
+							</span>
+						</p>
+					</Form>
+					<Form
+						className={`registerForm ${this.state.loginForm ? 'hide' : ''}`}
+					>
+						<Input
+							name='firstName'
+							autoComplete='on'
+							placeholder='First Name'
+							value={this.state.firstName}
+							onChange={e => this.handleChange(e)}
+						/>
+						<Input
+							name='lastName'
+							autoComplete='on'
+							placeholder='Last Name'
+							value={this.state.lastName}
+							onChange={e => this.handleChange(e)}
+						/>
+						<div className='radio'>
 							<Input
-								type='text'
-								name='userName'
-								value={this.state.userName}
-								onChange={e => this.handleChange(e)}
-								placeholder='Username'
-							/>
-							<Input
-								type='password'
-								autoComplete='on'
-								name='password'
-								value={this.state.password}
-								onChange={e => this.handleChange(e)}
-								placeholder='Password'
-							/>
-							<Button onClick={() => this.handleSubmitLogin()}>Login</Button>
-							<p>
-								Need an account?{' '}
-								<span onClick={e => this.registerForm(e)}>Register</span>
-							</p>
-						</Form>
-					</div>
-					<div className={`registerForm ${this.state.loginForm ? 'hide' : ''}`}>
-						<Form>
-							<Input
-								name='firstName'
-								autoComplete='on'
-								placeholder='First Name'
-								value={this.state.firstName}
-								onChange={e => this.handleChange(e)}
-							/>
-							<Input
-								name='lastName'
-								autoComplete='on'
-								placeholder='Last Name'
-								value={this.state.lastName}
-								onChange={e => this.handleChange(e)}
-							/>
-							<div className='radio'>
-								<Input
-									type='radio'
-									id='User'
-									name='userRole'
-									value='user'
-									required
-									onChange={e => this.handleChange(e)}
-								/>
-								<Label htmlFor='user'>User</Label>
-							</div>
-							<div className='radio'>
-								<Input
-									type='radio'
-									id='admin'
-									name='userRole'
-									value='admin'
-									required
-									onChange={e => this.handleChange(e)}
-								/>
-								<Label htmlFor='admin'>Admin</Label>
-							</div>
-							<Input
-								type='text'
-								name='userName'
-								placeholder='Username'
+								type='radio'
+								id='User'
+								name='userRole'
+								value='user'
 								required
-								value={this.state.userName}
 								onChange={e => this.handleChange(e)}
 							/>
+							<Label htmlFor='user'>User</Label>
+						</div>
+						<div className='radio'>
 							<Input
-								type='email'
-								autoComplete='on'
-								name='email'
-								placeholder='Email'
+								type='radio'
+								id='admin'
+								name='userRole'
+								value='admin'
 								required
-								value={this.state.email}
 								onChange={e => this.handleChange(e)}
 							/>
-							<Input
-								type='password'
-								autoComplete='on'
-								name='password'
-								placeholder='Password'
-								required
-								value={this.state.password}
-								onChange={e => this.handleChange(e)}
-							/>
-							<Button onClick={e => this.handleRegister(e)}>Register</Button>
-						</Form>
+							<Label htmlFor='admin'>Admin</Label>
+						</div>
+						<Input
+							type='text'
+							name='userName'
+							placeholder='Username'
+							required
+							value={this.state.userName}
+							onChange={e => this.handleChange(e)}
+						/>
+						<Input
+							type='email'
+							autoComplete='on'
+							name='email'
+							placeholder='Email'
+							required
+							value={this.state.email}
+							onChange={e => this.handleChange(e)}
+						/>
+						<Input
+							type='password'
+							autoComplete='on'
+							name='password'
+							placeholder='Password'
+							required
+							value={this.state.password}
+							onChange={e => this.handleChange(e)}
+						/>
+						<Button onClick={e => this.handleRegister(e)}>Register</Button>
 						<p>
 							Already have an account?{' '}
-							<span onClick={e => this.loginForm(e)}>Login</span>
+							<span className='link' onClick={e => this.loginForm(e)}>
+								Login
+							</span>
 						</p>
-					</div>
+					</Form>
 				</div>
 			</div>
 		);

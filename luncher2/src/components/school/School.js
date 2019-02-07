@@ -5,13 +5,13 @@ import lambda from '../../images/lambda.jpg';
 
 function School(props) {
 	return (
-		<Link className="schoolRow" to={`/school/${props.school.id}`}>
+		<Link className='schoolItem' to={`/school/${props.school.id}`}>
 			<img
-				className="schoolImg"
+				className='schoolImg'
 				src={props.school.image ? props.school.image : lambda}
 				alt={props.school.schoolname}
 			/>
-			<div className="schoolName">{props.school.schoolname}</div>
+			<div className='schoolName'>{props.school.schoolname}</div>
 		</Link>
 	);
 }

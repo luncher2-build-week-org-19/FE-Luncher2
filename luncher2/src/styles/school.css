@@ -1,11 +1,21 @@
-.schoolRow {
+.schoolItem {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	padding: 5px;
+	width: 240px;
+	border: 1px solid black;
+	border-radius: 4px;
+	padding: 5px;
+	margin: 5px;
 }
-.schoolRow:nth-child(odd) {
+.schoolItem:hover {
+	background-color: aqua;
+	text-decoration: none;
+}
+/* .schoolItem:nth-child(odd) {
 	background-color: rgb(240, 230, 217);
-}
+} */
 .schoolImg {
 	height: 100px;
 	width: auto;

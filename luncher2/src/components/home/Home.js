@@ -93,10 +93,11 @@ class Home extends React.Component {
 						<Button>Add</Button>
 					</Form>
 				) : null}
-
-				{this.props.schools.map(school => (
-					<School key={school.id} school={school} />
-				))}
+				<div className='schoolList'>
+					{this.props.schools.map(school => (
+						<School key={school.id} school={school} />
+					))}
+				</div>
 			</>
 		);
 	}

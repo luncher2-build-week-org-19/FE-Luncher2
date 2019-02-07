@@ -1,6 +1,21 @@
+.formWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 75px auto;
+	width: 500px;
+}
+.logo {
+	width: 200px;
+	height: 200px;
+}
+
 .loginForm {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	max-width: 200px;
 	width: 100%;
 	margin: 10% auto;
@@ -10,6 +25,9 @@
 }
 .loginForm input {
 	margin: 5px 0;
+}
+.loginForm p {
+	text-align: center;
 }
 .registerForm {
 	display: flex;
@@ -37,4 +55,8 @@
 }
 .show {
 	display: flex;
+}
+.link {
+	color: blue;
+	cursor: pointer;
 }

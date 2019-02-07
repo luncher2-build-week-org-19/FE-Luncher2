@@ -7,7 +7,8 @@ import {
 	getUserInfo,
 	getAllSchools,
 	deleteSchool,
-	addSchool
+	addSchool,
+	getAllDondationsBySchool
 } from '../../actions';
 
 //style
@@ -28,6 +29,7 @@ class Home extends React.Component {
 		let userToken = localStorage.getItem('userToken');
 		this.props.getAllSchools(userToken);
 		this.props.getUserInfo(userToken);
+		this.props.getAllDondationsBySchool(1);
 	}
 	componentDidUpdate(prevProps) {
 		// Typical usage (don't forget to compare props):
@@ -39,14 +41,12 @@ class Home extends React.Component {
 			}
 		}
 	}
-
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
 			[e.target.name]: e.target.value
 		});
 	};
-
 	handleAddSchool = e => {
 		e.preventDefault();
 		let userToken = localStorage.getItem('userToken');
@@ -58,6 +58,9 @@ class Home extends React.Component {
 		this.props.getAllSchools(userToken);
 	};
 
+	getAllDondationsBySchool = id => {
+		return this.props.getAllDondationsBySchool(id);
+	};
 	render() {
 		return (
 			<>
@@ -73,29 +76,35 @@ class Home extends React.Component {
 							this.handleAddSchool(e);
 						}}
 					>
-						<Input
-							name='schoolname'
-							value={this.state.schoolname}
-							required
-							onChange={e => {
-								this.handleChange(e);
-							}}
-							placeholder='School Name'
-						/>
-						<Input
-							name='image'
-							value={this.state.image}
-							onChange={e => {
-								this.handleChange(e);
-							}}
-							placeholder='Image URL'
-						/>
+						<div className='addSchoolInputs'>
+							<Input
+								name='schoolname'
+								value={this.state.schoolname}
+								required
+								onChange={e => {
+									this.handleChange(e);
+								}}
+								placeholder='School Name'
+							/>
+							<Input
+								name='image'
+								value={this.state.image}
+								onChange={e => {
+									this.handleChange(e);
+								}}
+								placeholder='Image URL'
+							/>
+						</div>
 						<Button>Add</Button>
 					</Form>
 				) : null}
 				<div className='schoolList'>
 					{this.props.schools.map(school => (
-						<School key={school.id} school={school} />
+						<School
+							key={school.id}
+							school={school}
+							getAllDondationsBySchool={this.getAllDondationsBySchool}
+						/>
 					))}
 				</div>
 			</>
@@ -117,11 +126,18 @@ const mapStateToProps = state => {
 		},
 		schools: state.schools,
 		username: state.username,
-		getAllSchoolIsLoading: state.getAllSchoolIsLoading
+		getAllSchoolIsLoading: state.getAllSchoolIsLoading,
+		totalDonationsBySchool: state.totalDonationsBySchool
 	};
 };
 
 export default connect(
 	mapStateToProps,
-	{ getUserInfo, getAllSchools, deleteSchool, addSchool }
+	{
+		getUserInfo,
+		getAllSchools,
+		deleteSchool,
+		addSchool,
+		getAllDondationsBySchool
+	}
 )(Home);

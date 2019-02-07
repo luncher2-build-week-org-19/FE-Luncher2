@@ -1,10 +1,33 @@
+/* 
+blue - #180aaf
+gray - #4c4c4c
+orange - #f9a03f
+white - #fefff2
+pink - #c2095a
+*/
+
+.navWrapper {
+	background-color: #fefff2;
+	border-bottom: 1px solid #4c4c4c;
+	max-width: 100%;
+}
+
 .nav {
 	display: flex;
 	justify-content: space-between;
 	max-width: 1000px;
 	padding: 20px 20px;
-	border-bottom: 1px solid black;
 	margin: 0 auto;
+}
+.navLogo {
+	width: 50px;
+	height: 50px;
+	margin-right: 10px;
+}
+.navApp {
+	display: flex;
+	justify-content: baseline;
+	font-size: 2rem;
 }
 .navItem {
 	margin-left: 10px;

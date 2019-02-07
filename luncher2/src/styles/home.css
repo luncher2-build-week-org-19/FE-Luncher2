@@ -1,3 +1,11 @@
+/* 
+blue - #180aaf
+gray - #4c4c4c
+orange - #f9a03f
+white - #fefff2
+pink - #c2095a
+*/
+
 .schoolList {
 	display: flex;
 	flex-flow: wrap;
@@ -11,6 +19,11 @@
 	width: 300px;
 	margin: 0 auto;
 }
+.addSchoolInputs input {
+	width: 200px;
+	margin: 5px;
+}
+
 .addSchool input {
 	margin-right: 10px;
 }

@@ -17,6 +17,12 @@ export const DELETE_DONATION_START = 'DELETE_DONATION_START ';
 export const DELETE_DONATION_SUCCESS = 'DELETE_DONATION_SUCCESS';
 export const DELETE_DONATION_FAILURE = 'DELTE_DONATION_FAILURE';
 
+export const GET_ALL_DONATIONS_SCHOOL_START = 'GET_ALL_DONATIONS_SCHOOL_START';
+export const GET_ALL_DONATIONS_SCHOOL_SUCCESS =
+	'GET_ALL_DONATIONS_SCHOOL_SUCCESS';
+export const GET_ALL_DONATIONS_SCHOOL_FAILURE =
+	'GET_ALL_DONATIONS_SCHOOL_FAILURE';
+
 export const deleteDonation = (userToken, id) => dispatch => {
 	console.log('delete action', id);
 	dispatch({ type: DELETE_DONATION_START });
@@ -24,8 +30,8 @@ export const deleteDonation = (userToken, id) => dispatch => {
 		method: 'delete',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/delete/${id}`,
 		headers: {
-			Authorization: userToken,
-		},
+			Authorization: userToken
+		}
 	})
 		.then(res => {
 			console.log('delete success', res);
@@ -40,13 +46,13 @@ export const addDonation = (userToken, donation, id) => dispatch => {
 		method: 'post',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/schools/${id}`,
 		headers: {
-			Authorization: userToken,
+			Authorization: userToken
 		},
 		data: {
 			title: donation.title,
 			description: donation.description,
-			amount: donation.amount,
-		},
+			amount: donation.amount
+		}
 	})
 		.then(res => {
 			dispatch({ type: ADD_DONATION_SUCCESS, payload: res });
@@ -60,14 +66,28 @@ export const editDonation = (userToken, donation, id) => dispatch => {
 		method: 'put',
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/update/${id}`,
 		headers: {
-			Authorization: userToken,
+			Authorization: userToken
 		},
 		data: {
 			title: donation.title,
 			description: donation.description,
-			amount: donation.amount,
-		},
+			amount: donation.amount
+		}
 	})
 		.then(res => ({ type: EDIT_DONATION_SUCCESS, payload: res.result }))
 		.catch(err => ({ type: EDIT_DONATION_FAILURE, payload: err }));
+};
+
+export const getAllDondationsBySchool = id => dispatch => {
+	dispatch({ type: GET_ALL_DONATIONS_SCHOOL_START });
+	axios({
+		method: 'get',
+		url: `https://luncher-2-bw-19-lambda.herokuapp.com/donations/made/${id}`
+	})
+		.then(res =>
+			dispatch({ type: GET_ALL_DONATIONS_SCHOOL_SUCCESS, payload: res })
+		)
+		.catch(err =>
+			dispatch({ type: GET_ALL_DONATIONS_SCHOOL_FAILURE, payload: err })
+		);
 };

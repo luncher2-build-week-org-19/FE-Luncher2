@@ -12,25 +12,33 @@ const Navigation = props => {
 		window.location.reload();
 	};
 	return (
-		<>
+		<div className='navWrapper'>
 			<Nav>
-				<Link to="/">Luncher</Link>
-				<div className="rightMenu">
-					<NavLink className="navItem" to="/profile/">
+				<Link className='navApp' to='/'>
+					<img
+						className='navLogo'
+						src='https://raw.githubusercontent.com/luncher2-build-week-org-19/UI-tabita-filimon/tabita-filimon/IMG/OrangeSlice%20(1).png'
+						alt='luncher'
+					/>
+					Luncher
+				</Link>
+				<div className='rightMenu'>
+					<NavLink className='navItem' to='/profile/'>
 						{localStorage.getItem('userName')}
 					</NavLink>
 					<NavLink
-						className="navItem"
-						to="/"
+						className='navItem'
+						to='/'
 						onClick={() => {
 							logoutUser();
-						}}>
+						}}
+					>
 						Logout
 					</NavLink>
 				</div>
 			</Nav>
 			<Errors />
-		</>
+		</div>
 	);
 };
 

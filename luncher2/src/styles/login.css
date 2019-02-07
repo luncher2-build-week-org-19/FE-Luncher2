@@ -1,3 +1,11 @@
+/* 
+blue - #180aaf
+gray - #4c4c4c
+orange - #f9a03f
+white - #fefff2
+pink - #c2095a
+*/
+
 .formWrapper {
 	display: flex;
 	flex-direction: column;
@@ -57,7 +65,7 @@
 	display: flex;
 }
 .link {
-	color: blue;
+	color: #180aaf;
 	cursor: pointer;
 }
 .loginLoader {

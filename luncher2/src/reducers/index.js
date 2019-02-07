@@ -37,7 +37,10 @@ import {
 	DELETE_DONATION_FAILURE,
 	EDIT_DONATION_START,
 	EDIT_DONATION_SUCCESS,
-	EDIT_DONATION_FAILURE
+	EDIT_DONATION_FAILURE,
+	GET_ALL_DONATIONS_SCHOOL_START,
+	GET_ALL_DONATIONS_SCHOOL_SUCCESS,
+	GET_ALL_DONATIONS_SCHOOL_FAILURE
 } from '../actions/';
 
 const initialState = {
@@ -64,7 +67,9 @@ const initialState = {
 	//componentDidUpdate booleans
 	getAllSchoolIsUpdating: false,
 	schoolDonationsIsUpdating: false,
-	schoolDonationsIsDeleting: false
+	schoolDonationsIsDeleting: false,
+	//Donations
+	totalDonationsBySchool: ''
 };
 
 const reducer = (state = initialState, action) => {
@@ -281,6 +286,21 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				editError: action.payload.message
+			};
+		//get all donations by school id
+		case GET_ALL_DONATIONS_SCHOOL_START:
+			return {
+				...state
+			};
+		case GET_ALL_DONATIONS_SCHOOL_SUCCESS:
+			console.group(action.payload);
+			return {
+				...state,
+				totalDonationsBySchool: action.payload.data.totalReceived
+			};
+		case GET_ALL_DONATIONS_SCHOOL_FAILURE:
+			return {
+				...state
 			};
 
 		default:

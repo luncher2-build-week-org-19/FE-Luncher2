@@ -22,14 +22,6 @@ class App extends Component {
 			userName: '',
 		};
 	}
-	componentDidMount() {
-		if (this.props.userInfoError) {
-			localStorage.removeItem('userToken');
-			localStorage.removeItem('userName');
-			localStorage.removeItem('userID');
-			window.location.reload();
-		}
-	}
 	render() {
 		return (
 			<div className="App">
@@ -48,7 +40,7 @@ class App extends Component {
 const mapStateToProps = state => {
 	return {
 		id: state.id,
-		userInfoError: state.userInfoError,
+		isLoading: state.isLoading,
 		user: {
 			id: state.id,
 			firstName: state.firstName,

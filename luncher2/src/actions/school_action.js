@@ -36,7 +36,6 @@ export const getAllSchools = () => dispatch => {
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools`,
 	})
 		.then(res => {
-			console.log('response', res);
 			dispatch({ type: GET_ALLSCHOOLS_SUCCESS, payload: res });
 		})
 		.catch(err => dispatch({ type: GET_ALLSCHOOLS_FAILURE, payload: err }));
@@ -53,6 +52,7 @@ export const deleteSchool = (userToken, schoolID) => dispatch => {
 	})
 		.then(res => {
 			dispatch({ type: DELETE_SCHOOL_SUCCESS, payload: res });
+			window.location.reload('/');
 		})
 		.catch(err => dispatch({ type: DELETE_SCHOOL_FAILURE, payload: err }));
 };
@@ -84,7 +84,6 @@ export const getSchoolData = id => dispatch => {
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/${id}`,
 	})
 		.then(res => {
-			console.log('school data', res);
 			dispatch({ type: GET_SCHOOLDATA_SUCCESS, payload: res.data[0] });
 			dispatch({ type: GET_SCHOOL_DONATIONS_START });
 			axios({
@@ -112,6 +111,17 @@ export const schoolEdit = (userToken, info, id) => dispatch => {
 		},
 		data: { schoolname: info.schoolName, image: info.image },
 	})
-		.then(res => dispatch({ type: SCHOOL_EDIT_SUCCESS, payload: res }))
+		.then(res => {
+			dispatch({ type: SCHOOL_EDIT_SUCCESS, payload: res });
+			dispatch({ type: GET_SCHOOLDATA_START });
+			axios({
+				method: 'get',
+				url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/${id}`,
+			})
+				.then(res => {
+					dispatch({ type: GET_SCHOOLDATA_SUCCESS, payload: res.data[0] });
+				})
+				.catch(err => dispatch({ type: GET_SCHOOLDATA_FAILURE, payload: err }));
+		})
 		.catch(err => dispatch({ type: SCHOOL_EDIT_FAILURE, payload: err }));
 };

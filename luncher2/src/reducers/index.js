@@ -23,6 +23,9 @@ import {
 	GET_SCHOOL_DONATIONS_START,
 	GET_SCHOOL_DONATIONS_SUCCESS,
 	GET_SCHOOL_DONATIONS_FAILURE,
+	GET_SCHOOL_DONATIONS_START_2,
+	GET_SCHOOL_DONATIONS_SUCCESS_2,
+	GET_SCHOOL_DONATIONS_FAILURE_2,
 	SCHOOL_EDIT_START,
 	SCHOOL_EDIT_SUCCESS,
 	SCHOOL_EDIT_FAILURE,
@@ -59,18 +62,20 @@ const initialState = {
 	schools: [],
 	schoolData: [],
 	schoolEdit: '',
+	isSchoolEditing: false,
 
 	//donation data
 	schoolDonations: [],
 	isEditingDonation: false,
 	getAllSchoolIsLoading: false,
 	donationsByUser: [],
+	isEditingDonation: false,
 	//ERRORS
 	deleteError: '',
 	editError: '',
 	loginError: '',
 	registerError: '',
-	userInfoError:'',
+	userInfoError: '',
 	//componentDidUpdate booleans
 	getAllSchoolIsUpdating: false,
 	schoolDonationsIsUpdating: false,
@@ -155,7 +160,6 @@ const reducer = (state = initialState, action) => {
 				getAllSchoolIsLoading: true,
 			};
 		case GET_ALLSCHOOLS_SUCCESS:
-			console.log('allSchools', action.payload);
 			return {
 				...state,
 				schools: action.payload.data,
@@ -203,7 +207,7 @@ const reducer = (state = initialState, action) => {
 			};
 		//GET SCHOOL DATA
 		case GET_SCHOOLDATA_START:
-			return { ...state };
+			return { ...state, schoolDonations: [] };
 		case GET_SCHOOLDATA_SUCCESS:
 			return {
 				...state,
@@ -219,7 +223,7 @@ const reducer = (state = initialState, action) => {
 			};
 		//DONATIONS
 		case GET_SCHOOL_DONATIONS_START:
-			return { ...state };
+			return { ...state, schoolDonations: [] };
 		case GET_SCHOOL_DONATIONS_SUCCESS:
 			return {
 				...state,
@@ -227,20 +231,34 @@ const reducer = (state = initialState, action) => {
 				schoolDonationsIsUpdating: false,
 			};
 		case GET_SCHOOL_DONATIONS_FAILURE:
+			return {
+				...state,
+				schoolDonations: [],
+				schoolDonationsIsUpdating: false,
+				schoolInfoIsUpdating: false,
+			};
+		//DONATIONS_2
+		case GET_SCHOOL_DONATIONS_START_2:
+			return { ...state };
+		case GET_SCHOOL_DONATIONS_SUCCESS_2:
+			return {
+				...state,
+				schoolDonations: action.payload,
+				schoolDonationsIsUpdating: false,
+			};
+		case GET_SCHOOL_DONATIONS_FAILURE_2:
 			return { ...state, schoolDonationsIsUpdating: false, schoolInfoIsUpdating: false };
+
 		//SCHOOL EDIT
 		case SCHOOL_EDIT_START:
 			return {
 				...state,
-				//  isEditingDonation: true
+				isSchoolEditing: true,
 			};
 		case SCHOOL_EDIT_SUCCESS:
 			return {
 				...state,
-				isEditingDonation: false,
-				// firstName: action.payload.firstName,
-				// lastName: action.payload.lastName,
-				// email: action.payload.email,
+				isSchoolEditing: false,
 				schoolEdit: action.payload,
 			};
 		case SCHOOL_EDIT_FAILURE:
@@ -281,17 +299,18 @@ const reducer = (state = initialState, action) => {
 			};
 		//Delete Donation
 		case EDIT_DONATION_START:
-			console.log(action.payload);
-			return { ...state, deleteError: '', editError: '' };
+			return { ...state, deleteError: '', editError: '', isEditingDonation: true };
 		case EDIT_DONATION_SUCCESS:
 			return {
 				...state,
 				editError: '',
+				isEditingDonation: false,
 			};
 		case EDIT_DONATION_FAILURE:
 			return {
 				...state,
 				editError: action.payload.message,
+				isEditingDonation: false,
 			};
 		//get all donations by school id
 		case GET_ALL_DONATIONS_SCHOOL_START:

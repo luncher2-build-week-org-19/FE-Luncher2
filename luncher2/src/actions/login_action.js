@@ -28,8 +28,8 @@ export const registerUser = user => dispatch => {
 			lastName: user.lastName,
 			password: user.password,
 			userRole: user.userRole,
-			userName: user.userName
-		}
+			userName: user.userName,
+		},
 	})
 		.then(res => {
 			dispatch({ type: REGISTER_SUCCESS, payload: res });
@@ -46,8 +46,8 @@ export const loginUser = user => dispatch => {
 		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/login`,
 		data: {
 			password: user.password,
-			userName: user.userName
-		}
+			userName: user.userName,
+		},
 	})
 		.then(res => {
 			dispatch({ type: LOGIN_SUCCESS, payload: res });
@@ -64,9 +64,13 @@ export const getUserInfo = userToken => dispatch => {
 		method: 'get',
 		url: 'https://luncher-2-bw-19-lambda.herokuapp.com/users/info',
 		headers: {
-			Authorization: userToken
-		}
+			Authorization: userToken,
+		},
 	})
 		.then(res => dispatch({ type: GET_USERINFO_SUCCESS, payload: res }))
-		.catch(err => dispatch({ type: GET_USERINFO_FAILURE, payload: err }));
+		.catch(err => {
+			localStorage.clear();
+			window.location.reload('/');
+			dispatch({ type: GET_USERINFO_FAILURE, payload: err });
+		});
 };

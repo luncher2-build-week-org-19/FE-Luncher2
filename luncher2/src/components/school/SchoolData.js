@@ -8,7 +8,8 @@ import {
 	schoolEdit,
 	getUserInfo,
 	addDonation,
-	deleteDonation
+	deleteDonation,
+	editDonation,
 } from '../../actions';
 import { Button, Input, Form } from 'reactstrap';
 import DonationForm from './DonationForm';
@@ -27,7 +28,7 @@ class SchoolData extends React.Component {
 			title: '',
 			description: '',
 			amount: '',
-			donationID: ''
+			donationID: '',
 		};
 	}
 
@@ -54,12 +55,22 @@ class SchoolData extends React.Component {
 				this.props.getSchoolData(this.props.match.params.id);
 			}
 		}
+		if (this.props.schoolData !== prevProps.schoolData) {
+			if (this.props.isSchoolEditing) {
+				this.props.getSchoolData(this.props.match.params.id);
+			}
+		}
+		if (this.props.schoolDonations !== prevProps.schoolDonations) {
+			if (this.props.isEditingDonation) {
+				this.props.getSchoolData(this.props.match.params.id);
+			}
+		}
 	}
 
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
 		});
 	};
 	handleDeleteSchool = (e, schoolID) => {
@@ -73,7 +84,7 @@ class SchoolData extends React.Component {
 		this.setState({
 			isEditingSchool: true,
 			schoolName: this.props.schoolData.schoolname,
-			image: this.props.schoolData.image
+			image: this.props.schoolData.image,
 		});
 	};
 	closeEditSchool = e => {
@@ -85,9 +96,12 @@ class SchoolData extends React.Component {
 		let userToken = localStorage.getItem('userToken');
 		let info = {
 			image: this.state.image,
-			schoolName: this.state.schoolName
+			schoolName: this.state.schoolName,
 		};
 		this.props.schoolEdit(userToken, info, this.props.match.params.id);
+		this.setState({
+			isEditingSchool: false,
+		});
 	};
 	editDonation = (e, donation, donationID) => {
 		e.preventDefault();
@@ -96,7 +110,22 @@ class SchoolData extends React.Component {
 			title: donation.title,
 			description: donation.description,
 			amount: donation.amount,
-			donationID: donationID
+			donationID: donationID,
+		});
+	};
+	submitDonation = (e, donationInfo, donationID) => {
+		e.preventDefault();
+		let userToken = localStorage.getItem('userToken');
+		// let id = this.props.donation.id;
+		let donation = {
+			title: donationInfo.title,
+			description: donationInfo.description,
+			amount: donationInfo.amount,
+		};
+
+		this.props.editDonation(userToken, donation, donationID, this.props.match.params.id);
+		this.setState({
+			donationID: '',
 		});
 	};
 	handleDeleteDonation = (e, id) => {
@@ -108,7 +137,7 @@ class SchoolData extends React.Component {
 	addDonation = e => {
 		e.preventDefault();
 		this.setState({
-			isAddingDonation: !this.state.isAddingDonation
+			isAddingDonation: !this.state.isAddingDonation,
 		});
 	};
 
@@ -124,25 +153,25 @@ class SchoolData extends React.Component {
 				<Form className={this.state.isEditingSchool ? '' : 'hide'}>
 					<Input
 						onChange={e => this.handleChange(e)}
-						name='schoolName'
+						name="schoolName"
 						value={this.state.schoolName}
-						placeholder='School Name'
+						placeholder="School Name"
 					/>
 					<Input
 						onChange={e => this.handleChange(e)}
-						name='image'
+						name="image"
 						value={this.state.image}
-						placeholder='School Image'
+						placeholder="School Image"
 					/>
 					<Button onClick={e => this.submitEdit(e)}>Submit</Button>
 					<Button onClick={e => this.closeEditSchool(e)}>Close </Button>
 				</Form>
 
-				<div className='schoolWrapper'>
-					<div className='schoolInfo'>
-						<div className='schoolTitle'>
+				<div className="schoolWrapper">
+					<div className="schoolInfo">
+						<div className="schoolTitle">
 							<img
-								className='schoolImg'
+								className="schoolImg"
 								src={
 									this.props.schoolData.image
 										? this.props.schoolData.image
@@ -152,13 +181,13 @@ class SchoolData extends React.Component {
 							/>
 							<h3>{this.props.schoolData.schoolname}</h3>
 							{this.props.userRole === 'admin' ? (
-								<div className='modify'>
+								<div className="modify">
 									<i
-										className='far fa-edit'
+										className="far fa-edit"
 										onClick={e => this.handleEditSchool(e)}
 									/>
 									<i
-										className='far fa-trash-alt'
+										className="far fa-trash-alt"
 										onClick={e =>
 											this.handleDeleteSchool(e, this.props.schoolData.id)
 										}
@@ -166,7 +195,7 @@ class SchoolData extends React.Component {
 								</div>
 							) : null}
 							{this.props.user.userRole === 'admin' ? (
-								<div className='addDonationWrapper'>
+								<div className="addDonationWrapper">
 									<DonationForm
 										isAddingDonation={this.state.isAddingDonation}
 										submitDonation={this.submitDonation}
@@ -178,33 +207,43 @@ class SchoolData extends React.Component {
 							<Button
 								onClick={e => {
 									this.addDonation(e);
-								}}
-							>
+								}}>
 								{this.state.isAddingDonation ? 'Close' : 'Add Donation'}
 							</Button>
 						</div>
-						<ul className='donationsList'>
+						<ul className="donationsList">
 							{this.props.schoolDonations.map(donation => {
+								if (this.props.schoolDonations.length === 0) {
+									return <p>'No donation requests'</p>;
+								}
+
 								return (
-									<div className='donationWrapper' key={donation.id}>
-										<li className='donationRow'>
-											<div className='donationInfo'>
+									<div className="donationWrapper" key={donation.id}>
+										<li className="donationRow">
+											<div className="donationInfo">
 												<h4>{donation.title}</h4>
 												<p>{donation.description}</p>
 												<p>${donation.amount}</p>
 											</div>
 											{this.props.userRole === 'admin' ? (
-												<div className='modify'>
+												<div className="modify">
 													<i
-														className='far fa-edit'
+														className="far fa-edit"
 														onClick={e =>
-															this.editDonation(e, donation, donation.id)
+															this.editDonation(
+																e,
+																donation,
+																donation.id
+															)
 														}
 													/>
 													<i
-														className='far fa-trash-alt'
+														className="far fa-trash-alt"
 														onClick={e =>
-															this.handleDeleteDonation(e, donation.id)
+															this.handleDeleteDonation(
+																e,
+																donation.id
+															)
 														}
 													/>
 												</div>
@@ -213,9 +252,11 @@ class SchoolData extends React.Component {
 										<div
 											className={`donationEditForm ${
 												this.state.donationID === donation.id ? '' : 'hide'
-											}`}
-										>
-											<DonationEditForm donation={donation} />
+											}`}>
+											<DonationEditForm
+												submitDonation={this.submitDonation}
+												donation={donation}
+											/>
 										</div>
 									</div>
 								);
@@ -238,16 +279,17 @@ const mapStateToProps = state => {
 		schoolDonationsIsDeleting: state.schoolDonationsIsDeleting,
 		schoolInfoIsUpdating: state.schoolInfoIsUpdating,
 		schoolEdit: state.schoolEdit,
+		isSchoolEditing: state.isSchoolEditing,
 		user: {
 			id: state.id,
 			firstName: state.firstName,
 			lastName: state.lastName,
 			username: state.username,
 			userRole: state.userRole,
-			email: state.email
+			email: state.email,
 		},
 		deleteError: state.deleteError,
-		editError: state.editError
+		editError: state.editError,
 	};
 };
 
@@ -259,6 +301,7 @@ export default connect(
 		schoolEdit,
 		getUserInfo,
 		addDonation,
-		deleteDonation
+		deleteDonation,
+		editDonation,
 	}
 )(SchoolData);

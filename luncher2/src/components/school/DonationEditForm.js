@@ -26,18 +26,6 @@ class AddDonation extends React.Component {
 			[e.target.name]: e.target.value,
 		});
 	};
-	submitDonation = e => {
-		e.preventDefault();
-		let userToken = localStorage.getItem('userToken');
-		let id = this.props.donation.id;
-		let donation = {
-			title: this.state.title,
-			description: this.state.description,
-			amount: this.state.amount,
-		};
-
-		this.props.editDonation(userToken, donation, id);
-	};
 
 	render() {
 		if (this.props.donation === undefined) {
@@ -62,11 +50,13 @@ class AddDonation extends React.Component {
 				<Input
 					required
 					name="amount"
+					type="number"
 					value={this.state.amount}
 					placeholder="Amount"
 					onChange={e => this.handleChange(e)}
 				/>
-				<Button onClick={e => this.submitDonation(e)}>
+				<Button
+					onClick={e => this.props.submitDonation(e, this.state, this.props.donation.id)}>
 					Submit Edit
 				</Button>
 			</Form>

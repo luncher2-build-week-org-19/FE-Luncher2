@@ -79,6 +79,7 @@ class AddDonation extends React.Component {
 				<Input
 					required
 					name="amount"
+					type='number'
 					value={this.state.amount}
 					placeholder="Amount"
 					onChange={e => this.handleChange(e)}

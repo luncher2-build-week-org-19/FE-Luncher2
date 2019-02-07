@@ -16,21 +16,21 @@ class Login extends React.Component {
 			userName: '',
 			email: '',
 			password: '',
-			loginForm: true
+			loginForm: true,
 		};
 	}
 
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
-			[e.target.name]: e.target.value
+			[e.target.name]: e.target.value,
 		});
 	};
 
 	handleSubmitLogin = () => {
 		let credentials = {
 			userName: this.state.userName,
-			password: this.state.password
+			password: this.state.password,
 		};
 		this.props.loginUser(credentials);
 		localStorage.setItem('userName', this.state.userName);
@@ -44,37 +44,35 @@ class Login extends React.Component {
 			userRole: this.state.userRole,
 			userName: this.state.userName,
 			email: this.state.email,
-			password: this.state.password
+			password: this.state.password,
 		};
 		this.props.registerUser(user);
 	};
 
 	loginForm = () => {
 		this.setState({
-			loginForm: true
+			loginForm: true,
 		});
 	};
 	registerForm = () => {
 		this.setState({
-			loginForm: false
+			loginForm: false,
 		});
 	};
 
 	render() {
 		return (
-			<div className='wrapper'>
+			<div className="wrapper">
 				{this.props.loginIsLoading && (
-					<div className='loginLoader'>
-						<Loader type='ThreeDots' color='#f9a03f' height={80} width={80} />
+					<div className="loginLoader">
+						<Loader type="ThreeDots" color="#f9a03f" height={80} width={80} />
 					</div>
 				)}
-				<div
-					className={`formWrapper ${this.props.loginIsLoading ? 'hide' : ''}`}
-				>
+				<div className={`formWrapper ${this.props.loginIsLoading ? 'hide' : ''}`}>
 					<img
-						className='logo'
-						src='https://raw.githubusercontent.com/luncher2-build-week-org-19/UI-tabita-filimon/tabita-filimon/IMG/OrangeSlice%20(1).png'
-						alt='luncher'
+						className="logo"
+						src="https://raw.githubusercontent.com/luncher2-build-week-org-19/UI-tabita-filimon/tabita-filimon/IMG/OrangeSlice%20(1).png"
+						alt="luncher"
 					/>
 
 					<Form className={`loginForm ${this.state.loginForm ? '' : 'hide'}`}>
@@ -83,31 +81,29 @@ class Login extends React.Component {
 						</p>
 
 						<Input
-							type='text'
-							name='userName'
+							type="text"
+							name="userName"
 							value={this.state.userName}
 							onChange={e => this.handleChange(e)}
-							placeholder='Username'
+							placeholder="Username"
 						/>
 						<Input
-							type='password'
-							autoComplete='on'
-							name='password'
+							type="password"
+							autoComplete="on"
+							name="password"
 							value={this.state.password}
 							onChange={e => this.handleChange(e)}
-							placeholder='Password'
+							placeholder="Password"
 						/>
 						<Button onClick={() => this.handleSubmitLogin()}>Login</Button>
 						<p>
 							Need an account?
-							<span className='link' onClick={e => this.registerForm(e)}>
+							<span className="link" onClick={e => this.registerForm(e)}>
 								Register
 							</span>
 						</p>
 					</Form>
-					<Form
-						className={`registerForm ${this.state.loginForm ? 'hide' : ''}`}
-					>
+					<Form className={`registerForm ${this.state.loginForm ? 'hide' : ''}`}>
 						<p className={this.props.registerError ? 'error' : 'hide'}>
 							{this.props.registerError
 								? 'Username and/or email already in use'
@@ -115,63 +111,64 @@ class Login extends React.Component {
 						</p>
 
 						<Input
-							name='firstName'
-							autoComplete='on'
-							placeholder='First Name'
+							name="firstName"
+							autoComplete="on"
+							placeholder="First Name"
 							value={this.state.firstName}
 							onChange={e => this.handleChange(e)}
 						/>
 						<Input
-							name='lastName'
-							autoComplete='on'
-							placeholder='Last Name'
+							name="lastName"
+							autoComplete="on"
+							placeholder="Last Name"
 							value={this.state.lastName}
 							onChange={e => this.handleChange(e)}
 						/>
-						<div className='radio'>
+						<div className="radio">
 							<Input
-								type='radio'
-								id='User'
-								name='userRole'
-								value='user'
+								type="radio"
+								id="User"
+								name="userRole"
+								value="user"
 								required
+								checked="checked"
 								onChange={e => this.handleChange(e)}
 							/>
-							<Label htmlFor='user'>User</Label>
+							<Label htmlFor="user">User</Label>
 						</div>
-						<div className='radio'>
+						<div className="radio">
 							<Input
-								type='radio'
-								id='admin'
-								name='userRole'
-								value='admin'
+								type="radio"
+								id="admin"
+								name="userRole"
+								value="admin"
 								required
 								onChange={e => this.handleChange(e)}
 							/>
-							<Label htmlFor='admin'>Admin</Label>
+							<Label htmlFor="admin">Admin</Label>
 						</div>
 						<Input
-							type='text'
-							name='userName'
-							placeholder='Username'
+							type="text"
+							name="userName"
+							placeholder="Username"
 							required
 							value={this.state.userName}
 							onChange={e => this.handleChange(e)}
 						/>
 						<Input
-							type='email'
-							autoComplete='on'
-							name='email'
-							placeholder='Email'
+							type="email"
+							autoComplete="on"
+							name="email"
+							placeholder="Email"
 							required
 							value={this.state.email}
 							onChange={e => this.handleChange(e)}
 						/>
 						<Input
-							type='password'
-							autoComplete='on'
-							name='password'
-							placeholder='Password'
+							type="password"
+							autoComplete="on"
+							name="password"
+							placeholder="Password"
 							required
 							value={this.state.password}
 							onChange={e => this.handleChange(e)}
@@ -179,7 +176,7 @@ class Login extends React.Component {
 						<Button onClick={e => this.handleRegister(e)}>Register</Button>
 						<p>
 							Already have an account?{' '}
-							<span className='link' onClick={e => this.loginForm(e)}>
+							<span className="link" onClick={e => this.loginForm(e)}>
 								Login
 							</span>
 						</p>
@@ -194,7 +191,7 @@ const mapStateToProps = state => {
 	return {
 		loginIsLoading: state.loginIsLoading,
 		loginError: state.loginError,
-		registerError: state.registerError
+		registerError: state.registerError,
 	};
 };
 

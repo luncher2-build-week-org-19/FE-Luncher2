@@ -74,3 +74,9 @@ pink - #c2095a
 	max-width: 1000px;
 	width: 100%;
 }
+.editSchoolBtn {
+	margin: 0 5px;
+}
+.editSchoolInput {
+	margin: 5px 0;
+}

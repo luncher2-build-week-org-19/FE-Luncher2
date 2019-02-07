@@ -150,23 +150,6 @@ class SchoolData extends React.Component {
 		}
 		return (
 			<div>
-				<Form className={this.state.isEditingSchool ? '' : 'hide'}>
-					<Input
-						onChange={e => this.handleChange(e)}
-						name="schoolName"
-						value={this.state.schoolName}
-						placeholder="School Name"
-					/>
-					<Input
-						onChange={e => this.handleChange(e)}
-						name="image"
-						value={this.state.image}
-						placeholder="School Image"
-					/>
-					<Button onClick={e => this.submitEdit(e)}>Submit</Button>
-					<Button onClick={e => this.closeEditSchool(e)}>Close </Button>
-				</Form>
-
 				<div className="schoolWrapper">
 					<div className="schoolInfo">
 						<div className="schoolTitle">
@@ -194,6 +177,26 @@ class SchoolData extends React.Component {
 									/>
 								</div>
 							) : null}
+							<Form
+								className={`editSchoolInfo ${
+									this.state.isEditingSchool ? '' : 'hide'
+								}`}>
+								<Input className='editSchoolInput'
+									onChange={e => this.handleChange(e)}
+									name="schoolName"
+									value={this.state.schoolName}
+									placeholder="School Name"
+								/>
+								<Input className='editSchoolInput'
+									onChange={e => this.handleChange(e)}
+									name="image"
+									value={this.state.image}
+									placeholder="School Image"
+								/>
+								<Button className='editSchoolBtn' onClick={e => this.submitEdit(e)}>Submit</Button>
+								<Button className='editSchoolBtn' onClick={e => this.closeEditSchool(e)}>Close </Button>
+							</Form>
+
 							{this.props.user.userRole === 'admin' ? (
 								<div className="addDonationWrapper">
 									<DonationForm

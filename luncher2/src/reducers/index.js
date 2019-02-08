@@ -211,7 +211,7 @@ const reducer = (state = initialState, action) => {
 			};
 		//GET SCHOOL DATA
 		case GET_SCHOOLDATA_START:
-			return { ...state, };
+			return { ...state };
 		case GET_SCHOOLDATA_SUCCESS:
 			return {
 				...state,
@@ -276,8 +276,7 @@ const reducer = (state = initialState, action) => {
 			return { ...state };
 		//Add Donation
 		case ADD_DONATION_START:
-			return { ...state,
-			schoolDonationsIsUpdating: false };
+			return { ...state, schoolDonationsIsUpdating: false };
 		case ADD_DONATION_SUCCESS:
 			return {
 				...state,

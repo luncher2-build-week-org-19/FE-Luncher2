@@ -229,12 +229,14 @@ class SchoolData extends React.Component {
 									/>
 								</div>
 							) : null}
-							<Button
-								onClick={e => {
-									this.addDonation(e);
-								}}>
-								{this.state.isAddingDonation ? 'Close' : 'Add Donation'}
-							</Button>
+							{this.props.user.userRole === 'admin' ? (
+								<Button
+									onClick={e => {
+										this.addDonation(e);
+									}}>
+									{this.state.isAddingDonation ? 'Close' : 'Add Donation'}
+								</Button>
+							) : null}
 						</div>
 						<ul className="donationsList">
 							{this.props.schoolDonations.length === 0 ? (

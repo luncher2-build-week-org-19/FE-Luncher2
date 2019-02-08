@@ -62,14 +62,16 @@ class Profile extends React.Component {
 				{this.state.isEditingUser ? (
 					<ProfileForm isEditingUser={this.state.isEditingUser} />
 				) : null}
-				<div className="userDonationsWrapper">
-					<h1>My Donation Requests</h1>
-					<div className="userDonationsList">
-						{this.props.donationsByUser.map(donation => (
-							<UserDonations key={donation.id} donation={donation} />
-						))}
+				{this.props.user.userRole === 'admin' ? (
+					<div className="userDonationsWrapper">
+						<h1>My Donation Requests</h1>
+						<div className="userDonationsList">
+							{this.props.donationsByUser.map(donation => (
+								<UserDonations key={donation.id} donation={donation} />
+							))}
+						</div>
 					</div>
-				</div>
+				) : null}
 			</div>
 		);
 	}

@@ -41,12 +41,9 @@ class SchoolData extends React.Component {
 		this.props.getUserInfo(userToken);
 	}
 	componentDidUpdate(prevProps) {
-		// Typical usage (don't forget to compare props):
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
 			if (this.props.schoolDonationsIsUpdating === !prevProps.schoolDonationsIsUpdating) {
-				console.log('MDU');
 				this.props.getSchoolData(this.props.match.params.id);
-				// this.props.getSchoolDonations(this.props.match.params.id);
 			}
 		}
 		if (this.props.schoolData !== prevProps.schoolData) {
@@ -61,19 +58,6 @@ class SchoolData extends React.Component {
 				this.props.getSchoolDonations(this.props.match.params.id);
 			}
 		}
-		// if (this.props.schoolEdit !== prevProps.schoolEdit) {
-		// 	if (this.props.schoolInfoIsUpdating) {
-		// 		this.props.getSchoolData(this.props.match.params.id);
-		// 		this.props.getSchoolDonations(this.props.match.params.id);
-		// 	}
-		// }
-		// if (this.props.schoolData !== prevProps.schoolData) {
-		// 	if (this.props.isSchoolEditing) {
-		// 		this.props.getSchoolData(this.props.match.params.id);
-		// 		this.props.getSchoolDonations(this.props.match.params.id);
-
-		// 	}
-		// }
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
 			if (this.props.isEditingDonation) {
 				this.props.getSchoolData(this.props.match.params.id);
@@ -130,7 +114,6 @@ class SchoolData extends React.Component {
 	submitDonation = (e, donationInfo, donationID) => {
 		e.preventDefault();
 		let userToken = localStorage.getItem('userToken');
-		// let id = this.props.donation.id;
 		let donation = {
 			title: donationInfo.title,
 			description: donationInfo.description,

@@ -10,8 +10,6 @@ import {
 	addSchool,
 	getAllDondationsBySchool,
 } from '../../actions';
-
-//style
 import '../../styles/home.css';
 
 class Home extends React.Component {
@@ -29,7 +27,6 @@ class Home extends React.Component {
 		let userToken = localStorage.getItem('userToken');
 		this.props.getAllSchools(userToken);
 		this.props.getUserInfo(userToken);
-		// this.props.getAllDondationsBySchool(1);
 	}
 	componentDidUpdate(prevProps) {
 		let userToken = localStorage.getItem('userToken');

@@ -49,7 +49,6 @@ export const deleteUser = userToken => dispatch => {
 			dispatch(
 				{ type: DELETE_USER_SUCCESS, payload: res },
 				localStorage.removeItem('userToken')
-				// window.location.reload()
 			);
 		})
 		.catch(err => dispatch({ type: DELETE_USER_FAILURE, payload: err }));

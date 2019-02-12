@@ -18,3 +18,33 @@ import {
 	DELETE_DONATION_SUCCESS,
 	DELETE_DONATION_FAILURE,
 } from '../actions/_donation_needs';
+
+const initialState = {};
+
+const reducer = (state = initialState, action) => {
+	switch (action.type) {
+		//**********************// GET ALL DONATIONS
+		case GET_ALL_DONATIONS_START:
+			return {
+				...state,
+				// isLoading
+				// error
+			};
+		case GET_ALL_DONATIONS_SUCCESS:
+			return {
+				...state,
+				// isLoading
+				// error
+			};
+		case GET_ALL_DONATIONS_FAILURE:
+			return {
+				...state,
+				// isLoading
+				// error
+			};
+		default:
+			return state;
+	}
+};
+
+export default reducer;

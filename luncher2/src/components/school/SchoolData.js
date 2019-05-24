@@ -3,14 +3,14 @@ import '../../styles/school.css';
 import { connect } from 'react-redux';
 import lambda from '../../images/lambda.jpg';
 import {
-	getSchoolData,
+	getSchoolById,
 	deleteSchool,
-	schoolEdit,
+	updateSchool,
 	getUserInfo,
-	addDonation,
+	addNewDonation,
 	deleteDonation,
-	editDonation,
-	getSchoolDonations,
+	updateDonation,
+	getDonationsBySchoolId,
 } from '../../actions';
 import { Button, Input, Form } from 'reactstrap';
 import DonationForm from './DonationForm';
@@ -36,31 +36,31 @@ class SchoolData extends React.Component {
 	componentDidMount() {
 		let userToken = localStorage.getItem('userToken');
 
-		this.props.getSchoolData(this.props.match.params.id);
-		this.props.getSchoolDonations(this.props.match.params.id);
+		this.props.getSchoolById(this.props.match.params.id);
+		this.props.getDonationsBySchoolId(this.props.match.params.id);
 		this.props.getUserInfo(userToken);
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
 			if (this.props.schoolDonationsIsUpdating === !prevProps.schoolDonationsIsUpdating) {
-				this.props.getSchoolData(this.props.match.params.id);
+				this.props.getSchoolById(this.props.match.params.id);
 			}
 		}
 		if (this.props.schoolData !== prevProps.schoolData) {
 			if (!this.props.isSchoolEditing) {
-				this.props.getSchoolDonations(this.props.match.params.id);
+				this.props.getDonationsBySchoolId(this.props.match.params.id);
 			}
 		}
 
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
 			if (this.props.schoolDonationsIsDeleting === !prevProps.schoolDonationsIsDeleting) {
-				this.props.getSchoolData(this.props.match.params.id);
-				this.props.getSchoolDonations(this.props.match.params.id);
+				this.props.getSchoolById(this.props.match.params.id);
+				this.props.getDonationsBySchoolId(this.props.match.params.id);
 			}
 		}
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
 			if (this.props.isEditingDonation) {
-				this.props.getSchoolData(this.props.match.params.id);
+				this.props.getSchoolById(this.props.match.params.id);
 			}
 		}
 	}
@@ -96,7 +96,7 @@ class SchoolData extends React.Component {
 			image: this.state.image,
 			schoolName: this.state.schoolName,
 		};
-		this.props.schoolEdit(userToken, info, this.props.match.params.id);
+		this.props.updateSchool(userToken, info, this.props.match.params.id);
 		this.setState({
 			isEditingSchool: false,
 		});
@@ -120,7 +120,7 @@ class SchoolData extends React.Component {
 			amount: donationInfo.amount,
 		};
 
-		this.props.editDonation(userToken, donation, donationID, this.props.match.params.id);
+		this.props.updateDonation(userToken, donation, donationID, this.props.match.params.id);
 		this.setState({
 			donationID: '',
 		});
@@ -308,13 +308,13 @@ const mapStateToProps = state => {
 export default connect(
 	mapStateToProps,
 	{
-		getSchoolData,
+		getSchoolById,
 		deleteSchool,
-		schoolEdit,
+		updateSchool,
 		getUserInfo,
-		addDonation,
+		addNewDonation,
 		deleteDonation,
-		editDonation,
-		getSchoolDonations,
+		updateDonation,
+		getDonationsBySchoolId,
 	}
 )(SchoolData);

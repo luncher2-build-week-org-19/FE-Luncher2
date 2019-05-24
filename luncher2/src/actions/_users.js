@@ -35,105 +35,125 @@ export const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
 //**********************// REGISTER
 
 export const register = user => dispatch => {
-	dispatch({ type: REGISTER_START });
-	axios({
-		method: 'post',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/register`,
-		data: {
-			email: user.email,
-			firstName: user.firstName,
-			lastName: user.lastName,
-			password: user.password,
-			userRole: user.userRole,
-			userName: user.userName,
-		},
-	})
-		.then(res => {
-			dispatch({ type: REGISTER_SUCCESS, payload: res });
-		})
-		.catch(err => dispatch({ type: REGISTER_FAILURE, payload: err }));
+    dispatch({ type: REGISTER_START });
+    axios({
+        method: 'post',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/register`,
+        data: {
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            password: user.password,
+            userRole: user.userRole,
+            userName: user.userName
+        }
+    })
+        .then(res => {
+            dispatch({ type: REGISTER_SUCCESS, payload: res });
+        })
+        .catch(err => dispatch({ type: REGISTER_FAILURE, payload: err }));
 };
 
 //**********************// LOGIN
 
 export const login = user => dispatch => {
-	dispatch({ type: LOGIN_START });
-	axios({
-		method: 'post',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/login`,
-		data: {
-			password: user.password,
-			userName: user.userName,
-		},
-	})
-		.then(res => {
-			dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-			localStorage.setItem('userToken', res.data.token);
-		})
-		.catch(err => dispatch({ type: LOGIN_FAILURE, payload: err }));
+    dispatch({ type: LOGIN_START });
+    axios({
+        method: 'post',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/login`,
+        data: {
+            password: user.password,
+            userName: user.userName
+        }
+    })
+        .then(res => {
+            dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+            localStorage.setItem('userToken', res.data.token);
+        })
+        .catch(err => dispatch({ type: LOGIN_FAILURE, payload: err }));
 };
 
 //**********************// GET ALL USERS
 
 export const getAllUsers = () => dispatch => {
-	dispatch({ type: GET_ALL_USERS_START });
-	axios({
-		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/all`,
-	})
-		.then(res => {
-			dispatch({ type: GET_ALL_USERS_SUCCESS, payload: res.data });
-		})
-		.catch(err => dispatch({ type: GET_ALL_USERS_FAILURE, payload: err }));
+    dispatch({ type: GET_ALL_USERS_START });
+    axios({
+        method: 'get',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/all`
+    })
+        .then(res => {
+            dispatch({ type: GET_ALL_USERS_SUCCESS, payload: res.data });
+        })
+        .catch(err => dispatch({ type: GET_ALL_USERS_FAILURE, payload: err }));
 };
 
 //**********************// GET USER BY ID
 
 export const getUserByID = id => dispatch => {
-	dispatch({ type: GET_USER_BY_ID_START });
-	axios({
-		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/${id}`,
-	})
-		.then(res => {
-			dispatch({ type: GET_USER_BY_ID_SUCCESS, payload: res.data });
-		})
-		.catch(err => dispatch({ type: GET_USER_BY_ID_FAILURE, payload: err }));
+    dispatch({ type: GET_USER_BY_ID_START });
+    axios({
+        method: 'get',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/${id}`
+    })
+        .then(res => {
+            dispatch({ type: GET_USER_BY_ID_SUCCESS, payload: res.data });
+        })
+        .catch(err => dispatch({ type: GET_USER_BY_ID_FAILURE, payload: err }));
 };
 
 //**********************// GET USER INFO
 
 export const getUserInfo = userToken => dispatch => {
-	dispatch({ type: GET_USER_INFO_START });
-	axios({
-		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/info`,
-		headers: {
-			Authorization: userToken,
-		},
-	})
-		.then(res => {
-			dispatch({ type: GET_USER_INFO_SUCCESS, payload: res.data[0] });
-		})
-		.catch(err => dispatch({ type: GET_USER_INFO_FAILURE, payload: err }));
+    dispatch({ type: GET_USER_INFO_START });
+    axios({
+        method: 'get',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/info`,
+        headers: {
+            Authorization: userToken
+        }
+    })
+        .then(res => {
+            dispatch({ type: GET_USER_INFO_SUCCESS, payload: res.data[0] });
+        })
+        .catch(err => dispatch({ type: GET_USER_INFO_FAILURE, payload: err }));
 };
 
 //**********************// DELETE USER
 
 export const deleteUser = userToken => dispatch => {
-	dispatch({ type: DELETE_USER_START });
-	axios({
-		method: 'delete',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/delete/`,
-		headers: {
-			Authorization: userToken,
-		},
-	})
-		.then(res => {
-			dispatch(
-				{ type: DELETE_USER_SUCCESS, payload: res },
-				localStorage.removeItem('userToken')
-			);
-		})
-		.catch(err => dispatch({ type: DELETE_USER_FAILURE, payload: err }));
+    dispatch({ type: DELETE_USER_START });
+    axios({
+        method: 'delete',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/delete/`,
+        headers: {
+            Authorization: userToken
+        }
+    })
+        .then(res => {
+            dispatch(
+                { type: DELETE_USER_SUCCESS, payload: res },
+                localStorage.removeItem('userToken')
+            );
+        })
+        .catch(err => dispatch({ type: DELETE_USER_FAILURE, payload: err }));
+};
+//**********************// UPDATE USER
+
+export const updateUser = (userToken, user) => dispatch => {
+    dispatch({ type: UPDATE_USER_START });
+    axios({
+        method: 'put',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/users/update`,
+        headers: {
+            Authorization: userToken
+        },
+        data: {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            password: user.password
+        }
+    })
+        .then(res => dispatch({ type: UPDATE_USER_SUCCESS, payload: res }))
+        .catch(err => dispatch({ type: UPDATE_USER_FAILURE, payload: err }));
 };

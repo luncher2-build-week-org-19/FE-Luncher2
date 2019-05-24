@@ -31,100 +31,109 @@ export const DELETE_SCHOOL_FAILURE = 'DELETE_SCHOOL_FAILURE';
 //**********************// GET ALL SCHOOLS
 
 export const getAllSchools = () => dispatch => {
-	dispatch({ type: GET_ALL_SCHOOLS_START });
-	axios({
-		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools`,
-	})
-		.then(res => {
-			dispatch({ type: GET_ALL_SCHOOLS_SUCCESS, payload: res });
-		})
-		.catch(err => dispatch({ type: GET_ALL_SCHOOLS_FAILURE, payload: err }));
+    dispatch({ type: GET_ALL_SCHOOLS_START });
+    axios({
+        method: 'get',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools`
+    })
+        .then(res => {
+            dispatch({ type: GET_ALL_SCHOOLS_SUCCESS, payload: res });
+        })
+        .catch(err =>
+            dispatch({ type: GET_ALL_SCHOOLS_FAILURE, payload: err })
+        );
 };
 
 //**********************// GET SCHOOL BY ID
 
 export const getSchoolById = schoolID => dispatch => {
-	dispatch({ type: GET_SCHOOL_BY_ID_START });
-	axios({
-		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/${schoolID}`,
-	})
-		.then(res => {
-			dispatch({ type: GET_SCHOOL_BY_ID_SUCCESS, payload: res[0] });
-		})
-		.catch(err => dispatch({ type: GET_SCHOOL_BY_ID_FAILURE, payload: err }));
+    dispatch({ type: GET_SCHOOL_BY_ID_START });
+    axios({
+        method: 'get',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/${schoolID}`
+    })
+        .then(res => {
+            dispatch({ type: GET_SCHOOL_BY_ID_SUCCESS, payload: res.data[0] });
+        })
+        .catch(err =>
+            dispatch({ type: GET_SCHOOL_BY_ID_FAILURE, payload: err })
+        );
 };
 
 //**********************// GET SCHOOLS BY USER ID
 
 export const getSchoolByUserId = userId => dispatch => {
-	dispatch({ type: GET_SCHOOLS_BY_USER_ID_START });
-	axios({
-		method: 'get',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/user/${userId}`,
-	})
-		.then(res => {
-			dispatch({ type: GET_SCHOOLS_BY_USER_ID_SUCCESS, payload: res });
-		})
-		.catch(err => dispatch({ type: GET_SCHOOLS_BY_USER_ID_FAILURE, payload: err }));
+    dispatch({ type: GET_SCHOOLS_BY_USER_ID_START });
+    axios({
+        method: 'get',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/user/${userId}`
+    })
+        .then(res => {
+            dispatch({
+                type: GET_SCHOOLS_BY_USER_ID_SUCCESS,
+                payload: res.data
+            });
+        })
+        .catch(err =>
+            dispatch({ type: GET_SCHOOLS_BY_USER_ID_FAILURE, payload: err })
+        );
 };
 
 //**********************// ADD SCHOOL
 
 export const addSchool = (userToken, school) => dispatch => {
-	dispatch({ type: ADD_SCHOOL_START });
-	axios({
-		method: 'post',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/`,
-		headers: {
-			Authorization: userToken,
-		},
-		data: {
-			image: school.image,
-			schoolname: school.schoolname,
-		},
-	})
-		.then(res => {
-			dispatch({ type: ADD_SCHOOL_SUCCESS, payload: res.data });
-		})
-		.catch(err => dispatch({ type: ADD_SCHOOL_FAILURE, payload: err }));
+    dispatch({ type: ADD_SCHOOL_START });
+    axios({
+        method: 'post',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/`,
+        headers: {
+            Authorization: userToken
+        },
+        data: {
+            image: school.image,
+            schoolname: school.schoolname
+        }
+    })
+        .then(res => {
+            dispatch({ type: ADD_SCHOOL_SUCCESS, payload: res.data });
+        })
+        .catch(err => dispatch({ type: ADD_SCHOOL_FAILURE, payload: err }));
 };
 
 //**********************// UPDATE SCHOOL
 
 export const updateSchool = (userToken, school, schoolID) => dispatch => {
-	dispatch({ type: UPDATE_SCHOOL_START });
-	axios({
-		method: 'put',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/update/${schoolID}`,
-		headers: {
-			Authorization: userToken,
-		},
-		data: {
-			schoolname: school.schoolName,
-			image: school.image,
-		},
-	})
-		.then(res => {
-			dispatch({ type: UPDATE_SCHOOL_SUCCESS, payload: res });
-		})
-		.catch(err => dispatch({ type: UPDATE_SCHOOL_FAILURE, payload: err }));
+    dispatch({ type: UPDATE_SCHOOL_START });
+    axios({
+        method: 'put',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/update/${schoolID}`,
+        headers: {
+            Authorization: userToken
+        },
+        data: {
+            schoolname: school.schoolName,
+            image: school.image
+        }
+    })
+        .then(res => {
+            dispatch({ type: UPDATE_SCHOOL_SUCCESS, payload: res });
+        })
+        .catch(err => dispatch({ type: UPDATE_SCHOOL_FAILURE, payload: err }));
 };
 
 //**********************// DELETE SCHOOL
 
 export const deleteSchool = (userToken, schoolID) => dispatch => {
-	dispatch({ type: DELETE_SCHOOL_START });
-	axios({
-		method: 'delete',
-		url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/delete/${schoolID}`,
-		headers: {
-			Authorization: userToken,
-		},
-	})
-		.then(res => {
-			dispatch({ type: DELETE_SCHOOL_SUCCESS, payload: res });
-		})
-		.catch(err => dispatch({ type: DELETE_SCHOOL_FAILURE, payload: err }));
+    dispatch({ type: DELETE_SCHOOL_START });
+    axios({
+        method: 'delete',
+        url: `https://luncher-2-bw-19-lambda.herokuapp.com/schools/delete/${schoolID}`,
+        headers: {
+            Authorization: userToken
+        }
+    })
+        .then(res => {
+            dispatch({ type: DELETE_SCHOOL_SUCCESS, payload: res });
+        })
+        .catch(err => dispatch({ type: DELETE_SCHOOL_FAILURE, payload: err }));
 };

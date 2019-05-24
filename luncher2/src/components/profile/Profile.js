@@ -23,9 +23,9 @@ class Profile extends React.Component {
         this.props.getUserInfo(userToken);
         this.props.getDonationsByUserId(userID);
         this.setState({
-            firstName: this.props.firstName,
-            lastName: this.props.lastName,
-            email: this.props.email,
+            firstName: this.props.user.firstName,
+            lastName: this.props.user.lastName,
+            email: this.props.user.email,
             isEditingUser: false
         });
     }
@@ -48,10 +48,10 @@ class Profile extends React.Component {
         return (
             <div className="profileWrapper">
                 <h1>
-                    {this.props.firstName} {this.props.lastName}
+                    {this.props.user.firstName} {this.props.user.lastName}
                 </h1>
-                <p>Role: {this.props.userRole}</p>
-                <p>Email: {this.props.email}</p>
+                <p>Role: {this.props.user.userRole}</p>
+                <p>Email: {this.props.user.email}</p>
 
                 <Button
                     onClick={e => {
@@ -81,15 +81,15 @@ class Profile extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-        user: state.user,
-        id: state.id,
-        firstName: state.firstName,
-        lastName: state.lastName,
-        username: state.username,
-        userRole: state.userRole,
-        email: state.email,
+        user: state._users.getUserByID,
+        // id: state._users.loggedInUser.id,
+        // firstName: state._users.loggedInUser.firstName,
+        // lastName: state._users.loggedInUser.lastName,
+        // username: state._users.loggedInUser.username,
+        // userRole: state._users.loggedInUser.userRole,
+        // email: state._users.loggedInUser.email,
         donationsByUser: state.donationsByUser,
-        isEditingUser: state.isEditingUser
+        isEditingUser: state._users.isLoading_UpdateUser
     };
 };
 

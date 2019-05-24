@@ -139,7 +139,7 @@ export const deleteUser = userToken => dispatch => {
 };
 //**********************// UPDATE USER
 
-export const updateUser = (userToken, user) => dispatch => {
+export const updateUser = (userToken, user, id) => dispatch => {
     dispatch({ type: UPDATE_USER_START });
     axios({
         method: 'put',
@@ -154,6 +154,9 @@ export const updateUser = (userToken, user) => dispatch => {
             password: user.password
         }
     })
-        .then(res => dispatch({ type: UPDATE_USER_SUCCESS, payload: res }))
+        .then(res => {
+            dispatch({ type: GET_USER_BY_ID_START, id: id });
+            dispatch({ type: UPDATE_USER_SUCCESS, payload: res });
+        })
         .catch(err => dispatch({ type: UPDATE_USER_FAILURE, payload: err }));
 };

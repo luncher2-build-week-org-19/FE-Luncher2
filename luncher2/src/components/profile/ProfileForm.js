@@ -42,7 +42,7 @@ class ProfileForm extends React.Component {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.updateUser(userToken, user);
+        this.props.updateUser(userToken, user, this.props.id);
         this.setState({
             isEditingUser: false
         });
@@ -89,12 +89,12 @@ class ProfileForm extends React.Component {
 }
 const mapStateToProps = state => {
     return {
-        id: state.id,
-        firstName: state.firstName,
-        lastName: state.lastName,
-        username: state.username,
-        userRole: state.userRole,
-        email: state.email
+        id: state._users.getUserByID.id,
+        firstName: state._users.getUserByID.firstName,
+        lastName: state._users.getUserByID.lastName,
+        username: state._users.getUserByID.username,
+        userRole: state._users.getUserByID.userRole,
+        email: state._users.getUserByID.email
     };
 };
 

@@ -127,7 +127,7 @@ const mapStateToProps = state => {
             userRole: state.userRole,
             email: state.email
         },
-        schools: state.schools,
+        schools: state._schools.allSchools,
         username: state.username,
         getAllSchoolIsLoading: state.getAllSchoolIsLoading,
         totalDonationsBySchool: state.totalDonationsBySchool,

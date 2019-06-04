@@ -7,7 +7,7 @@ pink - #c2095a
 */
 .schoolItem {
 	display: flex;
-	width: 100%;
+	width: 25%;
 	/* flex-direction: column; */
 	justify-content: space-between;
 	align-items: center;
@@ -50,7 +50,6 @@ pink - #c2095a
 }
 .schoolItem_left {
 	display: flex;
-	flex-direction: row;
 	align-items: center;
 }
 .schoolItem_right {

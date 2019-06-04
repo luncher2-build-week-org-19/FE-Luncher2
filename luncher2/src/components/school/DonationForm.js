@@ -88,7 +88,7 @@ class AddDonation extends React.Component {
                     onChange={e => this.handleChange(e)}
                 />
                 <Button onClick={e => this.addDonation(e)}>
-                    Submit Donation
+                    Submit Request
                 </Button>
             </Form>
         );

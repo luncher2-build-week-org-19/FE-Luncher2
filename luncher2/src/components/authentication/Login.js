@@ -21,7 +21,7 @@ class Login extends React.Component {
 	}
 
 	handleChange = e => {
-		e.preventDefault();
+		// e.preventDefault();
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
@@ -130,9 +130,9 @@ class Login extends React.Component {
 								id="User"
 								name="userRole"
 								value="user"
+								checked={this.state.userRole === 'user'}
 								required
-								checked="checked"
-								onChange={e => this.handleChange(e)}
+								onChange={this.handleChange}
 							/>
 							<Label htmlFor="user">User</Label>
 						</div>
@@ -142,8 +142,9 @@ class Login extends React.Component {
 								id="admin"
 								name="userRole"
 								value="admin"
+								checked={this.state.userRole === 'admin'}
 								required
-								onChange={e => this.handleChange(e)}
+								onChange={this.handleChange}
 							/>
 							<Label htmlFor="admin">Admin</Label>
 						</div>
@@ -189,8 +190,8 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
 	return {
-		loginIsLoading: state.loginIsLoading,
-		loginError: state.loginError,
+		loginIsLoading: state._users.isLoading_Login,
+		loginError: state._users.error_Login,
 		registerError: state.registerError,
 	};
 };

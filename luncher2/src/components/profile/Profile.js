@@ -88,7 +88,7 @@ const mapStateToProps = state => {
         // username: state._users.loggedInUser.username,
         // userRole: state._users.loggedInUser.userRole,
         // email: state._users.loggedInUser.email,
-        donationsByUser: state.donationsByUser,
+        donationsByUser: state._donation_needs.donationsByUserId,
         isEditingUser: state._users.isLoading_UpdateUser
     };
 };

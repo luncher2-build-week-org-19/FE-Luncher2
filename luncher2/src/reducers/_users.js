@@ -95,11 +95,12 @@ const reducer = (state = initialState, action) => {
                 error_Login: ''
             };
         case LOGIN_FAILURE:
+            console.log(action.payload.response.data);
             return {
                 ...state,
                 isLoading_Login: false,
                 loggedInUser: '',
-                error_Login: action.payload
+                error_Login: action.payload.response.data.message
             };
         //**********************// GET ALL USERS
         case GET_ALL_USERS_START:

@@ -175,7 +175,7 @@ class SchoolData extends React.Component {
 								</div>
 							) : null}
 							<Form
-								className={`editSchoolInfo ${
+								className={`edi	tSchoolInfo ${
 									this.state.isEditingSchool ? '' : 'hide'
 								}`}>
 								<Input
@@ -217,7 +217,7 @@ class SchoolData extends React.Component {
 									onClick={e => {
 										this.addDonation(e);
 									}}>
-									{this.state.isAddingDonation ? 'Close' : 'Add Donation'}
+									{this.state.isAddingDonation ? 'Close' : 'Add Donation Request'}
 								</Button>
 							) : null}
 						</div>

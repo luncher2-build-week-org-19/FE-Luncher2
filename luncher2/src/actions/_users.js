@@ -70,7 +70,7 @@ export const login = user => dispatch => {
             dispatch({ type: LOGIN_SUCCESS, payload: res.data });
             localStorage.setItem('userToken', res.data.token);
         })
-        .catch(err => dispatch({ type: LOGIN_FAILURE, payload: err }));
+        .catch(err => dispatch({ type: LOGIN_FAILURE, payload: err.data }));
 };
 
 //**********************// GET ALL USERS

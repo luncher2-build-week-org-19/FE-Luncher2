@@ -1,7 +1,8 @@
-import React from 'react';
-import '../../styles/school.css';
-import { connect } from 'react-redux';
-import lambda from '../../images/lambda.jpg';
+import React from "react";
+import "../../styles/school.css";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import lambda from "../../images/lambda.jpg";
 import {
 	getSchoolById,
 	deleteSchool,
@@ -10,12 +11,12 @@ import {
 	addNewDonation,
 	deleteDonation,
 	updateDonation,
-	getDonationsBySchoolId,
-} from '../../actions';
-import { Button, Input, Form } from 'reactstrap';
-import DonationForm from './DonationForm';
-import '../../styles/schoolData.css';
-import DonationEditForm from './DonationEditForm';
+	getDonationsBySchoolId
+} from "../../actions";
+import { Button, Input, Form } from "reactstrap";
+import DonationForm from "./DonationForm";
+import "../../styles/schoolData.css";
+import DonationEditForm from "./DonationEditForm";
 
 class SchoolData extends React.Component {
 	constructor(props) {
@@ -24,17 +25,17 @@ class SchoolData extends React.Component {
 			isEditingSchool: false,
 			isEditingDonation: false,
 			isAddingDonation: false,
-			schoolName: '',
-			image: '',
-			title: '',
-			description: '',
-			amount: '',
-			donationID: '',
+			schoolName: "",
+			image: "",
+			title: "",
+			description: "",
+			amount: "",
+			donationID: ""
 		};
 	}
 
 	componentDidMount() {
-		let userToken = localStorage.getItem('userToken');
+		let userToken = localStorage.getItem("userToken");
 
 		this.props.getSchoolById(this.props.match.params.id);
 		this.props.getDonationsBySchoolId(this.props.match.params.id);
@@ -42,7 +43,10 @@ class SchoolData extends React.Component {
 	}
 	componentDidUpdate(prevProps) {
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
-			if (this.props.schoolDonationsIsUpdating === !prevProps.schoolDonationsIsUpdating) {
+			if (
+				this.props.schoolDonationsIsUpdating ===
+				!prevProps.schoolDonationsIsUpdating
+			) {
 				this.props.getSchoolById(this.props.match.params.id);
 			}
 		}
@@ -53,7 +57,10 @@ class SchoolData extends React.Component {
 		}
 
 		if (this.props.schoolDonations !== prevProps.schoolDonations) {
-			if (this.props.schoolDonationsIsDeleting === !prevProps.schoolDonationsIsDeleting) {
+			if (
+				this.props.schoolDonationsIsDeleting ===
+				!prevProps.schoolDonationsIsDeleting
+			) {
 				this.props.getSchoolById(this.props.match.params.id);
 				this.props.getDonationsBySchoolId(this.props.match.params.id);
 			}
@@ -68,21 +75,21 @@ class SchoolData extends React.Component {
 	handleChange = e => {
 		e.preventDefault();
 		this.setState({
-			[e.target.name]: e.target.value,
+			[e.target.name]: e.target.value
 		});
 	};
 	handleDeleteSchool = (e, schoolID) => {
 		e.preventDefault();
-		let userToken = localStorage.getItem('userToken');
+		let userToken = localStorage.getItem("userToken");
 		this.props.deleteSchool(userToken, schoolID);
-		this.props.history.push('/');
+		this.props.history.push("/");
 	};
 	handleEditSchool = e => {
 		e.preventDefault();
 		this.setState({
 			isEditingSchool: true,
 			schoolName: this.props.schoolData.schoolname,
-			image: this.props.schoolData.image,
+			image: this.props.schoolData.image
 		});
 	};
 	closeEditSchool = e => {
@@ -91,14 +98,14 @@ class SchoolData extends React.Component {
 	};
 	submitEdit = e => {
 		e.preventDefault();
-		let userToken = localStorage.getItem('userToken');
+		let userToken = localStorage.getItem("userToken");
 		let info = {
 			image: this.state.image,
-			schoolName: this.state.schoolName,
+			schoolName: this.state.schoolName
 		};
 		this.props.updateSchool(userToken, info, this.props.match.params.id);
 		this.setState({
-			isEditingSchool: false,
+			isEditingSchool: false
 		});
 	};
 	editDonation = (e, donation, donationID) => {
@@ -108,34 +115,54 @@ class SchoolData extends React.Component {
 			title: donation.title,
 			description: donation.description,
 			amount: donation.amount,
-			donationID: donationID,
+			donationID: donationID
 		});
 	};
 	submitDonation = (e, donationInfo, donationID) => {
 		e.preventDefault();
-		let userToken = localStorage.getItem('userToken');
+		let userToken = localStorage.getItem("userToken");
 		let donation = {
 			title: donationInfo.title,
 			description: donationInfo.description,
-			amount: donationInfo.amount,
+			amount: donationInfo.amount
 		};
 
-		this.props.updateDonation(userToken, donation, donationID, this.props.match.params.id);
+		this.props.updateDonation(
+			userToken,
+			donation,
+			donationID,
+			this.props.match.params.id
+		);
 		this.setState({
-			donationID: '',
+			donationID: ""
 		});
 	};
 	handleDeleteDonation = (e, id) => {
 		e.preventDefault();
-		let userToken = localStorage.getItem('userToken');
+		let userToken = localStorage.getItem("userToken");
 
 		this.props.deleteDonation(userToken, id);
 	};
 	addDonation = e => {
 		e.preventDefault();
 		this.setState({
-			isAddingDonation: !this.state.isAddingDonation,
+			isAddingDonation: !this.state.isAddingDonation
 		});
+	};
+
+	adminEdit = donation => {
+		return (
+			<div className='modify'>
+				<i
+					className='far fa-edit'
+					onClick={e => this.editDonation(e, donation, donation.id)}
+				/>
+				<i
+					className='far fa-trash-alt'
+					onClick={e => this.handleDeleteDonation(e, donation.id)}
+				/>
+			</div>
+		);
 	};
 
 	render() {
@@ -146,12 +173,12 @@ class SchoolData extends React.Component {
 			return <React.Fragment>School doesn't exist.</React.Fragment>;
 		}
 		return (
-			<div>
-				<div className="schoolWrapper">
-					<div className="schoolInfo">
-						<div className="schoolTitle">
+			<Styles>
+				<div className='schoolWrapper'>
+					<div className='schoolInfo'>
+						<div className='schoolTitle'>
 							<img
-								className="schoolImg"
+								className='schoolImg'
 								src={
 									this.props.schoolData.image
 										? this.props.schoolData.image
@@ -160,110 +187,94 @@ class SchoolData extends React.Component {
 								alt={this.props.schoolData.schoolname}
 							/>
 							<h3>{this.props.schoolData.schoolname}</h3>
-							{this.props.userRole === 'admin' ? (
-								<div className="modify">
-									<i
-										className="far fa-edit"
-										onClick={e => this.handleEditSchool(e)}
-									/>
-									<i
-										className="far fa-trash-alt"
-										onClick={e =>
-											this.handleDeleteSchool(e, this.props.schoolData.id)
-										}
-									/>
-								</div>
+							{this.props.getUserByID.userRole === "admin" ? (
+								<>
+									<div className='modify'>
+										<i
+											className='far fa-edit'
+											onClick={e => this.handleEditSchool(e)}
+										/>
+										<i
+											className='far fa-trash-alt'
+											onClick={e =>
+												this.handleDeleteSchool(e, this.props.schoolData.id)
+											}
+										/>
+									</div>
+									<div className='addDonationWrapper'>
+										<DonationForm
+											isAddingDonation={this.state.isAddingDonation}
+											submitDonation={this.submitDonation}
+											id={this.props.schoolData.id}
+											schoolState={this.state}
+										/>
+									</div>
+									<Button
+										onClick={e => {
+											this.addDonation(e);
+										}}
+									>
+										{this.state.isAddingDonation
+											? "Close"
+											: "Add Donation Request"}
+									</Button>
+								</>
 							) : null}
 							<Form
-								className={`edi	tSchoolInfo ${
-									this.state.isEditingSchool ? '' : 'hide'
-								}`}>
+								className={`editSchoolInfo ${
+									this.state.isEditingSchool ? "" : "hide"
+								}`}
+							>
 								<Input
-									className="editSchoolInput"
+									className='editSchoolInput'
 									onChange={e => this.handleChange(e)}
-									name="schoolName"
+									name='schoolName'
 									value={this.state.schoolName}
-									placeholder="School Name"
+									placeholder='School Name'
 								/>
 								<Input
-									className="editSchoolInput"
+									className='editSchoolInput'
 									onChange={e => this.handleChange(e)}
-									name="image"
+									name='image'
 									value={this.state.image}
-									placeholder="School Image Url"
+									placeholder='School Image Url'
 								/>
-								<Button className="editSchoolBtn" onClick={e => this.submitEdit(e)}>
+								<Button
+									className='editSchoolBtn'
+									onClick={e => this.submitEdit(e)}
+								>
 									Submit
 								</Button>
 								<Button
-									className="editSchoolBtn"
-									onClick={e => this.closeEditSchool(e)}>
-									Close{' '}
+									className='editSchoolBtn'
+									onClick={e => this.closeEditSchool(e)}
+								>
+									Close{" "}
 								</Button>
 							</Form>
-
-							{this.props.user.userRole === 'admin' ? (
-								<div className="addDonationWrapper">
-									<DonationForm
-										isAddingDonation={this.state.isAddingDonation}
-										submitDonation={this.submitDonation}
-										id={this.props.schoolData.id}
-										schoolState={this.state}
-									/>
-								</div>
-							) : null}
-							{this.props.user.userRole === 'admin' ? (
-								<Button
-									onClick={e => {
-										this.addDonation(e);
-									}}>
-									{this.state.isAddingDonation ? 'Close' : 'Add Donation Request'}
-								</Button>
-							) : null}
 						</div>
-						<ul className="donationsList">
+						<ul className='donationsList'>
 							{this.props.schoolDonations.length === 0 ? (
 								<h2>No available donation requests</h2>
 							) : (
 								this.props.schoolDonations.map(donation => {
 									return (
-										<div className="donationWrapper" key={donation.id}>
-											<li className="donationRow">
-												<div className="donationInfo">
+										<div className='donationWrapper' key={donation.id}>
+											<li className='donationRow'>
+												<div className='donationInfo'>
 													<h4>{donation.title}</h4>
 													<p>{donation.description}</p>
 													<p>${donation.amount}</p>
 												</div>
-												{this.props.userRole === 'admin' ? (
-													<div className="modify">
-														<i
-															className="far fa-edit"
-															onClick={e =>
-																this.editDonation(
-																	e,
-																	donation,
-																	donation.id
-																)
-															}
-														/>
-														<i
-															className="far fa-trash-alt"
-															onClick={e =>
-																this.handleDeleteDonation(
-																	e,
-																	donation.id
-																)
-															}
-														/>
-													</div>
-												) : null}
+												{this.props.userRole === "admin"
+													? () => this.adminEdit(donation)
+													: null}
 											</li>
 											<div
 												className={`donationEditForm ${
-													this.state.donationID === donation.id
-														? ''
-														: 'hide'
-												}`}>
+													this.state.donationID === donation.id ? "" : "hide"
+												}`}
+											>
 												<DonationEditForm
 													submitDonation={this.submitDonation}
 													donation={donation}
@@ -276,7 +287,7 @@ class SchoolData extends React.Component {
 						</ul>
 					</div>
 				</div>
-			</div>
+			</Styles>
 		);
 	}
 }
@@ -285,6 +296,7 @@ const mapStateToProps = state => {
 	return {
 		username: state.username,
 		userRole: state.userRole,
+		getUserByID: state._users.getUserByID,
 		schoolData: state._schools.schoolById,
 		schoolDonations: state._donation_needs.donationsbySchoolId,
 		schoolDonationsIsUpdating: state.schoolDonationsIsUpdating,
@@ -294,7 +306,7 @@ const mapStateToProps = state => {
 		isSchoolEditing: state._schools.isLoading_UpdateSchool,
 		user: state._users.getUserByID,
 		deleteError: state.deleteError,
-		editError: state.editError,
+		editError: state.editError
 	};
 };
 
@@ -308,6 +320,19 @@ export default connect(
 		addNewDonation,
 		deleteDonation,
 		updateDonation,
-		getDonationsBySchoolId,
+		getDonationsBySchoolId
 	}
 )(SchoolData);
+
+const Styles = styled.div`
+	.schoolTitle {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin: 10px auto 30px;
+		align-items: center;
+	}
+	.schoolTitle button {
+		margin-top: 10px;
+	}
+`;

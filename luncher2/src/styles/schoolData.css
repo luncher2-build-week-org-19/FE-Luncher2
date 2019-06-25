@@ -5,7 +5,7 @@ orange - #f9a03f
 white - #fefff2
 pink - #c2095a
 */
-.schoolTitle {
+/* .schoolTitle {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -14,7 +14,7 @@ pink - #c2095a
 }
 .schoolTitle button {
 	margin-top: 10px;
-}
+} */
 .schoolImg {
 	width: 100px;
 	height: 100px;

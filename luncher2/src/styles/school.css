@@ -5,15 +5,12 @@ orange - #f9a03f
 white - #fefff2
 pink - #c2095a
 */
-.schoolItem {
+/* .schoolItem {
 	display: flex;
 	width: 25%;
-	/* flex-direction: column; */
 	justify-content: space-between;
 	align-items: center;
 	padding: 5px;
-	/* width: 240px;
-	height: 240px; */
 	border: 1px solid black;
 	border-radius: 4px;
 	padding: 5px;
@@ -24,16 +21,16 @@ pink - #c2095a
 	background-color: #f9a03f;
 	color: white;
 	text-decoration: none;
-}
+} */
 /* .schoolItem:nth-child(odd) {
 	background-color: rgb(240, 230, 217);
 } */
-.schoolImg {
+/* .schoolImg {
 	height: 100px;
 	width: auto;
 	margin-right: 15px;
 	border-radius: 50%;
-}
+} */
 .schoolInfo {
 	display: flex;
 	flex-direction: column;

@@ -6,14 +6,12 @@ white - #fefff2
 pink - #c2095a
 */
 
-.formWrapper {
+/* .formWrapper {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	margin-top: 10%;
-	/* margin: 75px auto;
-	width: 500px; */
 }
 .logo {
 	width: 200px;
@@ -53,7 +51,6 @@ pink - #c2095a
 }
 .registerForm .radio {
 	display: flex;
-	/* margin-left: 25px; */
 }
 .registerForm .radio label {
 	margin-left: 20px;
@@ -77,4 +74,4 @@ pink - #c2095a
 }
 .btn {
 	width: 100%;
-}
+} */

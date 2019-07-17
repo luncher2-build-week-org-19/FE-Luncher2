@@ -10,9 +10,6 @@ import authenticateHOC from './components/authentication/Authenticate';
 import Navigation from './components/navBar/Navigation';
 import { getUserInfo } from './actions';
 
-// Styles
-import { GlobalStyles } from './styles';
-
 import Profile from './components/profile/Profile';
 
 class App extends Component {
@@ -27,7 +24,6 @@ class App extends Component {
     render() {
         return (
             <SiteWrapper>
-                <GlobalStyles />
                 <Navigation user={this.props.username} />
 
                 <Route exact path="/" component={Home} />
